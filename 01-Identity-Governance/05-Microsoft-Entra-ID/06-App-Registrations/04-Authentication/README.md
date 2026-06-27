@@ -114,13 +114,16 @@ Certificate lifecycle management remains the responsibility of administrators.
 
 Managed Identities provide passwordless authentication for Azure resources.
 
-Azure automatically creates and manages the application's identity.
+Azure automatically creates and manages the identity, eliminating the need to store Client Secrets or certificates.
 
-No Client Secret or certificate needs to be stored inside the application.
+Microsoft Entra ID supports two types of Managed Identities:
 
-Azure also manages credential rotation automatically.
+| Type | Description |
+|------|-------------|
+| System-assigned | Linked to a single Azure resource. The identity is automatically deleted when the resource is removed. |
+| User-assigned | Created as an independent Azure resource and can be assigned to multiple Azure resources simultaneously. |
 
-Managed Identities are available only for supported Azure resources.
+Managed Identities automatically rotate their credentials and are Microsoft's recommended authentication method for Azure-hosted workloads.
 
 ---
 
@@ -153,6 +156,48 @@ Depending on the authentication flow, applications may receive:
 | Refresh Token | Request new Access Tokens without requiring another authentication |
 
 Applications use these tokens instead of repeatedly sending credentials.
+
+---
+
+## Token Endpoint
+
+Applications authenticate by sending requests to the Microsoft Identity Platform token endpoint.
+
+For OAuth 2.0 client credential flows, applications typically send an HTTP POST request to:
+
+```text
+https://login.microsoftonline.com/{tenant-id}/oauth2/v2.0/token
+```
+
+Depending on the authentication method, the request includes the application's identity (Client ID), its authentication credential (such as a Client Secret, Certificate, or Federated Credential), and the requested scope.
+
+After successful validation, Microsoft Entra ID issues an Access Token that the application presents to protected resources.
+
+---
+
+## Token Lifetime
+
+Access Tokens issued by Microsoft Entra ID have a limited lifetime.
+
+By default, Access Tokens are typically valid for approximately **one hour**, although the effective lifetime may vary depending on Microsoft Entra ID token policies and features such as Continuous Access Evaluation (CAE).
+
+Once issued, tokens cannot be modified.
+
+Permission changes made after a token has been issued generally take effect when the application requests a new token or when Continuous Access Evaluation triggers token revalidation.
+
+---
+
+## Certificates
+
+Certificates provide stronger authentication than Client Secrets.
+
+During configuration, administrators upload the application's public certificate to Microsoft Entra ID.
+
+The application securely retains the corresponding private key and uses it to prove its identity during authentication.
+
+Microsoft Entra ID validates the cryptographic signature using the stored public certificate before issuing security tokens.
+
+Certificates reduce the risks associated with shared secrets and are recommended for production workloads.
 
 ---
 
