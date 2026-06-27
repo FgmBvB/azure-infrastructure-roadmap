@@ -45,6 +45,12 @@ This allows the IT team to focus on managing workloads and delivering business v
 
 ## Common Mistakes
 
+- Treating Azure as just another virtualization platform.
+- Deploying resources without proper planning.
+- Ignoring cost management during deployments.
+- Assigning excessive permissions to users.
+- Designing workloads without considering availability and redundancy.
+
 ## AZ-104 Exam Notes
 
 ## References
