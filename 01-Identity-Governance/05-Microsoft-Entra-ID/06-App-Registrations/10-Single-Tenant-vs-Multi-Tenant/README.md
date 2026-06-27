@@ -241,13 +241,11 @@ The software company maintains only one Application Object while every customer 
 
 ---
 
-## References
-
-| Microsoft Documentation                                                                  | Purpose                                     |
-| ---------------------------------------------------------------------------------------- | ------------------------------------------- |
-| https://learn.microsoft.com/entra/identity-platform/single-and-multi-tenant-apps         | Single-Tenant and Multi-Tenant applications |
-| https://learn.microsoft.com/entra/identity-platform/howto-convert-app-to-be-multi-tenant | Configure a Multi-Tenant application        |
-| https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals   | Application Objects and Service Principals  |
-| https://learn.microsoft.com/entra/identity-platform/permissions-consent-overview         | Consent framework                           |
-| https://learn.microsoft.com/training/modules/build-app-that-authenticates-users/         | Microsoft Learn – Identity platform         |
+| Microsoft Documentation | Purpose |
+|-------------------------|---------|
+| [Single-tenant and multi-tenant apps](https://learn.microsoft.com/entra/identity-platform/single-and-multi-tenant-apps) | Single-Tenant and Multi-Tenant applications |
+| [Convert an app to be multi-tenant](https://learn.microsoft.com/entra/identity-platform/howto-convert-app-to-be-multi-tenant) | Configure a Multi-Tenant application |
+| [Application Objects and Service Principals](https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals) | Identity model |
+| [Permissions and consent overview](https://learn.microsoft.com/entra/identity-platform/permissions-consent-overview) | Consent framework |
+| [Microsoft Learn – Build applications that authenticate users](https://learn.microsoft.com/training/modules/build-app-that-authenticates-users/) | Microsoft Learn module |
 
