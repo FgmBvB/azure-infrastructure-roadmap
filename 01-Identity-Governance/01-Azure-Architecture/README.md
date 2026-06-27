@@ -36,6 +36,13 @@ This allows the IT team to focus on managing workloads and delivering business v
 
 ## Best Practices
 
+- Design your architecture before deploying resources.
+- Choose Azure regions that are geographically close to your users.
+- Follow the principle of least privilege.
+- Monitor resource usage and costs from the beginning.
+- Design workloads with high availability and resilience in mind.
+- Automate deployments whenever possible.
+
 ## Common Mistakes
 
 ## AZ-104 Exam Notes
