@@ -212,9 +212,11 @@ When the application is used inside a tenant, the corresponding Service Principa
 
 Application Objects support soft deletion.
 
-When an Application Object is deleted, it enters a recoverable state for a limited retention period before being permanently removed.
+When an Application Object is deleted, it enters a recoverable state for **30 days**.
 
-If restored during the retention period, the Application Object and its configuration can be recovered.
+During this period, administrators can restore the Application Object and recover its configuration.
+
+If the Application Object is not restored within the 30-day retention period, Microsoft Entra ID permanently removes it through a hard delete operation.
 
 Permanent deletion removes the application's global definition from Microsoft Entra ID.
 
