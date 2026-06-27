@@ -92,6 +92,33 @@ Some of the most commonly used include:
 
 ---
 
+## Requested Permissions
+
+The `requiredResourceAccess` property defines which Microsoft APIs or custom APIs an application intends to access.
+
+Adding permissions to this property does **not** automatically grant them.
+
+Administrators or users must still grant consent according to organizational policies.
+
+Only after consent is granted can Microsoft Entra ID issue Access Tokens containing those permissions.
+
+---
+
+## Credential Metadata
+
+Credential objects stored in the Manifest contain additional metadata.
+
+Common properties include:
+
+| Property | Purpose |
+|----------|---------|
+| `endDateTime` | Specifies when the certificate or client secret expires. |
+| `customKeyIdentifier` | Identifies the certificate associated with a registered public key. |
+
+Administrators should monitor credential expiration dates and replace certificates or Client Secrets before they expire.
+
+---
+
 ## Manifest and the Portal
 
 Changes made through the Microsoft Entra Admin Center automatically update the Manifest.
