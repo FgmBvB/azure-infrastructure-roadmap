@@ -177,6 +177,21 @@ The manifest is covered in detail later in this roadmap.
 
 ---
 
+### Common Identifiers in the Manifest
+
+The Application Manifest contains multiple identifiers for the application.
+
+| Property | Description |
+|----------|-------------|
+| `appId` | The globally unique **Application (Client) ID** used by applications during authentication. |
+| `id` | The unique **Object ID** of the Application Object within its home Microsoft Entra ID tenant. |
+
+When using Microsoft Graph, PowerShell, or Infrastructure as Code tools, different operations may require either the **Application (Client) ID** (`appId`) or the **Object ID** (`id`), depending on the API or resource being managed.
+
+Understanding the distinction between these identifiers helps avoid common automation and scripting errors.
+
+---
+
 ## Enterprise Scenario
 
 A software development team creates a new internal web application.
