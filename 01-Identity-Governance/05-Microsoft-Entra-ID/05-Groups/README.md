@@ -149,7 +149,11 @@ Role-assignable groups require Microsoft Entra ID P1 or P2.
 
 These groups must be created with role assignment capability enabled. This is represented by the `isAssignableToRole` property.
 
-Role-assignable groups cannot use dynamic membership. Their membership must be assigned and carefully controlled to prevent unintended privilege escalation.
+The `isAssignableToRole` property can only be configured when the group is created and cannot be modified afterwards.
+
+Role-assignable groups cannot use dynamic membership. Their membership must always be assigned manually or through supported automation to reduce the risk of unintended privilege escalation.
+
+Creating and managing role-assignable groups requires highly privileged Microsoft Entra ID administrative roles, such as Global Administrator or Privileged Role Administrator.
 
 ---
 
@@ -167,13 +171,19 @@ Dynamic groups are useful for automation, but they should not be used for scenar
 
 ## Nested Groups
 
-Microsoft Entra ID supports adding groups as members of other groups in some scenarios.
+Microsoft Entra ID supports nested groups in several scenarios by allowing one group to become a member of another group.
 
-Nested groups can simplify membership management, but their behavior depends on the service using the group.
+However, support for nested groups depends on the service evaluating the membership.
 
-For example, nested group membership can be useful for access evaluation in some scenarios, but not all Microsoft services expand nested memberships in the same way.
+For example:
 
-Administrators should verify whether the target service supports nested groups before relying on them for access, licensing, or application assignments.
+| Service | Nested Groups |
+|---------|---------------|
+| Azure RBAC | Supported for role assignment evaluation in supported scenarios. |
+| Microsoft 365 Group-based Licensing | Not supported |
+| Enterprise Applications | Support depends on the application and provisioning model |
+
+Administrators should always verify whether the target Azure or Microsoft 365 service supports nested groups before relying on inherited memberships.
 
 ---
 
