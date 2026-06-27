@@ -14,21 +14,18 @@
               ▼
      Application Object
               │
-    Global Definition
-              │
      ┌────────┴────────┐
      │                 │
      ▼                 ▼
-Authentication     Configuration
+Configuration    Authentication
      │                 │
      └────────┬────────┘
               ▼
-     Service Principals
+     Service Principal
               │
               ▼
      Azure Resources / APIs
 ```
-
 ---
 
 > [!TIP]
@@ -100,7 +97,7 @@ Examples include:
 - Certificates
 - Client Secrets
 - Federated Credentials
-- API Permissions
+- Exposed API Permissions
 - App Roles
 - Optional Claims
 - Branding
@@ -204,6 +201,8 @@ Examples include:
 
 These capabilities are declared by the Application Object.
 
+Client applications discover these capabilities during the consent process and request only the permissions they require.
+
 When the application is used inside a tenant, the corresponding Service Principal becomes the object that receives assignments and enforces access.
 
 ---
@@ -214,7 +213,7 @@ Application Objects support soft deletion.
 
 When an Application Object is deleted, it enters a recoverable state for **30 days**.
 
-During this period, administrators can restore the Application Object and recover its configuration.
+During this period, administrators can restore the Application Object together with its configuration.
 
 If the Application Object is not restored within the 30-day retention period, Microsoft Entra ID permanently removes it through a hard delete operation.
 
@@ -224,13 +223,13 @@ Permanent deletion removes the application's global definition from Microsoft En
 
 ## Global Credentials
 
-Client Secrets and Certificates belong to the **Application Object** in the application's Home Tenant.
+Client Secrets and Certificates belong exclusively to the **Application Object** in the application's Home Tenant.
 
-These credentials are part of the application's global definition and are not copied to Service Principals created in external tenants.
+These credentials are part of the application's global definition and are never copied to Service Principals created in external tenants.
 
-When a multi-tenant application is used by another organization, Microsoft Entra ID creates a local Service Principal for that tenant, but the application's credentials continue to be managed only through the original Application Object.
+When a multi-tenant application is used by another organization, Microsoft Entra ID creates a local Service Principal for that tenant, while all application credentials continue to be managed through the original Application Object.
 
-This separation allows a single application definition to securely authenticate across multiple Microsoft Entra ID tenants while each tenant independently manages its own local permissions and policies.
+This separation allows one Application Object to securely authenticate across multiple Microsoft Entra ID tenants while each tenant independently manages its own permissions, administrator consent, Conditional Access policies, and Azure RBAC assignments.
 
 ---
 
@@ -243,6 +242,8 @@ The application is registered once inside the company's Microsoft Entra ID tenan
 The Application Object stores the application's global configuration.
 
 As customers adopt the application, Microsoft Entra ID creates a separate Service Principal inside each customer's tenant while continuing to use the same Application Object as the master definition.
+
+Each customer tenant independently manages administrator consent, Conditional Access policies, and Azure RBAC assignments for its own Service Principal.
 
 ---
 
@@ -302,6 +303,6 @@ As customers adopt the application, Microsoft Entra ID creates a separate Servic
 | [Application and Service Principal Objects in Microsoft Entra ID](https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals) | Relationship between Application Objects and Service Principals |
 | [Register an application with the Microsoft identity platform](https://learn.microsoft.com/entra/identity-platform/quickstart-register-app) | Application registration process |
 | [Application Manifest](https://learn.microsoft.com/entra/identity-platform/reference-app-manifest) | JSON structure of the Application Object |
-| [Microsoft Graph Application resource type](https://learn.microsoft.com/graph/api/resources/application) | Application Object properties (`id`, `appId`, manifest) |
+| [Application resource type](https://learn.microsoft.com/graph/api/resources/application) | Microsoft Graph Application schema (`id`, `appId`, `signInAudience`, `appRoles`) |
 | [Microsoft identity platform documentation](https://learn.microsoft.com/entra/identity-platform/) | Identity platform architecture |
 | [Microsoft Learn – Build applications that authenticate users](https://learn.microsoft.com/training/modules/build-app-that-authenticates-users/) | Microsoft Learn module |
