@@ -25,3 +25,11 @@ Some regions support Availability Zones, where datacenters are separated by inde
 Applications can be deployed across multiple zones to increase availability and reduce the impact of hardware or datacenter failures.
 
 Microsoft also connects all regions through its global backbone network, enabling secure, high-speed communication between Azure services worldwide.
+
+## Enterprise Scenario
+
+A multinational company has offices in Europe, North America, and Asia.
+
+To reduce latency and improve the user experience, the company deploys applications in Azure Regions that are geographically close to each office.
+
+Critical workloads are distributed across Availability Zones to maintain service availability in the event of a datacenter failure.
