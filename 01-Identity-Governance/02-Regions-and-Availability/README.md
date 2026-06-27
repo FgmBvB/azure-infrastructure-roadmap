@@ -45,7 +45,7 @@ Some Azure regions include **Availability Zones**, which provide additional resi
 
 ---
 
-## 🏗️ Why It Exists
+## ❓ Why It Exists
 
 Azure Regions exist to provide customers with global coverage, allowing workloads to be deployed closer to users and data.
 
