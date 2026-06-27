@@ -10,6 +10,12 @@ Azure enables businesses to build scalable, highly available and secure environm
 
 ## Why It Exists
 
+Traditional on-premises infrastructure requires organizations to purchase, maintain and eventually replace physical hardware. This approach involves significant capital investment, ongoing maintenance, and limited scalability.
+
+Microsoft Azure was created to provide a cloud platform where organizations can deploy and manage IT resources without owning the underlying infrastructure.
+
+By using Azure, businesses can quickly provision services, scale resources on demand, improve availability, and reduce the operational burden of maintaining physical datacenters.
+
 ## How It Works
 
 ## Enterprise Scenario
