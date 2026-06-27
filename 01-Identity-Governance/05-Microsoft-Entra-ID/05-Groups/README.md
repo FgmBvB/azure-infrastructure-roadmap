@@ -32,9 +32,11 @@
 
 ## Microsoft Entra Admin Center
 
-The **All Groups** view in the Microsoft Entra admin center provides a centralized location to create, organize, and manage groups across the tenant.
+Brief explanation...
 
-![Microsoft Entra Groups](images/all-groups.png)
+<p align="center">
+  <img src="images/all-groups.png" alt="Microsoft Entra Groups" width="850">
+</p>
 
 ---
 
