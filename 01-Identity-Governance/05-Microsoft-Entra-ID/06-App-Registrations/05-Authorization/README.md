@@ -92,6 +92,26 @@ Permissions are granted during application configuration and evaluated whenever 
 
 ---
 
+## API Permissions vs Azure RBAC
+
+Although both control access, **API Permissions** and **Azure RBAC** apply to different authorization models.
+
+| API Permissions | Azure RBAC |
+|-----------------|------------|
+| Control access to protected APIs such as Microsoft Graph or custom APIs. | Control access to Azure management resources through Azure Resource Manager (ARM). |
+| Configured in the App Registration. | Assigned to the Service Principal or Managed Identity. |
+| Evaluated by the target API. | Evaluated by Azure Resource Manager. |
+| Commonly use Delegated or Application Permissions. | Use Azure built-in or custom RBAC roles. |
+
+For example:
+
+- Reading users from **Microsoft Graph** requires Microsoft Graph API permissions.
+- Creating a Virtual Machine or deleting a Resource Group requires an Azure RBAC role assigned to the application's Service Principal or Managed Identity.
+
+Understanding this distinction is essential because application authentication alone never grants management permissions over Azure resources.
+
+---
+
 ## Permission Types
 
 Microsoft Entra ID supports two primary permission models.
