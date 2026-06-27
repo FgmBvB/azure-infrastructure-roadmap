@@ -1,22 +1,76 @@
-Azure Infrastructure Roadmap
+# ☁️ Azure Infrastructure Roadmap
 
-Hands-on Azure infrastructure labs, documentation and automation while preparing for the Microsoft AZ-104 certification.
+> Hands-on Azure infrastructure labs, documentation and automation while preparing for the Microsoft AZ-104 certification.
 
----------------------------------------------------
+---
 
-Current Certification
+## 🎯 Current Goal
 
-🎯 AZ-104 Azure Administrator
+✔️ Become a competent Azure Administrator
 
-Future Roadmap
+✔️ Pass the Microsoft AZ-104 certification
 
-○ AZ-305
-○ AZ-500
-○ SC-300
+✔️ Build a professional Azure portfolio on GitHub
 
----------------------------------------------------
+---
 
-Progress
+# 🗺️ Roadmap
+
+| Module | Status |
+|---------|--------|
+| 🏛️ Identity & Governance | ⬜ Planned |
+| 💻 Compute | ⬜ Planned |
+| 💾 Storage | ⬜ Planned |
+| 🌐 Networking | ⬜ Planned |
+| 📊 Monitoring & BCDR | ⬜ Planned |
+| 💰 Cost Management | ⬜ Planned |
+| ⚙️ Automation | ⬜ Planned |
+| 🔐 Security | ⬜ Planned |
+| 🧪 Real Labs | ⬜ Planned |
+
+---
+
+# 📂 Repository Structure
+
+```
+azure-infrastructure-roadmap
+│
+├── 00-Study-Plan
+├── 01-Identity-Governance
+├── 02-Compute
+├── 03-Storage
+├── 04-Networking
+├── 05-Monitoring-BCDR
+├── 06-Cost-Management
+├── 07-Automation
+├── 08-Security
+├── 09-Real-Labs
+├── diagrams
+├── images
+└── scripts
+```
+
+---
+
+# 🛠️ Technologies
+
+- Microsoft Azure
+- Microsoft Entra ID
+- Azure Portal
+- Azure CLI
+- Azure PowerShell
+- Bicep
+- Windows Server
+- Active Directory
+- VMware
+- Kubernetes
+
+---
+
+# 📈 Progress
+
+```
+AZ-104 Progress
 
 ⬜ Identity & Governance
 
@@ -28,46 +82,37 @@ Progress
 
 ⬜ Monitoring
 
-⬜ Cost Management
+⬜ Security
 
 ⬜ Automation
 
-⬜ Security
+⬜ Cost Management
+```
 
----------------------------------------------------
+---
 
-Repository Structure
+# 🚀 Learning Philosophy
 
-00 - Study Plan
+This repository focuses on practical Azure administration rather than exam memorization.
 
-01 - Identity & Governance
+Every topic includes:
 
-02 - Compute
+- Documentation
+- Hands-on labs
+- PowerShell
+- Azure CLI
+- Best practices
+- Security considerations
+- Cost optimization
+- Lessons learned
 
-...
+---
 
----------------------------------------------------
+# 📌 Goal
 
-Technologies
+By the end of this roadmap I aim to:
 
-Azure Portal
-
-PowerShell
-
-Azure CLI
-
-Bicep
-
-Microsoft Entra ID
-
-Windows Server
-
-VMware
-
-Kubernetes
-
----------------------------------------------------
-
-License
-
-Personal learning repository.
+- Pass the Microsoft AZ-104 certification
+- Build production-oriented Azure administration skills
+- Develop a professional GitHub portfolio
+- Be prepared for real-world Azure Infrastructure Engineer roles
