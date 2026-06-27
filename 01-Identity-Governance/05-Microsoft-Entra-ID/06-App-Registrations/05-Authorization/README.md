@@ -169,6 +169,54 @@ Only after successful validation is access granted.
 
 ---
 
+## Effective Permissions
+
+When an application uses **Delegated Permissions**, the final permissions are limited by both:
+
+- The permissions granted to the application.
+- The privileges of the signed-in user.
+
+The application cannot perform operations that the signed-in user is not allowed to perform.
+
+```text
+Effective Permissions
+        =
+User Privileges
+        ∩
+Application Permissions
+```
+
+For example, if an application has the delegated permission `User.ReadWrite.All` but the signed-in user is not allowed to modify other users, the application cannot perform that operation on the user's behalf.
+
+---
+
+## Administrator Consent
+
+Some high-privilege API permissions require administrator consent before applications can use them.
+
+Administrator consent is typically granted by privileged Microsoft Entra ID administrative roles such as:
+
+- Global Administrator
+- Application Administrator
+- Cloud Application Administrator
+
+The granted consent applies to the entire tenant, allowing the application to request those permissions without requiring individual user approval.
+
+---
+
+## Permission Claims
+
+The type of permission granted to an application is reflected inside the Access Token.
+
+| Claim | Permission Type |
+|-------|-----------------|
+| `scp` | Delegated Permissions (Scopes) |
+| `roles` | Application Permissions |
+
+When troubleshooting authorization issues, inspecting these claims can help determine whether the application received delegated or application-level permissions.
+
+---
+
 ## Enterprise Scenario
 
 A scheduled Azure Automation job needs to read all users from Microsoft Graph every night.
