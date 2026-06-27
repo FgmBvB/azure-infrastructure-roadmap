@@ -9,7 +9,7 @@
 ## Concept Overview
 
 ```text
-                       Application
+                Application
                      │
                      ▼
           App Registration
@@ -18,10 +18,11 @@
           Application Object
                      │
                      ▼
-          Service Principal
-                     │
-                     ▼
         Microsoft Entra ID
+                     │
+             Creates
+                     ▼
+          Service Principal
                      │
                      ▼
           Security Tokens
@@ -37,6 +38,7 @@
 >
 > - An App Registration represents an application in Microsoft Entra ID.
 > - Every App Registration creates an Application Object.
+> - Microsoft Entra ID creates a Service Principal to represent the application inside a tenant.
 > - Applications authenticate using Microsoft Entra ID.
 > - App Registrations enable secure access to Azure resources and APIs.
 > - App Registrations are the foundation of modern authentication.
@@ -47,30 +49,33 @@
 
 An App Registration represents an application that needs to authenticate with Microsoft Entra ID.
 
-Rather than authenticating users only, Microsoft Entra ID can also authenticate applications, web services, APIs, background processes, mobile apps, and other workloads.
+Rather than authenticating only users, Microsoft Entra ID can also authenticate applications, APIs, web services, background jobs, mobile applications, desktop software, automation scripts, and many other workloads.
 
 An App Registration establishes a trust relationship between an application and Microsoft Entra ID.
 
-Once registered, the application can request security tokens that allow it to securely authenticate and access protected resources.
+Once registered, the application can securely request security tokens that are later used to access Azure resources, Microsoft services, or third-party APIs.
 
 ---
 
 ## Why App Registrations Exist
 
-Applications frequently need to access protected resources such as:
+Modern applications frequently need to access protected resources such as:
 
 - Microsoft Graph
 - Azure Resource Manager
 - Azure Key Vault
 - Azure Storage
+- Azure SQL
 - Custom APIs
 - Third-party APIs
 
-Instead of storing usernames and passwords inside application code, Microsoft Entra ID provides a secure identity for the application.
+Embedding usernames and passwords directly into application code is insecure and difficult to manage.
 
-Applications authenticate using this identity and receive security tokens instead of relying on embedded credentials.
+Instead, Microsoft Entra ID provides a dedicated identity for the application.
 
-This significantly improves security and supports modern authentication standards.
+Applications authenticate using this identity and receive short-lived security tokens instead of storing permanent credentials.
+
+This architecture significantly improves security while supporting modern authentication standards such as OAuth 2.0 and OpenID Connect.
 
 ---
 
@@ -78,59 +83,92 @@ This significantly improves security and supports modern authentication standard
 
 When an application is registered, Microsoft Entra ID creates an **Application Object** inside the tenant.
 
-This object defines the application's identity and configuration.
+The Application Object represents the global definition of the application and stores its configuration throughout its lifecycle.
 
 Important identifiers include:
 
 | Property | Description |
 |----------|-------------|
 | Application (Client) ID | Globally unique identifier of the application. |
-| Object ID | Unique identifier of the Application Object within the tenant. |
+| Object ID | Unique identifier of the Application Object inside the home tenant. |
 | Directory (Tenant) ID | Identifies the Microsoft Entra ID tenant where the application is registered. |
 
-These identifiers are frequently required when configuring authentication, APIs, or automation.
-The Application Object exists only in its home tenant and serves as the global definition of the application throughout its lifecycle.
+These identifiers are commonly required when configuring authentication, APIs, automation, infrastructure as code, or Microsoft Graph integrations.
+
+The Application Object exists only in its **home tenant** and represents the application's global definition.
+
+---
+
+## Supported Account Types
+
+During registration, administrators choose which identities are allowed to authenticate with the application.
+
+| Account Type | Description |
+|--------------|-------------|
+| Single-Tenant | Only identities from the application's home Microsoft Entra ID tenant can authenticate. |
+| Multi-Tenant | Identities from other Microsoft Entra ID tenants can authenticate after the required consent process. |
+
+For multi-tenant applications, Microsoft Entra ID automatically creates a Service Principal inside external tenants after administrator or user consent is granted.
+
+The differences between Single-Tenant and Multi-Tenant applications are covered later in this roadmap.
 
 ---
 
 ## Common Application Types
 
-Many different workloads can use App Registrations.
+Many different workloads use App Registrations.
 
 | Application Type | Example |
 |------------------|---------|
-| Web Application | Internal HR portal |
+| Web Application | Internal HR Portal |
 | Web API | REST API |
-| Mobile Application | Android or iOS app |
+| Mobile Application | Android or iOS application |
 | Desktop Application | Windows client |
 | Background Service | Scheduled automation |
 | Daemon Application | Unattended service |
 | CLI Tool | Internal administration utility |
 
-All of these applications can authenticate through Microsoft Entra ID.
+All of these application types can authenticate through Microsoft Entra ID.
 
 ---
 
 ## Authentication Model
 
-Applications do not authenticate in the same way as users.
+Applications authenticate differently from users.
 
-Instead of entering passwords interactively, applications typically authenticate using:
+Instead of interactive usernames and passwords, applications typically authenticate using one of the following mechanisms:
 
 - Client Secrets
 - Certificates
 - Managed Identities (Azure resources)
 - Federated Credentials
 
-After successful authentication, Microsoft Entra ID issues security tokens that the application uses to access protected resources. Depending on the scenario, applications may authenticate on behalf of a signed-in user or independently without user interaction.
+After successful authentication, Microsoft Entra ID issues security tokens that applications use to access protected resources securely.
 
-The authentication mechanisms themselves are covered in later sections of this roadmap.
+Depending on the scenario, applications may authenticate on behalf of a signed-in user or independently without any user interaction.
+
+Authentication mechanisms, permission models, and security tokens are explored in the following sections of this roadmap.
+
+---
+
+## API Permission Models
+
+Applications request permissions depending on how they access protected resources.
+
+Microsoft Entra ID supports two primary permission models.
+
+| Permission Type | Description |
+|-----------------|-------------|
+| Delegated Permissions | The application acts on behalf of a signed-in user. The effective permissions depend on both the application's granted permissions and the user's own permissions. |
+| Application Permissions | The application runs without user interaction, such as automation scripts or daemon services. These permissions require administrator consent because they grant direct access to resources. |
+
+API permissions and consent are explored in dedicated sections later in this roadmap.
 
 ---
 
 ## Relationship with Other Components
 
-An App Registration is only one part of the Microsoft Entra ID application model.
+An App Registration is only one part of the Microsoft Entra ID application identity model.
 
 ```text
                 Application
@@ -156,19 +194,21 @@ An App Registration is only one part of the Microsoft Entra ID application model
 
 These components work together to provide secure authentication and authorization across Microsoft cloud services.
 
-The following documents explain each component in detail.
+Each component is explored in detail throughout this roadmap.
 
 ---
 
 ## Application Object and Service Principal
 
-When an application is registered, Microsoft Entra ID creates an **Application Object** in the home tenant.
+When an application is registered, Microsoft Entra ID creates an **Application Object** inside the application's home tenant.
 
-The Application Object represents the global definition of the application, including its authentication settings, permissions, redirect URIs, and credentials.
+The Application Object contains the global definition of the application, including authentication settings, redirect URIs, API permissions, credentials, branding, and other configuration.
 
-When the application needs to operate within a tenant, Microsoft Entra ID creates a **Service Principal**.
+Whenever the application needs to operate inside a Microsoft Entra ID tenant, Microsoft Entra ID creates a **Service Principal**.
 
-The Service Principal represents the local identity of the application and is the object that receives permissions, Azure RBAC assignments, and Conditional Access policies.
+The Service Principal represents the application's local identity inside that tenant.
+
+Azure RBAC assignments, Conditional Access policies, API permissions, and administrative controls are applied to the Service Principal rather than to the Application Object.
 
 ```text
 Application Object
@@ -184,17 +224,21 @@ Authenticates
 Azure Resources
 ```
 
-This separation allows the same application to exist in multiple Microsoft Entra ID tenants while maintaining a single application definition.
+This separation allows one Application Object to be used across multiple Microsoft Entra ID tenants while each tenant maintains its own independent Service Principal.
+
+---
 
 ---
 
 ## Enterprise Scenario
 
-A development team creates a web application that needs to read information from Microsoft Graph.
+A development team creates a web application that needs to read user information from Microsoft Graph.
 
 Instead of embedding administrator credentials inside the application, the developers register the application in Microsoft Entra ID.
 
-The application authenticates using its own identity, receives security tokens from Microsoft Entra ID, and securely accesses Microsoft Graph according to the permissions granted by administrators.
+The application authenticates using its own identity, requests the appropriate API permissions, receives security tokens from Microsoft Entra ID, and securely accesses Microsoft Graph according to the permissions granted by administrators.
+
+If the application is later deployed to multiple organizations, Microsoft Entra ID creates a Service Principal inside each customer tenant after the required consent process, allowing the same application definition to operate securely across multiple tenants.
 
 ---
 
@@ -202,21 +246,26 @@ The application authenticates using its own identity, receives security tokens f
 
 - Register each application separately.
 - Follow the principle of least privilege.
-- Prefer certificates over client secrets when possible.
-- Rotate credentials regularly.
-- Store secrets securely using Azure Key Vault.
-- Review unused App Registrations periodically.
+- Request only the API permissions required by the application.
+- Prefer certificates over client secrets whenever possible.
+- Prefer Managed Identities for Azure-hosted workloads.
+- Rotate secrets and certificates regularly.
+- Store credentials securely using Azure Key Vault.
+- Remove unused App Registrations to reduce the attack surface.
+- Periodically review granted API permissions and administrator consent.
 
 ---
 
 ## Common Pitfalls
 
 - Confusing App Registrations with Enterprise Applications.
+- Confusing the Application Object with the Service Principal.
 - Embedding credentials directly into application code.
 - Granting excessive API permissions.
-- Forgetting to rotate client secrets.
+- Forgetting to rotate client secrets or certificates.
 - Registering multiple unrelated applications under a single App Registration.
-- Confusing the Application Object with the Service Principal.
+- Using long-lived credentials when more secure authentication methods are available.
+- Assuming an App Registration automatically has access to Azure resources without explicit permissions.
 
 ---
 
@@ -227,10 +276,13 @@ The application authenticates using its own identity, receives security tokens f
 >
 > - Purpose of App Registrations
 > - Application Object
+> - Service Principal
 > - Client ID
 > - Object ID
 > - Tenant ID
-> - Relationship with Service Principals
+> - Supported Account Types
+> - Authentication methods
+> - API Permission models
 > - Relationship with Enterprise Applications
 > - Modern application authentication
 
@@ -240,9 +292,33 @@ The application authenticates using its own identity, receives security tokens f
 
 - App Registrations provide identities for applications.
 - Every App Registration creates an Application Object.
-- Microsoft Entra ID authenticates applications as well as users.
-- Applications receive security tokens instead of using embedded credentials.
-- App Registrations are the foundation of modern authentication in Azure.
+- Microsoft Entra ID creates a Service Principal for each tenant where the application operates.
+- Applications authenticate using Microsoft Entra ID instead of embedded credentials.
+- Security tokens are issued after successful authentication.
+- API permissions determine which resources an application can access.
+- App Registrations are the foundation of modern authentication in Microsoft Entra ID.
+
+---
+
+## Related Topics
+
+This overview introduces the Microsoft Entra ID application model.
+
+The following sections explore each component in detail:
+
+- Application Registration Process
+- Application Object
+- Authentication
+- API Permissions
+- Consent
+- Certificates and Secrets
+- Redirect URIs
+- Tokens
+- Single-Tenant vs. Multi-Tenant Applications
+- App Roles
+- Expose an API
+- Manifest
+- Best Practices
 
 ---
 
@@ -251,6 +327,9 @@ The application authenticates using its own identity, receives security tokens f
 | Microsoft Documentation | Purpose |
 |-------------------------|---------|
 | [Register an application](https://learn.microsoft.com/entra/identity-platform/quickstart-register-app) | Creating an App Registration |
-| [Application Objects and Service Principals](https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals) | Identity model |
+| [Application Objects and Service Principals](https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals) | Microsoft Entra ID application model |
+| [Authentication and authorization basics](https://learn.microsoft.com/entra/identity-platform/authentication-vs-authorization) | Identity fundamentals |
+| [Microsoft identity platform](https://learn.microsoft.com/entra/identity-platform/) | Identity platform overview |
 | [OAuth 2.0 and OpenID Connect](https://learn.microsoft.com/entra/identity-platform/v2-protocols) | Authentication protocols |
-| [Microsoft Learn – App Registration fundamentals](https://learn.microsoft.com/training/modules/build-app-that-authenticates-users/) | Learning module |
+| [Microsoft Graph permissions reference](https://learn.microsoft.com/graph/permissions-reference) | Microsoft Graph API permissions |
+| [Microsoft Learn – Build applications that authenticate users](https://learn.microsoft.com/training/modules/build-app-that-authenticates-users/) | Microsoft Learn module |
