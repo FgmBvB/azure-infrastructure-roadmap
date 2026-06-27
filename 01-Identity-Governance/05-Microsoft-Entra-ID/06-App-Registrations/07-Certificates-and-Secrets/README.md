@@ -70,6 +70,12 @@ The application stores the secret securely and presents it when requesting an Ac
 
 Client Secrets are simple to configure but require secure storage and periodic rotation.
 
+Client Secrets should always have an expiration date.
+
+Long-lived secrets increase the risk of credential exposure and should be avoided.
+
+Microsoft Entra ID no longer recommends non-expiring secrets, and administrators should implement rotation processes before expiration.
+
 Because they are shared secrets, they present a higher security risk than certificate-based authentication.
 
 ---
@@ -132,6 +138,50 @@ Managed Identities eliminate this operational task because Azure automatically m
 
 ---
 
+## Certificate-Based Authentication Flow
+
+When using certificate-based authentication, the application does not send the certificate itself to Microsoft Entra ID during authentication.
+
+Instead, the application creates a signed client assertion using its private key.
+
+Microsoft Entra ID validates the signature using the public certificate stored in the App Registration.
+
+If validation succeeds, Microsoft Entra ID issues an Access Token.
+
+This approach avoids sending shared secrets over the network and provides stronger proof of possession than Client Secrets.
+
+---
+
+## Federated Credentials
+
+Federated Credentials enable applications running outside Azure to authenticate without storing secrets or certificates.
+
+Instead of presenting a shared credential, Microsoft Entra ID trusts an external OpenID Connect (OIDC) identity provider.
+
+Common scenarios include:
+
+- GitHub Actions
+- Kubernetes workloads
+- GitLab CI/CD
+- Other trusted OIDC providers
+
+In a Workload Identity Federation scenario, the external platform issues an OIDC token to the workload.
+
+The application presents that external token to Microsoft Entra ID.
+
+Microsoft Entra ID validates the configured issuer, subject, and audience in the Federated Credential.
+
+If the trust conditions match, Microsoft Entra ID exchanges the external token for an Azure Access Token.
+
+This authentication model avoids long-lived secrets and is Microsoft's recommended approach for modern DevOps environments.
+
+---
+
+
+
+
+
+
 ## Enterprise Scenario
 
 A company deploys an Azure Function that accesses Azure Key Vault.
@@ -192,11 +242,11 @@ Microsoft Entra ID authenticates the Managed Identity, Azure Resource Manager au
 
 ## References
 
-| Microsoft Documentation                                                                                                                                                 | Purpose                                   |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
-| [Certificates and secrets](https://learn.microsoft.com/entra/identity-platform/how-to-add-credentials)                                                                  | Configure client secrets and certificates |
-| [Managed identities for Azure resources](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview)                                        | Managed Identity overview                 |
-| [Workload identity federation](https://learn.microsoft.com/entra/workload-id/workload-identity-federation)                                                              | Federated Credentials and OIDC            |
-| [Microsoft identity platform authentication](https://learn.microsoft.com/entra/identity-platform/)                                                                      | Microsoft identity platform               |
-| [Microsoft Learn – Secure application authentication](https://learn.microsoft.com/training/modules/implement-authentication-by-using-microsoft-authentication-library/) | Microsoft Learn module                    |
-
+| Microsoft Documentation | Purpose |
+|-------------------------|---------|
+| [Certificates and secrets](https://learn.microsoft.com/entra/identity-platform/how-to-add-credentials) | Configure Client Secrets and Certificates |
+| [Certificate credentials](https://learn.microsoft.com/entra/identity-platform/certificate-credentials) | Certificate-based application authentication |
+| [Managed identities for Azure resources](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview) | Managed Identity overview |
+| [Workload identity federation](https://learn.microsoft.com/entra/workload-id/workload-identity-federation) | Federated Credentials and OIDC trust |
+| [Federated identity credentials](https://learn.microsoft.com/graph/api/resources/federatedidentitycredentials-overview) | Federated Credential properties |
+| [Microsoft identity platform](https://learn.microsoft.com/entra/identity-platform/) | Microsoft identity platform overview |
