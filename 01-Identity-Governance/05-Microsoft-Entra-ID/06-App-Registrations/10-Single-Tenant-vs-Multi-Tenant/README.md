@@ -59,6 +59,33 @@ Microsoft Entra ID provides four supported account types.
 
 ---
 
+## Authentication Endpoints
+
+The authentication endpoint depends on the application's supported account type.
+
+| Endpoint | Description |
+|----------|-------------|
+| `https://login.microsoftonline.com/{tenant-id}` | Single-Tenant applications. Only users from the specified Microsoft Entra ID tenant can authenticate. |
+| `https://login.microsoftonline.com/organizations` | Multi-Tenant applications for work or school accounts only. |
+| `https://login.microsoftonline.com/common` | Multi-Tenant applications that support both Microsoft Entra ID accounts and personal Microsoft accounts (when configured). |
+
+Selecting the correct endpoint ensures that users are directed to the appropriate authentication experience.
+
+---
+
+## Application ID URI
+
+Applications that expose APIs use an **Application ID URI** to uniquely identify the resource.
+
+Microsoft recommends using either:
+
+- `api://<client-id>`
+- A URI based on a verified domain, such as `https://contoso.com/api`
+
+The Application ID URI must be unique within Microsoft Entra ID to prevent identifier conflicts.
+
+---
+
 ## Single-Tenant Applications
 
 A Single-Tenant application accepts authentication requests only from identities that belong to its home Microsoft Entra ID tenant.
@@ -116,6 +143,14 @@ Depending on the requested permissions:
 * Administrators may grant Admin Consent.
 
 This ensures that every organization maintains control over its own resources.
+
+> [!NOTE]
+>
+> Many organizations disable User Consent for third-party applications.
+>
+> In these environments, users cannot grant consent themselves, even for low-privilege delegated permissions.
+>
+> Instead, Microsoft Entra ID prompts users to request administrator approval before the application can be used.
 
 ---
 
