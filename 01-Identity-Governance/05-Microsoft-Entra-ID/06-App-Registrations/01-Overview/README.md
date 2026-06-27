@@ -9,22 +9,25 @@
 ## Concept Overview
 
 ```text
-        Application
-             │
-             ▼
-      App Registration
-             │
-             ▼
-   Application Object
-             │
-             ▼
-   Microsoft Entra ID
-             │
-             ▼
- Issues Security Tokens
-             │
-             ▼
- Azure Resources / APIs
+                       Application
+                     │
+                     ▼
+          App Registration
+                     │
+                     ▼
+          Application Object
+                     │
+                     ▼
+          Service Principal
+                     │
+                     ▼
+        Microsoft Entra ID
+                     │
+                     ▼
+          Security Tokens
+                     │
+                     ▼
+      Azure Resources / APIs
 ```
 
 ---
