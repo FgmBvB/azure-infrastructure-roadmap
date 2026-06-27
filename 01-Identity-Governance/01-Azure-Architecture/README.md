@@ -63,9 +63,11 @@ For the AZ-104 certification, you should understand:
 
 ## References
 
-- Microsoft Learn
-- Microsoft Azure Documentation
-- Azure Well-Architected Framework
+## References
+
+- https://learn.microsoft.com/azure/
+- https://learn.microsoft.com/training/paths/azure-fundamentals-describe-azure-architecture-services/
+- https://learn.microsoft.com/azure/well-architected/
 
 ## Key Takeaways
 
