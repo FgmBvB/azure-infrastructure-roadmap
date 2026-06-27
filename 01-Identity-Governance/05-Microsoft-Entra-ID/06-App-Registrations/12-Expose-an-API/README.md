@@ -87,6 +87,17 @@ The Application ID URI must be unique.
 
 ---
 
+## Access Token Version
+
+Applications can specify which version of Access Tokens they expect by configuring the `accessTokenAcceptedVersion` property in the Application Object manifest.
+
+- `1` (or `null`) accepts version 1.0 Access Tokens.
+- `2` accepts version 2.0 Access Tokens.
+
+Choosing the correct token version ensures compatibility between Microsoft Entra ID and the protected API.
+
+---
+
 ## Permission Types
 
 An exposed API can define two authorization models.
@@ -114,6 +125,19 @@ Applications evaluate these scopes before granting access.
 
 ---
 
+## Scope Consent
+
+Each delegated permission (Scope) defines who is allowed to grant consent.
+
+| Option | Description |
+|--------|-------------|
+| Admins and users | Users can grant consent for themselves when tenant policies allow it. |
+| Admins only | Only administrators can grant tenant-wide consent. |
+
+Scopes that expose sensitive data should normally require administrator consent.
+
+---
+
 ## App Roles
 
 Exposed APIs can also define **Application Permissions** using App Roles.
@@ -138,6 +162,18 @@ Before calling the API, a client application must request permission.
 Administrators or users grant consent according to organizational policies.
 
 After consent is granted, Microsoft Entra ID includes the approved permissions inside the Access Token.
+
+---
+
+## Authorized Client Applications
+
+Microsoft Entra ID allows API owners to pre-authorize trusted client applications.
+
+Instead of requiring users to grant consent during their first sign-in, administrators can register trusted client application IDs together with the scopes they are allowed to request.
+
+This is commonly used when an organization owns both the client application and the API.
+
+Pre-authorized applications improve the user experience by eliminating unnecessary consent prompts while maintaining centralized administrative control.
 
 ---
 
