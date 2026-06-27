@@ -59,3 +59,17 @@ For the AZ-104 certification, you should understand:
 - Region selection
 - Service availability by region
 - High availability concepts
+
+  ## References
+
+- [Azure Global Infrastructure](https://learn.microsoft.com/azure/reliability/regions-list)
+- [Azure Availability Zones](https://learn.microsoft.com/azure/reliability/availability-zones-overview)
+- [Microsoft Learn - Describe Azure Architecture and Services](https://learn.microsoft.com/training/paths/azure-fundamentals-describe-azure-architecture-services/)
+
+  ## Key Takeaways
+
+- Azure is organized into geographic Regions.
+- Regions contain one or more datacenters.
+- Some Regions support Availability Zones.
+- Availability Zones improve workload resilience.
+- Region selection affects latency, compliance, and service availability.
