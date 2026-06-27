@@ -1,118 +1,57 @@
 # ☁️ Azure Infrastructure Roadmap
 
-> Hands-on Azure infrastructure labs, documentation and automation while preparing for the Microsoft AZ-104 certification.
+<p align="center">
+
+![Azure](https://img.shields.io/badge/Microsoft-Azure-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white)
+![AZ-104](https://img.shields.io/badge/Certification-AZ--104-0078D4?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-In%20Progress-orange?style=for-the-badge)
+
+</p>
 
 ---
 
-## 🎯 Current Goal
+## 📖 About
 
-✔️ Become a competent Azure Administrator
+This repository documents my journey towards becoming an Azure Infrastructure Engineer while preparing for the **Microsoft AZ-104: Azure Administrator** certification.
 
-✔️ Pass the Microsoft AZ-104 certification
-
-✔️ Build a professional Azure portfolio on GitHub
+Rather than focusing only on the exam, this project emphasizes practical Azure administration through hands-on labs, technical documentation, automation, and real-world scenarios.
 
 ---
 
-# 🗺️ Roadmap
+# 🗂️ Repository
 
-| Module | Status |
-|---------|--------|
-| 🏛️ Identity & Governance | ⬜ Planned |
-| 💻 Compute | ⬜ Planned |
-| 💾 Storage | ⬜ Planned |
-| 🌐 Networking | ⬜ Planned |
-| 📊 Monitoring & BCDR | ⬜ Planned |
-| 💰 Cost Management | ⬜ Planned |
-| ⚙️ Automation | ⬜ Planned |
-| 🔐 Security | ⬜ Planned |
-| 🧪 Real Labs | ⬜ Planned |
-
----
-
-# 📂 Repository Structure
-
-```
-azure-infrastructure-roadmap
-│
-├── 00-Study-Plan
-├── 01-Identity-Governance
-├── 02-Compute
-├── 03-Storage
-├── 04-Networking
-├── 05-Monitoring-BCDR
-├── 06-Cost-Management
-├── 07-Automation
-├── 08-Security
-├── 09-Real-Labs
-├── diagrams
-├── images
-└── scripts
-```
+| Module | Description |
+|---------|-------------|
+| 📚 **00 - Study Plan** | Certification roadmap and progress tracking |
+| 🏛️ **01 - Identity & Governance** | Entra ID, RBAC, Policies and Governance |
+| 💻 **02 - Compute** | Azure Virtual Machines and Compute Services |
+| 💾 **03 - Storage** | Storage Accounts, Blob Storage and Azure Files |
+| 🌐 **04 - Networking** | Virtual Networks, NSG, VPN, Firewall and Connectivity |
+| 📊 **05 - Monitoring & BCDR** | Monitoring, Backup and Disaster Recovery |
+| 💰 **06 - Cost Management** | Cost optimization and governance |
+| ⚙️ **07 - Automation** | Azure CLI, PowerShell and Bicep |
+| 🔐 **08 - Security** | Defender for Cloud, Key Vault and Managed Identities |
+| 🧪 **09 - Real Labs** | End-to-end practical Azure scenarios |
 
 ---
 
-# 🛠️ Technologies
+# 🎯 Repository Goals
 
-- Microsoft Azure
-- Microsoft Entra ID
-- Azure Portal
-- Azure CLI
-- Azure PowerShell
-- Bicep
-- Windows Server
-- Active Directory
-- VMware
-- Kubernetes
+- Learn Azure through practical laboratories.
+- Develop production-oriented administration skills.
+- Document every lab in professional technical English.
+- Build a GitHub portfolio that demonstrates real infrastructure knowledge.
 
 ---
 
-# 📈 Progress
+# 🚀 Current Focus
 
-```
-AZ-104 Progress
-
-⬜ Identity & Governance
-
-⬜ Compute
-
-⬜ Storage
-
-⬜ Networking
-
-⬜ Monitoring
-
-⬜ Security
-
-⬜ Automation
-
-⬜ Cost Management
-```
+> **Microsoft AZ-104 — Azure Administrator**
 
 ---
 
-# 🚀 Learning Philosophy
+<p align="center">
 
-This repository focuses on practical Azure administration rather than exam memorization.
+⭐ This repository will continuously grow with new labs, documentation and automation projects.
 
-Every topic includes:
-
-- Documentation
-- Hands-on labs
-- PowerShell
-- Azure CLI
-- Best practices
-- Security considerations
-- Cost optimization
-- Lessons learned
-
----
-
-# 📌 Goal
-
-By the end of this roadmap I aim to:
-
-- Pass the Microsoft AZ-104 certification
-- Build production-oriented Azure administration skills
-- Develop a professional GitHub portfolio
-- Be prepared for real-world Azure Infrastructure Engineer roles
+</p>
