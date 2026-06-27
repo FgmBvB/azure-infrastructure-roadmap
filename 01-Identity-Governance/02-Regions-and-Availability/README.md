@@ -101,16 +101,18 @@ Critical workloads are distributed across Availability Zones to maintain service
 
 ---
 
-##  AZ-104 Exam Notes
-
-For the AZ-104 certification, you should understand:
-
-- Azure Regions
-- Availability Zones
-- Region selection
-- Service availability by region
-- High availability concepts
-
+> [!IMPORTANT]
+> **AZ-104 Focus**
+>
+> You should understand:
+>
+> - Azure Regions
+> - Availability Zones
+> - Region Pairs
+> - Region selection
+> - Service availability by region
+> - High availability concepts
+> - The relationship between Availability Zones and Service Level Agreements (SLAs)
 ---
 
 ##  Key Takeaways
@@ -123,10 +125,10 @@ For the AZ-104 certification, you should understand:
 
 ---
 
-##  References
+## References
 
 | Microsoft Documentation | Purpose |
 |-------------------------|---------|
-| [Azure Regions](https://learn.microsoft.com/azure/reliability/regions-list) | Azure Regions overview and architecture |
-| [Azure Availability Zones](https://learn.microsoft.com/azure/reliability/availability-zones-overview) | Availability Zones concepts and resilience |
+| [Azure Regions](https://learn.microsoft.com/azure/reliability/regions-list) | Azure Regions, Region Pairs and global infrastructure |
+| [Azure Availability Zones](https://learn.microsoft.com/azure/reliability/availability-zones-overview) | Availability Zones and resiliency concepts |
 | [Microsoft Learn – Describe Azure Architecture and Services](https://learn.microsoft.com/training/paths/azure-fundamentals-describe-azure-architecture-services/) | Azure architecture fundamentals |
