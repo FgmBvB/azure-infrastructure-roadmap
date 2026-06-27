@@ -6,7 +6,7 @@
 
 ---
 
-## 🌍 Azure Global Infrastructure
+##  Azure Global Infrastructure
 
 ```text
                    Microsoft Azure
@@ -35,7 +35,7 @@ Zone 1   Zone 2
 
 ---
 
-## 📖 Overview
+##  Overview
 
 Microsoft Azure is organized into geographic locations known as **Azure Regions**. Each region consists of one or more datacenters connected through Microsoft's high-performance global network.
 
@@ -45,7 +45,7 @@ Some Azure regions include **Availability Zones**, which provide additional resi
 
 ---
 
-## ❓ Why It Exists
+##  Why It Exists
 
 Azure Regions exist to provide customers with global coverage, allowing workloads to be deployed closer to users and data.
 
@@ -55,7 +55,7 @@ Availability Zones further improve resilience by protecting applications against
 
 ---
 
-## ⚙️ How It Works
+##  How It Works
 
 Each Azure Region contains one or more physical datacenters.
 
@@ -67,7 +67,7 @@ Microsoft operates one of the world's largest private global networks, connectin
 
 ---
 
-## 🏢 Enterprise Scenario
+##  Enterprise Scenario
 
 A multinational company has offices in Europe, North America, and Asia.
 
@@ -77,7 +77,7 @@ Critical workloads are distributed across Availability Zones to maintain service
 
 ---
 
-## ✅ Best Practices
+##  Best Practices
 
 - Select the Azure Region closest to your users.
 - Verify service availability before choosing a region.
@@ -87,7 +87,7 @@ Critical workloads are distributed across Availability Zones to maintain service
 
 ---
 
-## ❌ Common Mistakes
+##  Common Mistakes
 
 - Choosing a region without considering latency.
 - Assuming all Azure services are available in every region.
@@ -97,7 +97,7 @@ Critical workloads are distributed across Availability Zones to maintain service
 
 ---
 
-## 🎯 AZ-104 Exam Notes
+##  AZ-104 Exam Notes
 
 For the AZ-104 certification, you should understand:
 
@@ -109,7 +109,7 @@ For the AZ-104 certification, you should understand:
 
 ---
 
-## 📌 Key Takeaways
+##  Key Takeaways
 
 - Azure is organized into geographic Regions.
 - Regions contain one or more datacenters.
@@ -119,7 +119,7 @@ For the AZ-104 certification, you should understand:
 
 ---
 
-## 📚 References
+##  References
 
 | Microsoft Documentation | Purpose |
 |-------------------------|---------|
