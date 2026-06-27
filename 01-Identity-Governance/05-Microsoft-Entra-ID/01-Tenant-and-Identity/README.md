@@ -2,7 +2,7 @@
 
 > [!NOTE]
 > This document is part of the Microsoft Entra ID section of my Azure Infrastructure Roadmap while preparing for the Microsoft AZ-104 certification.
-> It explains the core concepts of Microsoft Entra ID tenants and digital identities.
+> It explains the core concepts of Microsoft Entra ID tenants, identity boundaries, and how Azure uses identities to secure cloud resources.
 
 ---
 
@@ -13,11 +13,11 @@
                            │
                      Entra Tenant
                            │
-        ┌──────────┬──────────┬──────────┐
-        │          │          │
-      Users      Groups    Applications
-        │
-        └───────────────► Azure Resources
+      ┌─────────┬─────────┬──────────┬──────────────┬──────────┐
+      │         │         │          │              │
+    Users    Groups    Devices   Applications   Policies
+                                               │
+                                       Administrative Roles
 ```
 
 ---
@@ -26,31 +26,31 @@
 > **Key Concepts**
 >
 > - A tenant is a dedicated Microsoft Entra ID instance.
-> - Each tenant has its own identities and security configuration.
+> - Each tenant has its own identities, policies, and security configuration.
+> - Every Azure subscription is associated with one Microsoft Entra ID tenant.
 > - A tenant can manage multiple Azure subscriptions.
-> - Every Azure subscription is associated with one tenant.
-> - Identities authenticate to Microsoft Entra ID before accessing Azure resources.
+> - Authentication verifies identities.
 > - Azure RBAC authorizes authenticated identities to Azure resources.
 
 ---
 
 ## Overview
 
-Microsoft Entra ID is organized around the concept of a **tenant**.
+Microsoft Entra ID is Microsoft's cloud-based Identity and Access Management (IAM) platform.
 
-A tenant is a dedicated and isolated instance of Microsoft Entra ID that represents an organization.
+Its primary purpose is to authenticate identities and provide secure access to Azure, Microsoft 365, Microsoft services, and thousands of third-party applications.
 
-It stores identity-related objects such as users, groups, applications, devices, administrative roles, authentication policies, and security settings.
+Every organization that uses Microsoft Entra ID owns at least one tenant, which acts as the organization's dedicated identity directory.
 
-Every organization using Microsoft Entra ID owns at least one tenant.
+Microsoft Entra ID is one of the most fundamental Azure services because every Azure subscription relies on a tenant to authenticate identities before they can access Azure resources.
 
 ---
 
 ## What Is a Tenant?
 
-A tenant is the highest identity boundary within Microsoft Entra ID.
+A tenant is an isolated instance of Microsoft Entra ID owned by an organization.
 
-It provides centralized identity management for Azure, Microsoft 365, and thousands of integrated applications.
+It represents the highest identity boundary within Microsoft Entra ID and stores all identity-related information for that organization.
 
 A tenant can contain:
 
@@ -63,10 +63,23 @@ A tenant can contain:
 - Managed Identities
 - Administrative Roles
 - Authentication Policies
+- Security Policies
 
-A single Microsoft Entra ID tenant can be associated with multiple Azure subscriptions.
+A single tenant can manage multiple Azure subscriptions.
 
-However, each Azure subscription can belong to only one tenant at a time.
+However, an Azure subscription can only belong to one Microsoft Entra ID tenant at any given time.
+
+---
+
+## Directory Terminology
+
+Microsoft documentation commonly uses the terms **tenant** and **directory** interchangeably.
+
+Historically, Azure documentation referred to an **Azure Active Directory (Azure AD) directory**.
+
+Following the Microsoft Entra rebranding, the preferred terminology is **Microsoft Entra ID tenant**, although many APIs, tools, and enterprise environments still refer to it simply as a directory.
+
+Understanding both terms is important because you will encounter them frequently in documentation, PowerShell, Azure CLI, Microsoft Graph, and production environments.
 
 ---
 
@@ -74,15 +87,22 @@ However, each Azure subscription can belong to only one tenant at a time.
 
 Every Microsoft Entra ID tenant has a globally unique identifier known as the **Tenant ID**.
 
-The Tenant ID is widely used by Azure Portal, Azure CLI, PowerShell, Microsoft Graph, and automation tools when authenticating or managing Azure environments.
+This GUID uniquely identifies the tenant across Microsoft cloud services and is commonly required by:
 
-Each tenant also has a default domain, typically in the following format:
+- Azure Portal
+- Azure CLI
+- Azure PowerShell
+- Microsoft Graph
+- REST APIs
+- Infrastructure as Code tools
+
+Each tenant also has a default domain similar to:
 
 ```text
 contoso.onmicrosoft.com
 ```
 
-Organizations commonly add one or more custom domains, such as:
+Organizations commonly add one or more custom domains such as:
 
 ```text
 contoso.com
@@ -94,7 +114,7 @@ contoso.com
 
 An identity is any object that Microsoft Entra ID can authenticate.
 
-After authentication, Azure services determine what that identity is allowed to access through authorization mechanisms such as Azure RBAC.
+After authentication, Azure determines what that identity is allowed to access through authorization mechanisms such as Azure Role-Based Access Control (Azure RBAC).
 
 Common identity types include:
 
@@ -102,23 +122,41 @@ Common identity types include:
 |----------|---------|
 | User | Human users |
 | Group | Permission management |
-| Service Principal | Applications and automation |
-| Managed Identity | Azure resources |
+| Service Principal | Workload identity for applications and automation |
+| Managed Identity | Azure-managed identity for Azure resources |
 | Device | Registered devices |
 
-Authentication verifies **who the identity is**.
+> [!TIP]
+> Service Principals and Managed Identities are workload identities used by applications and Azure resources.
+>
+> Their authentication model, architecture, and security considerations are covered in dedicated sections later in this roadmap.
 
-Authorization determines **what the identity is allowed to do**.
+Authentication answers the question:
+
+> **Who are you?**
+
+Authorization answers the question:
+
+> **What are you allowed to do?**
+
+Although closely related, they are completely different security processes.
 
 ---
 
 ## Tenant Isolation
 
-Each Microsoft Entra ID tenant is isolated from every other tenant.
+Every Microsoft Entra ID tenant is isolated from every other tenant.
 
-Objects stored inside one tenant are not visible to another tenant unless explicitly shared using **Microsoft Entra External ID (B2B collaboration)**.
+Objects stored inside one tenant cannot be accessed by another tenant unless explicitly shared.
 
-This isolation provides administrative, security, and compliance boundaries between organizations.
+Organizations can collaborate securely through **Microsoft Entra External ID (B2B collaboration)**, which allows guest users from external organizations to access selected resources without compromising tenant isolation.
+
+Tenant isolation provides:
+
+- Administrative separation
+- Security boundaries
+- Identity isolation
+- Compliance boundaries
 
 ---
 
@@ -126,9 +164,11 @@ This isolation provides administrative, security, and compliance boundaries betw
 
 Azure subscriptions establish a trust relationship with a Microsoft Entra ID tenant.
 
-The tenant authenticates identities, while the Azure subscription relies on those identities to perform authorization through Azure RBAC.
+The tenant is responsible for authenticating identities.
 
-If an Azure subscription is transferred to another tenant, Azure RBAC assignments and identity relationships must be reconfigured because security principals are unique to each tenant.
+Azure Resource Manager trusts the tenant to verify identities before Azure RBAC evaluates permissions.
+
+If an Azure subscription is transferred to another tenant, Azure RBAC assignments and identity relationships must be recreated because security principals are unique to each Microsoft Entra ID tenant.
 
 ---
 
@@ -137,9 +177,9 @@ If an Azure subscription is transferred to another tenant, Azure RBAC assignment
 ```text
                  Microsoft Entra ID Tenant
                           │
-               Authentication
+                  Authentication
                           │
-                  Azure RBAC
+                     Azure RBAC
                           │
         ┌─────────────────┴─────────────────┐
         │                                   │
@@ -150,59 +190,79 @@ If an Azure subscription is transferred to another tenant, Azure RBAC assignment
    Azure Resources                  Azure Resources
 ```
 
-Microsoft Entra ID manages identities.
+Microsoft Entra ID is responsible for identity management.
 
 Azure Resource Manager manages Azure resources.
 
-Azure RBAC connects both by authorizing authenticated identities to perform actions on Azure resources.
+Azure RBAC connects both services by authorizing authenticated identities to perform actions on Azure resources.
 
 ---
 
 ## Administrative Boundary
 
-Microsoft Entra ID administrative roles and Azure RBAC roles are independent.
+Microsoft Entra ID administrative roles and Azure RBAC roles are independent security systems.
 
-Being a **Global Administrator** in Microsoft Entra ID does not automatically grant administrative permissions over Azure subscriptions or Azure resources.
+Being assigned the **Global Administrator** role in Microsoft Entra ID does **not** automatically grant administrative permissions over Azure subscriptions or Azure resources.
 
-In emergency scenarios, a Global Administrator can enable **Access management for Azure resources**, which temporarily grants the **User Access Administrator** role at the root scope of Azure subscriptions. This capability is intended for recovery and administrative scenarios.
+Azure resources are protected by Azure Role-Based Access Control (Azure RBAC), which operates independently from Microsoft Entra ID administrative roles.
+
+In emergency scenarios, a Global Administrator can enable **Access management for Azure resources**.
+
+When enabled, Azure assigns the **User Access Administrator** role at the **Root Management Group**, allowing RBAC permissions to be inherited across Azure subscriptions within the tenant.
+
+This feature is intended for recovery scenarios, such as regaining administrative access when Azure RBAC permissions have been lost.
 
 ---
 
 ## Enterprise Scenario
 
-A company creates a Microsoft Entra ID tenant for its organization.
+A multinational company manages more than 5,000 employees across several countries.
 
-Employees authenticate using corporate accounts stored in the tenant.
+The organization creates a single Microsoft Entra ID tenant to centralize identity management.
 
-The organization manages two Azure subscriptions:
+Within the tenant, administrators manage:
 
-- Development
+- Employee accounts
+- Security Groups
+- Devices
+- Enterprise Applications
+- Authentication Policies
+
+Two Azure subscriptions are associated with the tenant:
+
 - Production
+- Development
 
-Both subscriptions trust the same Microsoft Entra ID tenant for authentication while remaining independent for billing, governance, and resource management.
+Employees authenticate once using Microsoft Entra ID.
 
-Azure RBAC determines which users can administer each subscription.
+Azure RBAC then determines which Azure resources each identity is allowed to access.
+
+This centralized identity model simplifies administration while maintaining strong security boundaries.
 
 ---
 
 ## Best Practices
 
-- Use a single tenant unless multiple tenants are required.
-- Protect privileged identities with Multi-Factor Authentication.
+- Use a single tenant unless multiple tenants are required for business or regulatory reasons.
+- Protect privileged identities using Multi-Factor Authentication (MFA).
 - Apply the principle of least privilege.
+- Assign permissions to Security Groups instead of individual users whenever possible.
 - Review guest users regularly.
-- Use Security Groups instead of assigning permissions directly to users.
+- Limit the number of Global Administrators.
+- Protect privileged accounts using Conditional Access policies.
 - Document tenant ownership and administrative responsibilities.
 
 ---
 
 ## Common Pitfalls
 
-- Confusing a tenant with an Azure subscription.
+- Confusing a Microsoft Entra ID tenant with an Azure subscription.
 - Confusing authentication with authorization.
-- Assuming Global Administrators automatically manage Azure resources.
-- Assigning permissions directly to individual users.
+- Assuming Global Administrators automatically have Azure RBAC permissions.
+- Assigning Azure permissions directly to users instead of groups.
 - Creating unnecessary Global Administrator accounts.
+- Forgetting to review guest user access.
+- Mixing identity administration with Azure resource administration.
 
 ---
 
@@ -214,25 +274,28 @@ Azure RBAC determines which users can administer each subscription.
 > - Microsoft Entra ID tenants
 > - Tenant isolation
 > - Tenant ID
-> - Tenant and subscription relationship
+> - Tenant domains
 > - Identity concepts
 > - Authentication versus authorization
-> - Trust relationship between tenant and subscriptions
+> - Trust relationship between Microsoft Entra ID and Azure subscriptions
 > - Azure RBAC relationship
 > - Administrative boundaries
+> - Root Management Group access elevation
 
 ---
 
 ## Key Takeaways
 
 - A tenant is an isolated Microsoft Entra ID directory.
-- Every tenant has a unique Tenant ID.
-- A tenant stores identities and security configuration.
+- Every tenant has a globally unique Tenant ID.
+- A tenant stores identities, security settings, and authentication policies.
 - Multiple Azure subscriptions can belong to one tenant.
-- Every Azure subscription belongs to only one tenant.
+- Every Azure subscription belongs to only one tenant at a time.
 - Microsoft Entra ID authenticates identities.
 - Azure RBAC authorizes authenticated identities.
 - Microsoft Entra ID administrative roles are different from Azure RBAC roles.
+- Microsoft documentation may use the terms **tenant** and **directory** interchangeably.
+- Tenant isolation is one of the fundamental security boundaries in Microsoft Azure.
 
 ---
 
