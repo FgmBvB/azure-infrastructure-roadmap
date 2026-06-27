@@ -124,8 +124,6 @@ Instead of entering passwords interactively, applications typically authenticate
 
 After successful authentication, Microsoft Entra ID issues security tokens that the application uses to access protected resources. Depending on the scenario, applications may authenticate on behalf of a signed-in user or independently without user interaction.
 
-These authentication models are explored later in this roadmap.
-
 The authentication mechanisms themselves are covered in later sections of this roadmap.
 
 ---
@@ -218,6 +216,7 @@ The application authenticates using its own identity, receives security tokens f
 - Granting excessive API permissions.
 - Forgetting to rotate client secrets.
 - Registering multiple unrelated applications under a single App Registration.
+- Confusing the Application Object with the Service Principal.
 
 ---
 
