@@ -70,6 +70,19 @@ Each Service Principal maintains its own local configuration while referencing t
 
 ---
 
+## Service Principal Identifiers
+
+Every Service Principal has multiple identifiers.
+
+| Identifier | Purpose |
+|------------|---------|
+| **Application (Client) ID** | Global identifier shared with the Application Object across all tenants. |
+| **Object ID** | Unique identifier of the Service Principal within the local tenant. |
+
+When assigning Azure RBAC roles, automating deployments, or querying Microsoft Graph, administrators often need the **Object ID** of the local Service Principal rather than the shared Application (Client) ID.
+
+---
+
 ## Service Principal Responsibilities
 
 The Service Principal enables Microsoft Entra ID to:
