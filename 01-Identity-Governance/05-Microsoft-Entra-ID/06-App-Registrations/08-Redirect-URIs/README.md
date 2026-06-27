@@ -78,6 +78,36 @@ Any mismatch causes the authentication request to fail.
 
 ---
 
+## Redirect URI Restrictions
+
+For security reasons, Redirect URIs must be explicitly defined.
+
+Microsoft Entra ID does not support wildcard (`*`) characters in Redirect URIs because they could allow open redirect attacks.
+
+Each Redirect URI must be individually registered.
+
+Redirect URIs are also subject to platform-specific length and formatting limitations.
+
+---
+
+## Local Development
+
+Microsoft Entra ID requires HTTPS for Redirect URIs in production environments.
+
+However, an exception exists for local development.
+
+Applications can use HTTP when the Redirect URI points to `localhost`, for example:
+
+```text
+http://localhost:3000/signin-oidc
+```
+
+This allows developers to test applications locally without configuring SSL certificates.
+
+Microsoft recommends using HTTPS for all production deployments.
+
+---
+
 ## Supported Application Types
 
 Different application types use different Redirect URI formats.
@@ -136,6 +166,22 @@ If an attacker attempts to modify the destination, Microsoft Entra ID rejects th
 * Validate application URLs before registration.
 * Separate development and production Redirect URIs.
 * Review Redirect URI configuration periodically.
+
+---
+
+## Common Authentication Error
+
+One of the most common Redirect URI configuration errors is:
+
+```text
+AADSTS50011
+
+The reply URL specified in the request does not match the reply URLs configured for the application.
+```
+
+This error occurs when the Redirect URI sent by the application does not exactly match any Redirect URI registered in the App Registration.
+
+Administrators should verify the protocol, domain, port, and path when troubleshooting this error.
 
 ---
 
