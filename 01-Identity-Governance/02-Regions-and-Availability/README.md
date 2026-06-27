@@ -62,9 +62,14 @@ For the AZ-104 certification, you should understand:
 
   ## References
 
-- [Azure Global Infrastructure](https://learn.microsoft.com/azure/reliability/regions-list)
-- [Azure Availability Zones](https://learn.microsoft.com/azure/reliability/availability-zones-overview)
-- [Microsoft Learn - Describe Azure Architecture and Services](https://learn.microsoft.com/training/paths/azure-fundamentals-describe-azure-architecture-services/)
+- [Azure Regions](https://learn.microsoft.com/azure/reliability/regions-list)
+  - Overview, Why It Exists
+
+- [Availability Zones](https://learn.microsoft.com/azure/reliability/availability-zones-overview)
+  - How It Works, Best Practices
+
+- [Microsoft Learn – Describe Azure Architecture and Services](https://learn.microsoft.com/training/paths/azure-fundamentals-describe-azure-architecture-services/)
+  - General concepts
 
   ## Key Takeaways
 
