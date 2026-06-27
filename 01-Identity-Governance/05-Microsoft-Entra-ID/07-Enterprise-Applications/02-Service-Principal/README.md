@@ -98,6 +98,30 @@ Although their origin differs, all Service Principals represent identities manag
 
 ---
 
+## Creating a Service Principal
+
+Service Principals can also be created using automation tools.
+
+Examples include:
+
+**Azure CLI**
+
+```bash
+az ad sp create-for-rbac --name <name>
+```
+
+**Azure PowerShell**
+
+```powershell
+New-AzADServicePrincipal -DisplayName <name>
+```
+
+These commands simplify application identity creation and are commonly used in automation, Infrastructure as Code (IaC), and CI/CD scenarios.
+
+Depending on the parameters used, they can also create Azure RBAC role assignments during deployment.
+
+---
+
 ## Multi-Tenant Applications
 
 A Multi-Tenant application has a single Application Object but can create multiple Service Principals.
@@ -180,6 +204,14 @@ Provisioning
 ```
 
 If an Application Object is permanently deleted, its associated Service Principals are eventually removed as well.
+
+> [!NOTE]
+>
+> Deleting a **Service Principal** (Enterprise Application) removes only the application's local identity from that tenant.
+>
+> The original **Application Object** remains unchanged in its home tenant and can continue to create Service Principals in other tenants.
+>
+> However, permanently deleting the **Application Object** removes the application's global definition, and its associated Service Principals are eventually removed as well.
 
 ---
 
