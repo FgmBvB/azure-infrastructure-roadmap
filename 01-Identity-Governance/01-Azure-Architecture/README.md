@@ -2,9 +2,9 @@
 
 ## Overview
 
-## Why Azure Exists
+## Why It Exists
 
-## Core Concepts
+## How It Works
 
 ## Enterprise Scenario
 
@@ -12,6 +12,6 @@
 
 ## Common Mistakes
 
-## AZ-104 Notes
+## AZ-104 Exam Notes
 
 ## References
