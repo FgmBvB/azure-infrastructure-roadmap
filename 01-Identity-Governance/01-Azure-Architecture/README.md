@@ -18,6 +18,12 @@ By using Azure, businesses can quickly provision services, scale resources on de
 
 ## How It Works
 
+Azure is built on a global network of Microsoft datacenters distributed across multiple geographic regions.
+
+Customers can deploy cloud resources such as virtual machines, storage accounts, databases, networking components, and many other services through the Azure Portal, Azure CLI, PowerShell, APIs, or Infrastructure as Code (IaC) tools.
+
+Azure manages the underlying physical infrastructure, allowing customers to focus on deploying and managing their workloads rather than maintaining hardware.
+
 ## Enterprise Scenario
 
 ## Best Practices
