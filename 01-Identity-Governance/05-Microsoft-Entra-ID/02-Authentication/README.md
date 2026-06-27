@@ -8,6 +8,7 @@
 
 ## Authentication Flow
 
+```text
                 User
                   │
          Enter Credentials
@@ -25,8 +26,7 @@
         ┌─────────┴─────────┐
         │                   │
  Application          Azure Resource
-
----
+```
 
 > [!TIP]
 > **Key Concepts**
