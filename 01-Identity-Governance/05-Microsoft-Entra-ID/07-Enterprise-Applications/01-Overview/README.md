@@ -86,6 +86,32 @@ Both objects are required for applications to authenticate and operate within Mi
 
 ---
 
+## Assignment Required
+
+Enterprise Applications can require explicit user or group assignments before users are allowed to sign in.
+
+| Setting | Behavior |
+|---------|----------|
+| **Yes** | Only assigned users or groups can access the application. |
+| **No** | Any user in the tenant can sign in, provided other access requirements are met. |
+
+Requiring assignments helps implement the principle of least privilege and is recommended for most enterprise applications.
+
+---
+
+## Visibility
+
+Enterprise Applications can be configured to appear in the Microsoft Entra **My Apps** portal.
+
+| Setting | Behavior |
+|---------|----------|
+| **Yes** | Assigned users see the application in the My Apps portal. |
+| **No** | The application is hidden from My Apps but remains accessible through direct links or automated processes. |
+
+Applications such as APIs, background services, or infrastructure components are commonly hidden from end users.
+
+---
+
 ## Service Principal
 
 Every Enterprise Application is backed by a **Service Principal**.
@@ -94,12 +120,26 @@ The Service Principal is the security identity used by Microsoft Entra ID to:
 
 - Authenticate applications
 - Assign permissions
-- Apply Conditional Access
-- Configure Single Sign-On
+- Apply Conditional Access policies
+- Configure Single Sign-On (SSO)
 - Assign users and groups
-- Enable provisioning
+- Enable application provisioning
 
-The Service Principal exists independently inside each tenant.
+The Service Principal exists independently within each Microsoft Entra ID tenant.
+
+---
+
+## Service Principal Types
+
+Microsoft Entra ID creates different types of Service Principals depending on how an application or workload is introduced into a tenant.
+
+| Type | Description |
+|------|-------------|
+| **Application** | Created from an App Registration and represents an application within a tenant. |
+| **Managed Identity** | Automatically created for Azure resources, such as Virtual Machines or App Services, to provide passwordless authentication. |
+| **Legacy** | Created through older application management models or legacy integration scenarios. |
+
+Although they have different origins, all Service Principals represent security identities managed by Microsoft Entra ID.
 
 ---
 
