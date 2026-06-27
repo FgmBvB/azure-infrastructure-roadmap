@@ -191,6 +191,35 @@ This property is part of the Application Manifest and determines which identitie
 
 ---
 
+## Application Capabilities
+
+The Application Object defines the security capabilities that an application exposes.
+
+Examples include:
+
+| Capability | Purpose |
+|------------|---------|
+| `appRoles` | Defines application roles that can be assigned to users, groups, or applications. |
+| `oauth2PermissionScopes` | Defines delegated permission scopes that client applications can request during OAuth 2.0 authorization. |
+
+These capabilities are declared by the Application Object.
+
+When the application is used inside a tenant, the corresponding Service Principal becomes the object that receives assignments and enforces access.
+
+---
+
+## Application Lifecycle
+
+Application Objects support soft deletion.
+
+When an Application Object is deleted, it enters a recoverable state for a limited retention period before being permanently removed.
+
+If restored during the retention period, the Application Object and its configuration can be recovered.
+
+Permanent deletion removes the application's global definition from Microsoft Entra ID.
+
+---
+
 ## Enterprise Scenario
 
 A software company develops a SaaS application.
