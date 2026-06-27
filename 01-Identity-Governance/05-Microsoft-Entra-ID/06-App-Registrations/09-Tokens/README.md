@@ -177,15 +177,11 @@ Microsoft Entra ID issues ID Tokens and Access Tokens as JSON Web Tokens (JWTs).
 
 A JWT consists of three Base64URL-encoded sections:
 
-```text
-Header
-      .
-Payload
-      .
-Signature
-```
-
-The signature protects the token against tampering.
+| Section | Purpose |
+|----------|---------|
+| Header | Identifies the token type and signing algorithm (typically RS256). |
+| Payload | Contains claims describing the authenticated identity and granted permissions. |
+| Signature | Cryptographically protects the token against tampering using Microsoft Entra ID's signing key. |
 
 Applications can decode JWTs for inspection, but only trusted resources should validate and rely on their contents.
 
