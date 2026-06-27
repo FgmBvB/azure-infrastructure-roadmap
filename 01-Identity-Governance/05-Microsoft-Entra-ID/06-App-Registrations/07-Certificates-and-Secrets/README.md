@@ -78,6 +78,9 @@ Microsoft Entra ID no longer recommends non-expiring secrets, and administrators
 
 Because they are shared secrets, they present a higher security risk than certificate-based authentication.
 
+> [!NOTE]
+> New Client Secrets can have a maximum lifetime of **24 months (2 years)**. Microsoft recommends using shorter lifetimes (less than 12 months) and implementing regular credential rotation to reduce the risk of credential compromise.
+
 ---
 
 ## Certificates
