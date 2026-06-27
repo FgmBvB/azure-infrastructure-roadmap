@@ -222,6 +222,18 @@ Permanent deletion removes the application's global definition from Microsoft En
 
 ---
 
+## Global Credentials
+
+Client Secrets and Certificates belong to the **Application Object** in the application's Home Tenant.
+
+These credentials are part of the application's global definition and are not copied to Service Principals created in external tenants.
+
+When a multi-tenant application is used by another organization, Microsoft Entra ID creates a local Service Principal for that tenant, but the application's credentials continue to be managed only through the original Application Object.
+
+This separation allows a single application definition to securely authenticate across multiple Microsoft Entra ID tenants while each tenant independently manages its own local permissions and policies.
+
+---
+
 ## Enterprise Scenario
 
 A software company develops a SaaS application.
