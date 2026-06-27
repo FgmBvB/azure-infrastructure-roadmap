@@ -248,7 +248,7 @@ The application authenticates using its own identity, receives security tokens f
 
 | Microsoft Documentation | Purpose |
 |-------------------------|---------|
-| https://learn.microsoft.com/entra/identity-platform/quickstart-register-app | Register an application |
-| https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals | Application Objects and Service Principals |
-| https://learn.microsoft.com/entra/identity-platform/v2-protocols | OAuth 2.0 and OpenID Connect |
-| https://learn.microsoft.com/training/modules/build-app-that-authenticates-users/ | Microsoft Learn – App Registration fundamentals |
+| [Register an application](https://learn.microsoft.com/entra/identity-platform/quickstart-register-app) | Creating an App Registration |
+| [Application Objects and Service Principals](https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals) | Identity model |
+| [OAuth 2.0 and OpenID Connect](https://learn.microsoft.com/entra/identity-platform/v2-protocols) | Authentication protocols |
+| [Microsoft Learn – App Registration fundamentals](https://learn.microsoft.com/training/modules/build-app-that-authenticates-users/) | Learning module |
