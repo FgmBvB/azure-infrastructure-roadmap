@@ -94,6 +94,19 @@ Authentication occurs only once while the session remains valid.
 
 ---
 
+## SAML Sign-In Flows
+
+Microsoft Entra ID supports two common SAML authentication flows.
+
+| Flow | Description |
+|------|-------------|
+| **SP-Initiated** | The user accesses the application first. The application redirects the user to Microsoft Entra ID for authentication before returning a signed SAML assertion to the Assertion Consumer Service (ACS) endpoint. |
+| **IdP-Initiated** | The user launches the application from the Microsoft Entra **My Apps** portal. Microsoft Entra ID authenticates the user and sends a signed SAML assertion directly to the application's ACS endpoint. |
+
+Both authentication flows rely on trust between Microsoft Entra ID and the Service Provider established through SAML metadata and signing certificates.
+
+---
+
 ## Identity Provider
 
 In a Single Sign-On environment:
@@ -103,6 +116,18 @@ In a Single Sign-On environment:
 - Microsoft Entra ID is responsible for verifying the user's identity.
 
 Applications trust Microsoft Entra ID instead of storing user passwords.
+
+---
+
+## Token Signing Certificate
+
+For SAML-based Single Sign-On, Microsoft Entra ID signs every SAML assertion using a **Token Signing Certificate**.
+
+The external application validates the digital signature using the corresponding public certificate to verify that the assertion was issued by Microsoft Entra ID and has not been modified.
+
+Token Signing Certificates are typically valid for three years.
+
+Administrators should monitor certificate expiration and update the trusted certificate in the external application before it expires to avoid authentication failures.
 
 ---
 
@@ -133,6 +158,18 @@ Administrators can require:
 - Device state requirements
 
 Authentication succeeds only if all configured policies are satisfied.
+
+---
+
+## Password-based Single Sign-On
+
+Password-based Single Sign-On is designed for applications that do not support modern federation protocols such as SAML or OpenID Connect.
+
+Instead of federating authentication, Microsoft Entra ID securely stores the application credentials and automatically submits them during sign-in.
+
+This method typically relies on the **Microsoft Entra My Apps Secure Sign-in Extension**, which securely fills in the application's sign-in form.
+
+Although convenient for legacy applications, Microsoft recommends using modern federation protocols whenever possible.
 
 ---
 
