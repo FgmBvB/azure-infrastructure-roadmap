@@ -41,3 +41,21 @@ Critical workloads are distributed across Availability Zones to maintain service
 - Use Availability Zones for business-critical workloads whenever supported.
 - Consider data residency and compliance requirements.
 - Design for high availability from the beginning.
+
+## Common Mistakes
+
+- Choosing a region without considering latency.
+- Assuming all Azure services are available in every region.
+- Ignoring data residency requirements.
+- Deploying critical workloads in a single Availability Zone.
+- Confusing Azure Regions with Availability Zones.
+
+  ## AZ-104 Exam Notes
+
+For the AZ-104 certification, you should understand:
+
+- Azure Regions
+- Availability Zones
+- Region selection
+- Service availability by region
+- High availability concepts
