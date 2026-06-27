@@ -141,6 +141,26 @@ Although verification does not automatically grant trust, it helps users make in
 
 ---
 
+## Admin Consent Workflow
+
+Organizations can enable the **Admin Consent Workflow** to simplify application approval requests.
+
+When a user attempts to access an application that requires administrator consent, Microsoft Entra ID can display a request form instead of immediately denying access.
+
+The user can submit a business justification, and the request is sent to designated reviewers for approval or rejection.
+
+This workflow helps reduce Shadow IT while maintaining centralized governance.
+
+The workflow can be configured with:
+
+- Up to 15 designated reviewers.
+- Email notifications for reviewers.
+- A request expiration period (30 days by default).
+
+These settings help administrators manage consent requests consistently across the organization.
+
+---
+
 ## Enterprise Scenario
 
 An internal HR application requests permission to read employee profile information from Microsoft Graph.
