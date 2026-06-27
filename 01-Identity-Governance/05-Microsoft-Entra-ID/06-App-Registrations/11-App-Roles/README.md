@@ -73,6 +73,24 @@ Each tenant can then assign those App Roles to users, groups, or other applicati
 
 ---
 
+## App Role Definition
+
+App Roles are defined in the `appRoles` section of the Application Object manifest.
+
+Each App Role includes several properties:
+
+| Property | Purpose |
+|----------|---------|
+| `id` | Globally unique identifier (GUID) of the App Role. |
+| `value` | String value that applications use for authorization (for example, `Expense.Manager`). |
+| `displayName` | Human-readable name displayed to administrators. |
+| `description` | Explains the purpose of the App Role. |
+| `allowedMemberTypes` | Specifies whether the role can be assigned to `User`, `Application`, or both. |
+
+These properties define how Microsoft Entra ID exposes App Roles to administrators and applications.
+
+---
+
 ## Supported Assignments
 
 Microsoft Entra ID allows App Roles to be assigned to different identity types.
@@ -84,6 +102,12 @@ Microsoft Entra ID allows App Roles to be assigned to different identity types.
 | Service Principals | Yes       |
 
 This flexibility supports both interactive users and application-to-application authorization.
+
+> [!NOTE]
+>
+> Assigning App Roles directly to groups for enterprise applications requires Microsoft Entra ID Premium (P1 or P2).
+>
+> Organizations using Microsoft Entra ID Free may need to assign App Roles directly to individual users, depending on the application and assignment scenario.
 
 ---
 
@@ -102,11 +126,11 @@ Although both use the term "role", they control different authorization models.
 
 ## App Roles in Tokens
 
-When an identity is assigned an App Role, Microsoft Entra ID includes the assigned role in the Access Token.
+When an App Role is assigned, Microsoft Entra ID includes it in the Access Token inside the `roles` claim.
 
-The application reads the role claim and decides which features or operations the identity is allowed to use.
+The `roles` claim is returned as an array, allowing multiple App Roles to be assigned to the same identity.
 
-This allows authorization decisions to be made without querying Microsoft Entra ID during every request.
+Applications evaluate these values to determine which operations the authenticated identity is authorized to perform.
 
 ---
 
