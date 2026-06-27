@@ -26,6 +26,14 @@ Azure manages the underlying physical infrastructure, allowing customers to focu
 
 ## Enterprise Scenario
 
+A medium-sized company currently hosts its applications, databases, file servers, and backup infrastructure in an on-premises datacenter.
+
+As the business grows, the existing infrastructure becomes increasingly difficult to scale, requires significant hardware investment, and demands continuous maintenance.
+
+By adopting Microsoft Azure, the organization can provision new resources in minutes, expand services when demand increases, improve disaster recovery capabilities, and reduce the operational effort required to maintain physical infrastructure.
+
+This allows the IT team to focus on managing workloads and delivering business value rather than maintaining servers and datacenter facilities.
+
 ## Best Practices
 
 ## Common Mistakes
