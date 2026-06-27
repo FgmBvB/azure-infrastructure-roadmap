@@ -112,10 +112,10 @@ Critical workloads are distributed across Availability Zones to maintain service
 > - Region selection
 > - Service availability by region
 > - High availability concepts
-> - The relationship between Availability Zones and Service Level Agreements (SLAs)
+- The relationship between Availability Zones and Service Level Agreements (SLAs)
 ---
 
-##  Key Takeaways
+## Key Takeaways
 
 - Azure is organized into geographic Regions.
 - Regions contain one or more datacenters.
