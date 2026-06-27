@@ -32,6 +32,7 @@ Zone 1   Zone 2
 > - Some Regions support Availability Zones.
 > - Availability Zones improve resilience.
 > - Region selection affects latency, compliance, and availability.
+> - Availability Zones and Availability Sets are different high-availability features.
 
 ---
 
