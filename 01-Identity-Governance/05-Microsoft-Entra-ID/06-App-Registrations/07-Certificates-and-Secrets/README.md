@@ -119,12 +119,20 @@ Instead of presenting a shared credential, Microsoft Entra ID trusts an external
 
 Common scenarios include:
 
-* GitHub Actions
-* Kubernetes workloads
-* GitLab CI/CD
-* Other trusted OIDC providers
+- GitHub Actions
+- Kubernetes workloads
+- GitLab CI/CD
+- Other trusted OIDC providers
 
-This authentication model is known as **Workload Identity Federation** and is Microsoft's recommended approach for modern DevOps environments.
+In a Workload Identity Federation scenario, the external platform issues an OIDC token to the workload.
+
+The application presents that external token to Microsoft Entra ID.
+
+Microsoft Entra ID validates the configured issuer, subject, and audience in the Federated Credential.
+
+If the trust conditions match, Microsoft Entra ID exchanges the external token for an Azure Access Token.
+
+This authentication model avoids long-lived secrets and is Microsoft's recommended approach for modern DevOps environments.
 
 ---
 
@@ -151,36 +159,6 @@ If validation succeeds, Microsoft Entra ID issues an Access Token.
 This approach avoids sending shared secrets over the network and provides stronger proof of possession than Client Secrets.
 
 ---
-
-## Federated Credentials
-
-Federated Credentials enable applications running outside Azure to authenticate without storing secrets or certificates.
-
-Instead of presenting a shared credential, Microsoft Entra ID trusts an external OpenID Connect (OIDC) identity provider.
-
-Common scenarios include:
-
-- GitHub Actions
-- Kubernetes workloads
-- GitLab CI/CD
-- Other trusted OIDC providers
-
-In a Workload Identity Federation scenario, the external platform issues an OIDC token to the workload.
-
-The application presents that external token to Microsoft Entra ID.
-
-Microsoft Entra ID validates the configured issuer, subject, and audience in the Federated Credential.
-
-If the trust conditions match, Microsoft Entra ID exchanges the external token for an Azure Access Token.
-
-This authentication model avoids long-lived secrets and is Microsoft's recommended approach for modern DevOps environments.
-
----
-
-
-
-
-
 
 ## Enterprise Scenario
 
