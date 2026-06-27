@@ -8,25 +8,23 @@
 
 ## Authentication Flow
 
-```text
-          User
-            │
-     Enter Credentials
-            │
-            ▼
-   Microsoft Entra ID
-            │
-   Verify Identity
-            │
-            ▼
- Authentication Success
-            │
-            ▼
- Access Token Issued
-            │
-            ▼
- Azure Resource / Application
-```
+                User
+                  │
+         Enter Credentials
+                  │
+                  ▼
+        Microsoft Entra ID
+                  │
+      Authentication Policies
+                  │
+     MFA / Conditional Access
+                  │
+                  ▼
+     ID Token + Access Token
+                  │
+        ┌─────────┴─────────┐
+        │                   │
+ Application          Azure Resource
 
 ---
 
@@ -70,6 +68,21 @@ Authentication does not grant permissions by itself. Authorization mechanisms su
 
 ---
 
+## Security Tokens
+
+After successful authentication, Microsoft Entra ID issues security tokens that applications and Azure services use to establish trust.
+
+The two most common token types are:
+
+| Token | Purpose |
+|--------|---------|
+| ID Token | Proves that the user has successfully authenticated. It contains identity information about the authenticated user and is primarily intended for the client application. |
+| Access Token | Grants access to protected APIs or Azure resources. Azure Resource Manager, Microsoft Graph, and other services validate this token before processing requests. |
+
+Microsoft Entra ID typically issues these tokens as JSON Web Tokens (JWTs), allowing applications and services to validate them securely.
+
+---
+
 ## Authentication Factors
 
 Authentication can rely on one or more independent factors:
@@ -95,6 +108,12 @@ Microsoft Entra ID supports multiple authentication methods, including:
 - Certificate-Based Authentication
 - SMS (legacy scenarios)
 - Voice Call (legacy scenarios)
+  
+> [!NOTE]
+> **Temporary Access Pass (TAP)** is a time-limited passcode that allows users to authenticate temporarily while registering passwordless authentication methods such as Microsoft Authenticator or FIDO2 Security Keys.
+>
+> TAP is commonly used during onboarding, device replacement, or account recovery scenarios.
+  
 
 The availability of authentication methods depends on organizational policies and licensing.
 
@@ -107,6 +126,18 @@ Passwordless authentication eliminates the need for traditional passwords.
 Instead, users authenticate using trusted devices or cryptographic credentials such as Windows Hello for Business, FIDO2 security keys, Microsoft Authenticator, or Passkeys.
 
 Microsoft recommends passwordless authentication whenever possible because passwords remain one of the primary attack vectors in modern environments.
+
+---
+
+## Self-Service Password Reset (SSPR)
+
+Self-Service Password Reset (SSPR) allows users to securely reset or unlock their own passwords without contacting the IT department.
+
+Users must first register one or more authentication methods, such as Microsoft Authenticator, phone number, or email verification.
+
+SSPR reduces help desk workload while improving the user experience and maintaining organizational security.
+
+Microsoft commonly recommends combining SSPR with Multi-Factor Authentication and passwordless authentication strategies.
 
 ---
 
@@ -132,6 +163,16 @@ Microsoft Entra ID supports several industry-standard authentication protocols.
 | WS-Federation | Legacy Microsoft applications |
 
 These protocols enable secure authentication across cloud and hybrid environments.
+
+---
+
+## Legacy Authentication
+
+Legacy Authentication refers to older authentication protocols such as POP3, IMAP, SMTP AUTH, and MAPI that do not support modern security features like Multi-Factor Authentication (MFA) or Conditional Access.
+
+Because these protocols cannot enforce modern authentication policies, they are frequently targeted by password spraying and brute-force attacks.
+
+Microsoft recommends disabling Legacy Authentication whenever possible and using Modern Authentication protocols such as OAuth 2.0 and OpenID Connect.
 
 ---
 
