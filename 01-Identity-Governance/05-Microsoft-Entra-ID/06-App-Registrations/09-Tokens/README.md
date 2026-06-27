@@ -120,6 +120,35 @@ Only valid tokens are accepted.
 
 ---
 
+## Token Signature Validation
+
+Protected APIs do not contact Microsoft Entra ID every time they receive an Access Token.
+
+Instead, Microsoft Entra ID publishes its public signing keys through its OpenID Connect metadata endpoint.
+
+Applications and APIs download and periodically refresh these public keys to validate JWT signatures locally.
+
+This allows token validation to be performed efficiently without requiring a network request for every API call.
+
+---
+
+## Continuous Access Evaluation (CAE)
+
+Some Microsoft services support **Continuous Access Evaluation (CAE)**.
+
+With CAE, compatible services can respond immediately to critical security events instead of waiting for the Access Token to expire.
+
+Examples include:
+
+- User account disabled.
+- Password changed or reset.
+- High-risk user detected.
+- Conditional Access policy changes.
+
+This improves security by reducing the time during which previously issued tokens remain usable after significant identity changes.
+
+---
+
 ## Token Claims
 
 Tokens contain claims that describe the authenticated identity.
