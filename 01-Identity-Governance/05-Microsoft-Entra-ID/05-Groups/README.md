@@ -30,7 +30,7 @@
  Delete Group
 ```
 
-## Microsoft Entra Groups
+## Microsoft Entra Admin Center
 
 The **All Groups** view in the Microsoft Entra admin center provides a centralized location to create, organize, and manage groups across the tenant.
 
