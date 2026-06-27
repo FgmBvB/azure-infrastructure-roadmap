@@ -86,6 +86,7 @@ Important identifiers include:
 | Directory (Tenant) ID | Identifies the Microsoft Entra ID tenant where the application is registered. |
 
 These identifiers are frequently required when configuring authentication, APIs, or automation.
+The Application Object exists only in its home tenant and serves as the global definition of the application throughout its lifecycle.
 
 ---
 
@@ -118,7 +119,9 @@ Instead of entering passwords interactively, applications typically authenticate
 - Managed Identities (Azure resources)
 - Federated Credentials
 
-After successful authentication, Microsoft Entra ID issues security tokens that the application uses to access protected resources.
+After successful authentication, Microsoft Entra ID issues security tokens that the application uses to access protected resources. Depending on the scenario, applications may authenticate on behalf of a signed-in user or independently without user interaction.
+
+These authentication models are explored later in this roadmap.
 
 The authentication mechanisms themselves are covered in later sections of this roadmap.
 
@@ -129,24 +132,58 @@ The authentication mechanisms themselves are covered in later sections of this r
 An App Registration is only one part of the Microsoft Entra ID application model.
 
 ```text
-App Registration
-        │
-Creates
-        ▼
-Application Object
-        │
-Creates
-        ▼
-Service Principal
-        │
-Used by
-        ▼
-Enterprise Application
+                Application
+                     │
+                     ▼
+          App Registration
+                     │
+                     ▼
+          Application Object
+                     │
+        ┌────────────┴────────────┐
+        │                         │
+        ▼                         ▼
+ Service Principal         Authentication
+        │                         │
+        └────────────┬────────────┘
+                     ▼
+            Security Tokens
+                     │
+                     ▼
+        Azure Resources / APIs
 ```
 
 These components work together to provide secure authentication and authorization across Microsoft cloud services.
 
 The following documents explain each component in detail.
+
+---
+
+## Application Object and Service Principal
+
+When an application is registered, Microsoft Entra ID creates an **Application Object** in the home tenant.
+
+The Application Object represents the global definition of the application, including its authentication settings, permissions, redirect URIs, and credentials.
+
+When the application needs to operate within a tenant, Microsoft Entra ID creates a **Service Principal**.
+
+The Service Principal represents the local identity of the application and is the object that receives permissions, Azure RBAC assignments, and Conditional Access policies.
+
+```text
+Application Object
+(Home Tenant)
+        │
+Creates
+        ▼
+Service Principal
+(Local Identity)
+        │
+Authenticates
+        ▼
+Azure Resources
+```
+
+This separation allows the same application to exist in multiple Microsoft Entra ID tenants while maintaining a single application definition.
 
 ---
 
