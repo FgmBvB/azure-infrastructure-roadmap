@@ -55,7 +55,7 @@ Availability Zones further improve resilience by protecting applications against
 
 ---
 
-##  How It Works
+## How It Works
 
 Each Azure Region contains one or more physical datacenters.
 
@@ -64,6 +64,10 @@ Some regions support Availability Zones, where datacenters are separated by inde
 Applications can be deployed across multiple zones to increase availability and reduce the impact of hardware or datacenter failures.
 
 Microsoft operates one of the world's largest private global networks, connecting Azure Regions through its high-capacity backbone infrastructure.
+
+Some Azure Regions are paired with another region within the same geography, known as **Region Pairs**.
+
+Region Pairs support platform updates, disaster recovery strategies, and help improve service resilience by reducing the likelihood of both regions being affected simultaneously.
 
 ---
 
