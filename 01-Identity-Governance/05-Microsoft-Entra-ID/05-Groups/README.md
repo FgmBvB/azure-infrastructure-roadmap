@@ -139,6 +139,56 @@ This approach simplifies permission management and supports the principle of lea
 
 ---
 
+## Role-Assignable Groups
+
+Role-assignable groups are special Microsoft Entra ID groups that can be assigned Microsoft Entra administrative roles.
+
+They are used to manage privileged access through groups instead of assigning administrative roles directly to individual users.
+
+Role-assignable groups require Microsoft Entra ID P1 or P2.
+
+These groups must be created with role assignment capability enabled. This is represented by the `isAssignableToRole` property.
+
+Role-assignable groups cannot use dynamic membership. Their membership must be assigned and carefully controlled to prevent unintended privilege escalation.
+
+---
+
+## Dynamic Group Considerations
+
+Dynamic groups require the appropriate Microsoft Entra ID licensing.
+
+Membership is calculated by Microsoft Entra ID based on rules and directory attributes.
+
+Dynamic membership updates are not always immediate. In large tenants or complex rules, processing can take longer.
+
+Dynamic groups are useful for automation, but they should not be used for scenarios where access must change instantly.
+
+---
+
+## Nested Groups
+
+Microsoft Entra ID supports adding groups as members of other groups in some scenarios.
+
+Nested groups can simplify membership management, but their behavior depends on the service using the group.
+
+For example, nested group membership can be useful for access evaluation in some scenarios, but not all Microsoft services expand nested memberships in the same way.
+
+Administrators should verify whether the target service supports nested groups before relying on them for access, licensing, or application assignments.
+
+---
+
+## Group Expiration
+
+Microsoft 365 Groups can use expiration policies to reduce unused or abandoned groups.
+
+When a group reaches its expiration period, owners can renew it.
+
+If the group is not renewed, it can be deleted and later recovered during the soft-delete period.
+
+This helps keep the directory clean and reduces governance risks caused by unmanaged groups.
+
+---
+
 ## Enterprise Scenario
 
 A company has 300 IT employees.
