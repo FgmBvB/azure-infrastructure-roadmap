@@ -53,12 +53,24 @@ This allows the IT team to focus on managing workloads and delivering business v
 
 ## AZ-104 Exam Notes
 
+For the AZ-104 certification, you should understand:
+
+- The purpose of Microsoft Azure.
+- The benefits of cloud computing.
+- Azure global infrastructure.
+- Shared responsibility model.
+- Basic cloud deployment concepts.
+
 ## References
+
+- Microsoft Learn
+- Microsoft Azure Documentation
+- Azure Well-Architected Framework
 
 ## Key Takeaways
 
-- Azure is a public cloud platform.
-- Microsoft manages the physical infrastructure.
-- Resources can be deployed on demand.
-- Azure follows a shared responsibility model.
-
+- Azure is Microsoft's public cloud platform.
+- Microsoft owns and manages the physical infrastructure.
+- Customers deploy and manage cloud resources on demand.
+- Azure enables scalable, resilient, and globally distributed solutions.
+- The shared responsibility model defines which security and management responsibilities belong to Microsoft and which belong to the customer.
