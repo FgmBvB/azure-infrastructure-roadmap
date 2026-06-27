@@ -30,7 +30,7 @@
 > - A Resource Group belongs to one Azure Subscription.
 > - Resources inside a Resource Group can be managed together.
 > - RBAC, Azure Policy, Resource Locks, and Tags can be applied at the Resource Group scope.
-> - Moving resources between Resource Groups or subscriptions has important governance and dependency implications.
+> - Moving resources between Resource Groups or subscriptions has governance and dependency implications.
 
 ---
 
@@ -60,6 +60,10 @@ Every Azure resource must belong to exactly one Resource Group.
 
 A Resource Group belongs to a single Azure Subscription, but it can contain resources located in different Azure Regions, depending on the service.
 
+When a Resource Group is created, Azure requires a region. This location stores the metadata for the Resource Group, not the resources themselves.
+
+If the Resource Group's metadata region becomes unavailable, resources running in other Azure Regions continue operating. However, management operations such as creating, updating, or deleting resources within that Resource Group may be temporarily unavailable.
+
 Resource Groups are managed through Azure Resource Manager (ARM), which provides the management layer used to deploy, update, organize, and control Azure resources.
 
 Resource Groups work together with Azure RBAC, Azure Policy, Resource Locks, and Tags to provide governance and resource management.
@@ -74,7 +78,7 @@ Before moving resources, administrators should validate whether the resource typ
 
 During a move operation, both the source and destination Resource Groups are temporarily locked for write and delete operations.
 
-Moving a resource can affect automation, scripts, monitoring, dependencies, RBAC inheritance, and governance because the resource is now managed under a different Resource Group or subscription scope.
+Moving a resource changes its management scope and may affect automation, scripts, monitoring, dependencies, RBAC inheritance, Azure Policy assignments, and other governance configurations.
 
 ---
 
@@ -84,37 +88,37 @@ Resource Locks can be applied at the subscription, Resource Group, or resource s
 
 When a lock is applied at the Resource Group level, resources inside that Resource Group inherit the lock.
 
-There are two main lock types:
+There are two lock types:
 
-- **CanNotDelete**: authorized users can read and modify resources, but they cannot delete them.
-- **ReadOnly**: authorized users can read resources, but they cannot update or delete them.
+- **CanNotDelete**: resources can be modified but cannot be deleted.
+- **ReadOnly**: resources become read-only and update operations are blocked.
 
-Resource Locks override user permissions, so even users with high privileges can be blocked from deleting or modifying locked resources.
+Many Azure operations that appear to be read actions actually require write operations through Azure Resource Manager. As a result, a ReadOnly lock can prevent operations such as starting or stopping a Virtual Machine.
+
+Resource Locks take precedence over RBAC permissions. Even users with high-level roles may be prevented from modifying or deleting locked resources.
 
 ---
 
 ## ARM and Bicep Deployments
 
-Resource Groups are commonly used as deployment scopes for ARM templates and Bicep files.
+Resource Groups are the most common deployment scope for ARM templates and Bicep files.
 
-Azure Resource Manager supports different deployment modes:
+Azure Resource Manager supports two deployment modes:
 
-- **Incremental mode**: adds or updates resources without deleting resources that are not included in the template.
-- **Complete mode**: deletes resources in the Resource Group that are not defined in the template.
+- **Incremental mode** adds or updates resources without deleting resources that are not included in the template.
+- **Complete mode** removes resources from the Resource Group if they are not defined in the deployment template.
 
-Complete mode must be used carefully because it can remove resources unintentionally if the template does not include the full desired state.
-
-For most scenarios, incremental deployments are safer and more commonly used.
+Because Complete mode can delete existing resources, it should only be used when the desired state of the Resource Group is fully defined.
 
 ---
 
 ## Limits and Quotas
 
-Azure applies limits and quotas to resources, deployments, subscriptions, and Resource Groups.
+Azure applies limits and quotas to Resource Groups, subscriptions, deployments, and individual services.
 
-These limits can affect large environments and should be reviewed during architecture planning.
+Deployment history is also maintained for each Resource Group. When the deployment history reaches the supported platform limit, older deployment records should be removed before creating new deployments.
 
-Because Azure limits can change over time and may vary by service, administrators should always verify the current limits in the official Microsoft documentation.
+Because Azure limits may change over time, administrators should always verify current values in the official Microsoft documentation before designing large-scale environments.
 
 ---
 
@@ -150,13 +154,13 @@ Managing these resources together simplifies administration, monitoring, automat
 ## Common Pitfalls
 
 - Creating one large Resource Group for every resource.
-- Organizing Resource Groups only by resource type instead of workload or lifecycle.
+- Organizing Resource Groups by resource type instead of workload lifecycle.
 - Ignoring naming conventions.
 - Applying excessive permissions.
 - Forgetting to use Tags and Resource Locks.
 - Deleting a Resource Group without understanding that all contained resources are also deleted.
-- Moving resources without checking dependencies and supported resource types.
-- Using complete deployment mode without understanding its deletion behavior.
+- Moving resources without checking supported resource types and dependencies.
+- Using Complete deployment mode without understanding its impact.
 
 ---
 
@@ -166,15 +170,16 @@ Managing these resources together simplifies administration, monitoring, automat
 > You should understand:
 >
 > - Resource Groups
+> - Azure Resource Manager
 > - Resource organization
 > - Resource lifecycle
-> - Azure Resource Manager
-> - Moving resources between Resource Groups or subscriptions
-> - RBAC inheritance at Resource Group scope
-> - Azure Policy integration
+> - Resource movement
 > - Resource Locks
+> - RBAC inheritance
+> - Azure Policy integration
 > - Tags
-> - ARM and Bicep deployment behavior
+> - ARM and Bicep deployment modes
+> - Resource Group metadata location
 > - Limits and quotas
 
 ---
@@ -183,10 +188,11 @@ Managing these resources together simplifies administration, monitoring, automat
 
 - Every Azure resource belongs to one Resource Group.
 - Resource Groups belong to a single Azure Subscription.
-- Resource Groups are logical management containers, not physical locations.
+- Resource Groups are logical management containers.
+- Resource Groups store metadata in a specific Azure Region.
 - Governance features such as RBAC, Policy, Locks, and Tags integrate with Resource Groups.
-- Resource movement requires validation and can affect permissions, dependencies, and automation.
-- Resource Locks help protect critical resources from accidental deletion or modification.
+- Resource movement requires planning and validation.
+- Resource Locks help protect critical resources.
 - ARM and Bicep deployments commonly target Resource Groups.
 
 ---
@@ -197,8 +203,8 @@ Managing these resources together simplifies administration, monitoring, automat
 |-------------------------|---------|
 | [Azure Resource Manager overview](https://learn.microsoft.com/azure/azure-resource-manager/management/overview) | Azure Resource Manager and Resource Groups |
 | [Manage Azure Resource Groups](https://learn.microsoft.com/azure/azure-resource-manager/management/manage-resource-groups-portal) | Resource Group management |
-| [Move resources to a new Resource Group or subscription](https://learn.microsoft.com/azure/azure-resource-manager/management/move-resource-group-and-subscription) | Resource movement behavior and restrictions |
+| [Move resources to a new Resource Group or subscription](https://learn.microsoft.com/azure/azure-resource-manager/management/move-resource-group-and-subscription) | Resource movement |
 | [Lock your Azure resources](https://learn.microsoft.com/azure/azure-resource-manager/management/lock-resources) | Resource Locks |
-| [Azure Resource Manager deployment modes](https://learn.microsoft.com/azure/azure-resource-manager/templates/deployment-modes) | Incremental and complete deployment modes |
-| [Azure subscription and service limits](https://learn.microsoft.com/azure/azure-resource-manager/management/azure-subscription-service-limits) | Azure limits, quotas, and constraints |
+| [ARM deployment modes](https://learn.microsoft.com/azure/azure-resource-manager/templates/deployment-modes) | Incremental and Complete deployment modes |
+| [Azure subscription and service limits](https://learn.microsoft.com/azure/azure-resource-manager/management/azure-subscription-service-limits) | Azure limits and quotas |
 | [Azure naming rules and restrictions](https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules) | Naming conventions |
