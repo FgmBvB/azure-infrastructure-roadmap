@@ -132,6 +132,51 @@ These configurations are performed separately according to the application's req
 
 ---
 
+## Supported Account Types
+
+The Supported Account Types setting defines who can sign in to the application.
+
+| Supported Account Type | Description |
+|------------------------|-------------|
+| Single-Tenant | Only accounts from the application's home Microsoft Entra ID tenant can sign in. |
+| Multi-Tenant | Accounts from any Microsoft Entra ID tenant can sign in after consent is granted. |
+| Multi-Tenant and Personal Microsoft Accounts | Organizational accounts from any Microsoft Entra ID tenant and personal Microsoft accounts can sign in. |
+| Personal Microsoft Accounts Only | Only personal Microsoft accounts such as Outlook.com or Xbox accounts can sign in. |
+
+This decision affects the application's identity boundary, consent model, and Service Principal creation behavior.
+
+For enterprise applications, the account type should be selected carefully during registration because changing it later may require additional configuration and review.
+
+---
+
+## Tenant App Registration Policy
+
+Microsoft Entra ID tenants can control who is allowed to register applications.
+
+In many tenants, users may be allowed to register applications by default.
+
+In enterprise environments, this setting is often restricted to reduce Shadow IT and improve governance.
+
+When app registration is restricted, only authorized roles such as **Application Administrator**, **Cloud Application Administrator**, or other privileged identities can create App Registrations.
+
+This helps organizations control which applications are trusted by the tenant.
+
+---
+
+## Application Manifest
+
+The Application Manifest is the JSON representation of an App Registration.
+
+Many settings configured through the Microsoft Entra admin center are stored in the manifest.
+
+The manifest can be used to review or modify advanced application configuration that may not be visible directly in the portal.
+
+Automation tools such as Microsoft Graph, Terraform, and Infrastructure as Code workflows interact with the same underlying application configuration model.
+
+The manifest is covered in detail later in this roadmap.
+
+---
+
 ## Enterprise Scenario
 
 A software development team creates a new internal web application.
