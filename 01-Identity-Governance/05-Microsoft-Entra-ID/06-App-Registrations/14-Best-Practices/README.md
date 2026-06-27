@@ -97,6 +97,16 @@ Recommendations:
 
 ---
 
+## Tenant Governance
+
+Organizations should review the Microsoft Entra ID tenant setting **Users can register applications**.
+
+In many enterprise environments, this setting is changed from its default value to restrict App Registration creation to authorized administrators.
+
+Restricting application registration helps reduce Shadow IT and improves governance over application identities.
+
+---
+
 ## Credentials
 
 Protect all application credentials.
@@ -108,6 +118,8 @@ Recommendations:
 - Store secrets in Azure Key Vault.
 - Monitor credential expiration dates.
 - Remove unused credentials.
+- Store credentials in Azure Key Vault.
+- Configure expiration monitoring and alerting to notify administrators before certificates or Client Secrets expire.
 
 ---
 
@@ -148,6 +160,16 @@ Recommendations:
 - Review Service Principals regularly.
 - Detect unused App Registrations.
 - Remove abandoned applications.
+
+---
+
+## Application Owners
+
+Every App Registration should have one or more assigned **Application Owners**.
+
+Application Owners can manage the application configuration, such as credentials, Redirect URIs, certificates, and API permissions, without requiring broad administrative roles like Global Administrator.
+
+Assigning dedicated owners supports the principle of least privilege and improves application lifecycle management.
 
 ---
 
