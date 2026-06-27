@@ -253,7 +253,10 @@ The registration itself only establishes the application's identity.
 
 | Microsoft Documentation | Purpose |
 |-------------------------|---------|
-| https://learn.microsoft.com/entra/identity-platform/quickstart-register-app | Register an application |
-| https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals | Application Objects |
-| https://learn.microsoft.com/entra/identity-platform/howto-create-service-principal-portal | Service Principal creation |
-| https://learn.microsoft.com/training/modules/build-app-that-authenticates-users/ | Microsoft Learn module |
+| [Register an application with the Microsoft identity platform](https://learn.microsoft.com/entra/identity-platform/quickstart-register-app) | Create and configure App Registrations |
+| [Application and Service Principal Objects in Microsoft Entra ID](https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals) | Relationship between Application Objects and Service Principals |
+| [Supported account types](https://learn.microsoft.com/entra/identity-platform/supported-accounts-validation) | Supported Account Types and tenant audience |
+| [Application Manifest](https://learn.microsoft.com/entra/identity-platform/reference-app-manifest) | JSON configuration of an App Registration |
+| [Restrict who can create applications](https://learn.microsoft.com/entra/identity/role-based-access-control/delegate-app-roles#restrict-who-can-create-applications) | Tenant App Registration Policy and governance |
+| [Microsoft Graph Application resource type](https://learn.microsoft.com/graph/api/resources/application) | Application properties, including `id` and `appId` |
+| [Microsoft Learn – Build applications that authenticate users](https://learn.microsoft.com/training/modules/build-app-that-authenticates-users/) | Microsoft Learn module covering App Registration fundamentals |
