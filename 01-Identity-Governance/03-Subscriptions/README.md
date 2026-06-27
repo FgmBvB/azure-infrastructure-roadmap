@@ -6,18 +6,18 @@
 
 ---
 
-## Azure Subscription Hierarchy
+## Azure Resource Hierarchy
 
 ```text
-                 Microsoft Entra ID
-                        │
-               Azure Subscription
-                        │
-        ┌───────────────┼───────────────┐
-        │               │               │
- Resource Group   Resource Group   Resource Group
-        │               │               │
-     Resources       Resources      Resources
+           Root Management Group
+                    │
+          Management Group(s)
+                    │
+          Azure Subscription(s)
+                    │
+            Resource Group(s)
+                    │
+             Azure Resources
 ```
 
 ---
@@ -30,6 +30,7 @@
 > - A subscription can contain multiple Resource Groups.
 > - Access is controlled through Azure RBAC.
 > - Subscriptions define quotas and service limits.
+> - Multiple subscriptions can be organized using Management Groups.
 
 ---
 
@@ -47,7 +48,7 @@ Organizations commonly use multiple subscriptions to separate environments, depa
 
 Subscriptions help organizations organize cloud resources while providing clear boundaries for billing, governance, and administration.
 
-They also simplify cost management, improve security by isolating workloads, and allow administrators to apply different governance policies to different environments.
+They simplify cost management, improve security by isolating workloads, and allow administrators to apply different governance policies to different environments.
 
 Using multiple subscriptions is a common strategy for managing enterprise-scale Azure environments.
 
@@ -57,9 +58,11 @@ Using multiple subscriptions is a common strategy for managing enterprise-scale 
 
 Each Azure Subscription is associated with a Microsoft Entra ID tenant.
 
-Within a subscription, administrators create Resource Groups that contain Azure resources such as Virtual Machines, Storage Accounts, Virtual Networks, and Databases.
+Within a subscription, administrators create Resource Groups that contain Azure resources such as Virtual Machines, Storage Accounts, Virtual Networks, Databases, and many other Azure services.
 
 Permissions are assigned through Azure Role-Based Access Control (RBAC), while spending and service consumption are tracked independently for each subscription.
+
+Large organizations commonly organize multiple subscriptions using Management Groups, allowing governance, Azure Policy, and RBAC assignments to be inherited across subscriptions.
 
 ---
 
@@ -67,13 +70,13 @@ Permissions are assigned through Azure Role-Based Access Control (RBAC), while s
 
 A company has separate Development, Testing, and Production environments.
 
-Instead of placing every resource inside a single subscription, the organization creates three subscriptions:
+Instead of placing every workload into a single subscription, the organization creates three independent subscriptions:
 
-- Development Subscription
-- Testing Subscription
-- Production Subscription
+- Development
+- Testing
+- Production
 
-This approach improves security, simplifies billing, and prevents development workloads from affecting production resources.
+This approach improves security, simplifies billing, isolates workloads, and prevents development activities from affecting production resources.
 
 ---
 
@@ -81,9 +84,10 @@ This approach improves security, simplifies billing, and prevents development wo
 
 - Use separate subscriptions for different environments when appropriate.
 - Assign permissions using Azure RBAC.
-- Monitor costs for each subscription.
+- Monitor subscription costs regularly.
 - Apply governance policies consistently.
 - Use meaningful subscription names.
+- Organize enterprise subscriptions using Management Groups.
 
 ---
 
@@ -93,7 +97,8 @@ This approach improves security, simplifies billing, and prevents development wo
 - Confusing subscriptions with Resource Groups.
 - Granting excessive permissions.
 - Ignoring subscription quotas and limits.
-- Not monitoring subscription costs.
+- Failing to monitor subscription costs.
+- Not planning the subscription hierarchy before deploying resources.
 
 ---
 
@@ -107,16 +112,17 @@ This approach improves security, simplifies billing, and prevents development wo
 > - Management boundaries
 > - Resource organization
 > - Subscription limits and quotas
+> - Management Groups
 
 ---
 
 ## Key Takeaways
 
-- Every Azure resource belongs to one subscription.
-- A subscription is the billing boundary.
-- Subscriptions provide administrative isolation.
-- Multiple subscriptions improve governance.
-- RBAC controls access within subscriptions.
+- Every Azure resource belongs to a single subscription.
+- A subscription is the billing and management boundary in Azure.
+- Resource Groups organize resources within a subscription.
+- Large organizations typically use multiple subscriptions.
+- Management Groups provide governance across multiple subscriptions.
 
 ---
 
@@ -124,6 +130,7 @@ This approach improves security, simplifies billing, and prevents development wo
 
 | Microsoft Documentation | Purpose |
 |-------------------------|---------|
-| https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/initial-subscriptions | Subscription design recommendations |
-| https://learn.microsoft.com/azure/cost-management-billing/manage/ | Billing and cost management |
-| https://learn.microsoft.com/training/paths/azure-fundamentals-describe-azure-architecture-services/ | Azure subscription fundamentals |
+| [Organize your Azure resources effectively](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/initial-subscriptions) | Subscription organization and enterprise design |
+| [Azure Management Groups](https://learn.microsoft.com/azure/governance/management-groups/overview) | Management Groups hierarchy and governance |
+| [Azure Cost Management](https://learn.microsoft.com/azure/cost-management-billing/manage/) | Billing and subscription management |
+| [Microsoft Learn – Describe Azure Architecture and Services](https://learn.microsoft.com/training/paths/azure-fundamentals-describe-azure-architecture-services/) | Azure subscription fundamentals |
