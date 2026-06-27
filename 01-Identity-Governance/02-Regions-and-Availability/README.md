@@ -49,8 +49,8 @@ Critical workloads are distributed across Availability Zones to maintain service
 - Ignoring data residency requirements.
 - Deploying critical workloads in a single Availability Zone.
 - Confusing Azure Regions with Availability Zones.
-
-  ## AZ-104 Exam Notes
+  
+## AZ-104 Exam Notes
 
 For the AZ-104 certification, you should understand:
 
