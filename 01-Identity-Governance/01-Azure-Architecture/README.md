@@ -34,5 +34,10 @@ Azure manages the underlying physical infrastructure, allowing customers to focu
 
 ## References
 
+## Key Takeaways
 
+- Azure is a public cloud platform.
+- Microsoft manages the physical infrastructure.
+- Resources can be deployed on demand.
+- Azure follows a shared responsibility model.
 
