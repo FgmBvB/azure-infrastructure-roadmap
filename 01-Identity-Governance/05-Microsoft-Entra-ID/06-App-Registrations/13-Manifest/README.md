@@ -48,6 +48,12 @@ Although administrators usually configure applications through the Microsoft Ent
 
 The Manifest represents the Application Object in a structured format that can be viewed and edited.
 
+> [!NOTE]
+>
+> Microsoft Entra ID limits the maximum size of an Application Manifest to **2 MB**.
+>
+> Applications with very large numbers of App Roles, Redirect URIs, certificates, or other configuration entries may exceed this limit and require redesign.
+
 ---
 
 ## Why the Manifest Exists
