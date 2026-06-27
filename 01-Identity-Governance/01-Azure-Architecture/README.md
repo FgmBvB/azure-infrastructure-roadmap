@@ -1,76 +1,121 @@
 # Azure Architecture
 
+> [!NOTE]
+> This document is part of my Azure Infrastructure Roadmap while preparing for the Microsoft AZ-104 certification.
+> It is continuously updated as I gain new knowledge and hands-on experience.
+
+---
+
+## Azure Platform Overview
+
+```text
+                    Microsoft Azure
+                          │
+     ┌────────────┬────────────┬────────────┐
+     │            │            │            │
+ Compute     Networking    Storage    Security
+```
+
+---
+
+> [!TIP]
+> **Key Concepts**
+>
+> - Azure is Microsoft's public cloud platform.
+> - Microsoft manages the physical infrastructure.
+> - Customers deploy and manage cloud resources.
+> - Resources can be provisioned on demand.
+> - Azure follows a shared responsibility model.
+
+---
+
 ## Overview
 
-Microsoft Azure is Microsoft's public cloud platform, providing a wide range of cloud services including compute, networking, storage, databases, security, monitoring and artificial intelligence.
+Microsoft Azure is Microsoft's public cloud platform, providing a wide range of cloud services including compute, networking, storage, databases, security, monitoring, and artificial intelligence.
 
-Instead of purchasing, maintaining and replacing physical hardware, organizations can deploy and manage IT resources on Microsoft's global infrastructure using a pay-as-you-go model.
+Instead of purchasing, maintaining, and replacing physical hardware, organizations can deploy and manage IT resources on Microsoft's global infrastructure using a pay-as-you-go model.
 
-Azure enables businesses to build scalable, highly available and secure environments while reducing the operational complexity of managing traditional on-premises infrastructure.
+Azure enables businesses to build scalable, highly available, and secure environments while reducing the operational complexity of managing traditional on-premises infrastructure.
 
-## Why It Exists
+---
 
-Traditional on-premises infrastructure requires organizations to purchase, maintain and eventually replace physical hardware. This approach involves significant capital investment, ongoing maintenance, and limited scalability.
+## Purpose
+
+Traditional on-premises infrastructure requires organizations to purchase, maintain, and eventually replace physical hardware. This approach involves significant capital investment, ongoing maintenance, and limited scalability.
 
 Microsoft Azure was created to provide a cloud platform where organizations can deploy and manage IT resources without owning the underlying infrastructure.
 
 By using Azure, businesses can quickly provision services, scale resources on demand, improve availability, and reduce the operational burden of maintaining physical datacenters.
 
-## How It Works
+---
 
-Azure is built on a global network of Microsoft datacenters distributed across multiple geographic regions.
+## Architecture
 
-Customers can deploy cloud resources such as virtual machines, storage accounts, databases, networking components, and many other services through the Azure Portal, Azure CLI, PowerShell, APIs, or Infrastructure as Code (IaC) tools.
+Azure is built on Microsoft's global infrastructure, consisting of datacenters distributed across multiple geographic regions.
 
-Azure manages the underlying physical infrastructure, allowing customers to focus on deploying and managing their workloads rather than maintaining hardware.
+Customers can deploy cloud resources such as virtual machines, storage accounts, databases, networking components, and many other services through the Azure Portal, Azure CLI, PowerShell, REST APIs, or Infrastructure as Code (IaC) tools.
+
+Microsoft manages the underlying physical infrastructure while customers are responsible for configuring and managing their cloud resources according to the shared responsibility model.
+
+---
 
 ## Enterprise Scenario
 
-A medium-sized company currently hosts its applications, databases, file servers, and backup infrastructure in an on-premises datacenter.
+A company currently hosts its infrastructure in an on-premises datacenter.
 
-As the business grows, the existing infrastructure becomes increasingly difficult to scale, requires significant hardware investment, and demands continuous maintenance.
+As the business grows, the organization requires additional compute, storage, and networking resources. Purchasing new hardware increases costs and operational complexity.
 
-By adopting Microsoft Azure, the organization can provision new resources in minutes, expand services when demand increases, improve disaster recovery capabilities, and reduce the operational effort required to maintain physical infrastructure.
+By adopting Microsoft Azure, the company can provision resources on demand, improve business continuity, simplify infrastructure management, and scale services according to business needs.
 
-This allows the IT team to focus on managing workloads and delivering business value rather than maintaining servers and datacenter facilities.
+---
 
 ## Best Practices
 
-- Design your architecture before deploying resources.
-- Choose Azure regions that are geographically close to your users.
-- Follow the principle of least privilege.
-- Monitor resource usage and costs from the beginning.
-- Design workloads with high availability and resilience in mind.
+- Design the cloud architecture before deploying resources.
+- Apply the principle of least privilege.
+- Design for scalability and high availability.
+- Monitor resource utilization and costs from the beginning.
 - Automate deployments whenever possible.
 
-## Common Mistakes
+---
 
-- Treating Azure as just another virtualization platform.
+## Common Pitfalls
+
+- Treating Azure as only a virtualization platform.
 - Deploying resources without proper planning.
-- Ignoring cost management during deployments.
-- Assigning excessive permissions to users.
-- Designing workloads without considering availability and redundancy.
+- Ignoring cost management.
+- Assigning excessive permissions.
+- Designing workloads without considering resilience.
 
-## AZ-104 Exam Notes
+---
 
-For the AZ-104 certification, you should understand:
+> [!IMPORTANT]
+> **AZ-104 Focus**
+>
+> You should understand:
+>
+> - Azure architecture fundamentals.
+> - Global Azure infrastructure.
+> - Shared responsibility model.
+> - Cloud deployment methods.
+> - Core Azure services.
 
-- The purpose of Microsoft Azure.
-- The benefits of cloud computing.
-- Azure global infrastructure.
-- Shared responsibility model.
-- Basic cloud deployment concepts.
-
-## References
-
-- [Microsoft Learn - Azure Documentation](https://learn.microsoft.com/azure/)
-- [Azure Fundamentals: Describe Azure Architecture and Services](https://learn.microsoft.com/training/paths/azure-fundamentals-describe-azure-architecture-services/)
-- [Microsoft Azure Well-Architected Framework](https://learn.microsoft.com/azure/well-architected/)
+---
 
 ## Key Takeaways
 
 - Azure is Microsoft's public cloud platform.
-- Microsoft owns and manages the physical infrastructure.
-- Customers deploy and manage cloud resources on demand.
+- Microsoft manages the physical infrastructure.
+- Customers manage their cloud resources.
+- Resources can be deployed on demand.
 - Azure enables scalable, resilient, and globally distributed solutions.
-- The shared responsibility model defines which security and management responsibilities belong to Microsoft and which belong to the customer.
+
+---
+
+## References
+
+| Microsoft Documentation | Purpose |
+|-------------------------|---------|
+| [Microsoft Azure Documentation](https://learn.microsoft.com/azure/) | Azure platform overview |
+| [Azure Fundamentals – Describe Azure Architecture and Services](https://learn.microsoft.com/training/paths/azure-fundamentals-describe-azure-architecture-services/) | Azure architecture fundamentals |
+| [Microsoft Azure Well-Architected Framework](https://learn.microsoft.com/azure/well-architected/) | Architecture best practices |
