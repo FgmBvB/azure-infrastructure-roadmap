@@ -174,6 +174,23 @@ Understanding this distinction helps avoid common automation mistakes.
 
 ---
 
+## signInAudience
+
+The supported account type selected during application registration is stored in the Application Object as the `signInAudience` property.
+
+Common values include:
+
+| Value | Description |
+|-------|-------------|
+| `AzureADMyOrg` | Single-Tenant application |
+| `AzureADMultipleOrgs` | Multi-Tenant application |
+| `AzureADandPersonalMicrosoftAccount` | Multi-Tenant including personal Microsoft accounts |
+| `PersonalMicrosoftAccount` | Personal Microsoft accounts only |
+
+This property is part of the Application Manifest and determines which identities are allowed to authenticate with the application.
+
+---
+
 ## Enterprise Scenario
 
 A software company develops a SaaS application.
