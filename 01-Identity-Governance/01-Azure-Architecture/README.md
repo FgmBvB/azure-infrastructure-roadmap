@@ -69,6 +69,16 @@ By adopting Microsoft Azure, the company can provision resources on demand, impr
 
 ---
 
+## Shared Responsibility Model
+
+Microsoft is responsible for managing the physical infrastructure, including datacenters, networking, hardware, and the Azure platform.
+
+Customers are responsible for configuring and securing their cloud resources, identities, applications, operating systems, and data, depending on the cloud service model (IaaS, PaaS, or SaaS).
+
+Understanding the shared responsibility model is fundamental for designing secure Azure environments.
+
+---
+
 ## Best Practices
 
 - Design the cloud architecture before deploying resources.
