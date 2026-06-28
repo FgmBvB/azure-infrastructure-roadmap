@@ -38,12 +38,12 @@ After completing this section you should be able to:
 
 | Module | Description |
 |---------|-------------|
-| **01 - Microsoft Entra ID** | Microsoft Entra architecture, tenants, identities, licensing, and directory fundamentals. |
-| **02 - Users and Groups** | User lifecycle, Security Groups, Microsoft 365 Groups, Dynamic Groups, Administrative Units, and licensing. |
-| **03 - Azure RBAC** | Authorization, role assignments, built-in roles, custom roles, and least privilege. |
-| **04 - Azure Policy** | Governance, Policy Definitions, Assignments, Initiatives, compliance, and remediation. |
-| **05 - Resource Locks** | Protecting Azure resources from accidental modification or deletion. |
-| **06 - Tags** | Resource organization, governance, Cost Management, and Azure Policy integration. |
+| **05 - Microsoft Entra ID** | Microsoft Entra architecture, tenants, identities, licensing, and directory fundamentals. |
+| **06 - Users and Groups** | User lifecycle, Security Groups, Microsoft 365 Groups, Dynamic Groups, Administrative Units, and licensing. |
+| **07 - Azure RBAC** | Authorization, role assignments, built-in roles, custom roles, and least privilege. |
+| **08 - Azure Policy** | Governance, Policy Definitions, Assignments, Initiatives, compliance, and remediation. |
+| **09 - Resource Locks** | Protecting Azure resources from accidental modification or deletion. |
+| **10 - Tags** | Resource organization, governance, Cost Management, and Azure Policy integration. |
 
 ---
 
