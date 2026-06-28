@@ -210,8 +210,17 @@ Permission Already Granted?
                  ▼
           Protected Resource
 ```
-
+> [!NOTE]
+>
+> If User Consent is disabled and administrator approval has not been granted, Microsoft Entra ID blocks the sign-in request.
+>
+> Users are typically presented with a **Need admin approval** message indicating that the requested permissions require administrator consent.
+>
+> Depending on the scenario, administrators may also encounter Microsoft Entra ID error codes such as **AADSTS65005** during troubleshooting.
+> 
 ---
+
+
 
 ## Low Impact Permissions
 
