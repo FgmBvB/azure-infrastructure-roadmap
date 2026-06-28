@@ -67,6 +67,23 @@ Assigning roles to groups is Microsoft's recommended approach because it simplif
 
 ---
 
+## Azure RBAC Limits
+
+Azure RBAC supports a large number of role assignments, but subscriptions have platform limits.
+
+One important design consideration is the maximum number of role assignments that can exist within a subscription.
+
+Because of these limits, Microsoft recommends assigning roles to **Security Groups** instead of individual users whenever possible.
+
+Using groups:
+
+- Reduces the total number of role assignments.
+- Simplifies administration.
+- Improves scalability.
+- Makes permission reviews easier.
+
+---
+
 ## Scope Levels
 
 Role assignments can be created at four different scopes.
@@ -121,6 +138,16 @@ When a request reaches Azure Resource Manager:
 
 ---
 
+## Orphaned Role Assignments
+
+If a Security Principal (such as a user, group, Service Principal, or Managed Identity) is deleted, its Azure RBAC role assignments are not removed automatically.
+
+Instead, Azure displays the assignment with an **Identity not found** status because the Object ID referenced by the assignment no longer exists.
+
+Administrators should periodically review and remove orphaned role assignments to maintain a clean and secure Azure environment.
+
+---
+
 ## Assignment Methods
 
 Azure roles can be assigned using several tools.
@@ -132,6 +159,22 @@ Azure roles can be assigned using several tools.
 | Azure PowerShell | Administration and automation |
 | ARM Templates / Bicep | Infrastructure as Code (IaC) |
 | Azure REST API | Programmatic management |
+
+---
+
+## Scope Path Examples
+
+Azure RBAC identifies scopes using Azure Resource Manager (ARM) resource IDs.
+
+Common examples include:
+
+| Scope | Example |
+|--------|---------|
+| **Subscription** | `/subscriptions/<subscription-id>` |
+| **Resource Group** | `/subscriptions/<subscription-id>/resourceGroups/<resource-group>` |
+| **Resource** | `/subscriptions/<subscription-id>/resourceGroups/<resource-group>/providers/Microsoft.Storage/storageAccounts/<storage-account>` |
+
+Azure Resource Manager evaluates these paths hierarchically, allowing permissions assigned at higher scopes to be inherited by child resources.
 
 ---
 
