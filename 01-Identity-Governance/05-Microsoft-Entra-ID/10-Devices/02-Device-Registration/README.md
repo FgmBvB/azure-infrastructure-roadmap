@@ -51,6 +51,22 @@ This enables organizations to apply security controls based on both the user and
 
 ---
 
+## Device Settings
+
+Microsoft Entra ID provides tenant-level settings that control how devices can be registered or joined.
+
+Important settings include:
+
+| Setting | Purpose |
+|---------|---------|
+| **Users may join devices to Microsoft Entra ID** | Defines which users are allowed to join devices to the tenant. |
+| **Maximum number of devices per user** | Limits how many devices a single user can register or join. |
+| **Require Multi-Factor Authentication to register or join devices** | Requires MFA during device registration or join. |
+
+These settings help control device onboarding and reduce unmanaged device growth.
+
+---
+
 ## Registration Models
 
 Microsoft Entra ID supports three primary registration models.
@@ -110,6 +126,14 @@ Characteristics include:
 
 Hybrid Join is commonly used during cloud migration.
 
+> [!NOTE]
+>
+> Hybrid Joined devices require synchronization between on-premises Active Directory and Microsoft Entra ID.
+>
+> The computer object must be synchronized by Microsoft Entra Connect or Cloud Sync before the device can complete Hybrid Join.
+>
+> If the Organizational Unit (OU) containing the computer object is excluded from synchronization, Hybrid Join will fail.
+
 ---
 
 ## Device Registration Flow
@@ -132,6 +156,18 @@ Authentication
    ▼
 Conditional Access
 ```
+
+---
+
+## Primary Refresh Token
+
+A **Primary Refresh Token (PRT)** is issued to a user during Windows device registration or join.
+
+The PRT enables Single Sign-On (SSO) across Microsoft Entra ID integrated applications and Microsoft 365 services.
+
+It allows the device and user session to obtain tokens without repeatedly prompting the user for credentials.
+
+The PRT is also used by Microsoft Entra ID during Conditional Access evaluation when device state is required.
 
 ---
 
