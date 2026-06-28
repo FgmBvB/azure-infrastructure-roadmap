@@ -84,6 +84,26 @@ Azure RBAC consists of four primary components.
 
 ---
 
+### Role Definition Permissions
+
+A Role Definition specifies the operations that a Security Principal is allowed to perform.
+
+Permissions are divided into two categories.
+
+| Permission Type | Purpose |
+|-----------------|---------|
+| **Actions / NotActions** | Manage Azure resources (Control Plane). |
+| **DataActions / NotDataActions** | Access data stored inside supported Azure resources (Data Plane). |
+
+For example:
+
+- Creating a Virtual Machine is a **Control Plane** operation.
+- Reading blobs from an Azure Storage account is a **Data Plane** operation.
+
+Many built-in roles, such as **Contributor**, manage Azure resources but do not automatically grant access to resource data.
+
+---
+
 ## Security Principals
 
 Azure RBAC supports several identity types.
@@ -118,6 +138,25 @@ Permissions assigned at a higher scope are inherited by all child resources.
 
 ---
 
+### Permission Inheritance
+
+Azure RBAC permissions are cumulative.
+
+If a Security Principal receives multiple role assignments, the effective permissions are the union of all allowed actions within the applicable scope.
+
+For example:
+
+- **Reader** at the Subscription scope.
+- **Contributor** at a Resource Group.
+
+The user becomes **Contributor** within that Resource Group while remaining **Reader** elsewhere in the subscription.
+
+It is also important to understand that **NotActions** does not explicitly deny access.
+
+If another applicable role grants the same permission, Azure RBAC allows the operation.
+
+---
+
 ## Permission Evaluation
 
 When a request reaches Azure Resource Manager:
@@ -127,6 +166,23 @@ When a request reaches Azure Resource Manager:
 3. The requested operation is compared against the allowed permissions.
 4. Scope inheritance is evaluated.
 5. Access is granted or denied.
+
+---
+
+### Permission Evaluation Rules
+
+Azure RBAC follows an **allow-based authorization model**.
+
+If no role assignment grants the requested permission, access is denied automatically.
+
+Azure Resource Manager also evaluates **Deny Assignments** before granting access.
+
+Important characteristics include:
+
+- Deny Assignments always take precedence over role assignments.
+- Administrators cannot create custom Deny Assignments directly.
+- Deny Assignments are created automatically by certain Azure services and resource protection features.
+- A matching Deny Assignment blocks access even if the user has the **Owner** role.
 
 ---
 
