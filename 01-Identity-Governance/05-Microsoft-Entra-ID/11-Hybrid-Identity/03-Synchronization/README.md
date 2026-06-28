@@ -110,6 +110,32 @@ Synchronization propagates directory changes from Active Directory to Microsoft 
 
 ---
 
+## Synchronization Schedule
+
+Microsoft Entra Connect performs synchronization automatically on a scheduled basis.
+
+By default, a **Delta Synchronization** runs approximately every **30 minutes**, synchronizing only changes since the previous cycle.
+
+Administrators can manually trigger synchronization from the Microsoft Entra Connect server using PowerShell.
+
+**Delta Synchronization**
+
+```powershell
+Start-ADSyncSyncCycle -PolicyType Delta
+```
+
+Synchronizes only new or modified objects.
+
+**Initial Synchronization**
+
+```powershell
+Start-ADSyncSyncCycle -PolicyType Initial
+```
+
+Performs a full synchronization and is typically required after major configuration changes, such as modifying synchronization filters.
+
+---
+
 ## Synchronized Objects
 
 Organizations decide which objects are synchronized.
