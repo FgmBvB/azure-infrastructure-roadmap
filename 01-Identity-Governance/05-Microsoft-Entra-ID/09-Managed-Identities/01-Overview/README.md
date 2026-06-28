@@ -77,6 +77,28 @@ No credentials are exchanged or stored by the application.
 
 ---
 
+## Azure Instance Metadata Service (IMDS)
+
+Azure resources obtain Access Tokens through the **Azure Instance Metadata Service (IMDS)**.
+
+Instead of communicating directly with Microsoft Entra ID, the application sends an HTTP request to the local metadata endpoint:
+
+```text
+http://169.254.169.254/metadata/identity/oauth2/token
+```
+
+The request must include the HTTP header:
+
+```text
+Metadata: true
+```
+
+IMDS authenticates the Managed Identity with Microsoft Entra ID, retrieves the OAuth 2.0 Access Token, and returns it to the application.
+
+This process allows applications to obtain tokens without storing credentials or communicating directly with Microsoft Entra ID.
+
+---
+
 ## Authentication Flow
 
 ```text
@@ -108,6 +130,35 @@ Microsoft Entra ID supports two types of Managed Identities.
 | **User-Assigned** | Created as an independent Azure resource and can be assigned to multiple Azure resources. |
 
 Both identity types authenticate through Microsoft Entra ID and use Azure RBAC for authorization.
+
+---
+
+## Service Principal Lifecycle
+
+When a Managed Identity is enabled, Microsoft Entra ID automatically creates a corresponding **Service Principal**.
+
+This Service Principal appears in **Enterprise Applications** with the type **Managed Identity**.
+
+For a **System-Assigned Managed Identity**, the Service Principal shares the lifecycle of the Azure resource:
+
+- Created automatically when the Managed Identity is enabled.
+- Deleted automatically when the Azure resource is deleted.
+
+Deleting the resource also removes the associated Service Principal and its Azure RBAC role assignments.
+
+A **User-Assigned Managed Identity** has its own independent lifecycle and remains available until explicitly deleted.
+
+---
+
+## Identity Assignment Limits
+
+Managed Identity assignment depends on the identity type.
+
+- An Azure resource can have **only one System-Assigned Managed Identity**.
+- A resource can have **multiple User-Assigned Managed Identities**, subject to the limits of the Azure service.
+- A resource can use both a **System-Assigned** and one or more **User-Assigned Managed Identities** simultaneously.
+
+This flexibility allows applications to use dedicated identities for different workloads while maintaining a single resource.
 
 ---
 
