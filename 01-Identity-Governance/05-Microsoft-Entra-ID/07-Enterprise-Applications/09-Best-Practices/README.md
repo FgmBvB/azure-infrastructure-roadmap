@@ -96,6 +96,23 @@ Authentication policies should reflect the organization's security requirements.
 
 ---
 
+## Block Legacy Authentication
+
+Legacy authentication protocols such as:
+
+- IMAP
+- POP3
+- SMTP AUTH
+- Older Office clients
+
+do not support modern authentication features such as Multi-Factor Authentication (MFA).
+
+Microsoft recommends blocking legacy authentication through **Conditional Access** by targeting legacy client applications.
+
+Blocking these protocols significantly reduces the risk of password spraying and credential-based attacks.
+
+---
+
 ## Secure Credentials
 
 Applications should avoid long-lived credentials whenever possible.
@@ -140,6 +157,22 @@ Removing unnecessary applications reduces the attack surface.
 
 ---
 
+## Access Reviews
+
+Organizations should periodically validate who still requires access to Enterprise Applications.
+
+Microsoft Entra ID **Access Reviews** automate this process by allowing administrators or Application Owners to review user and group assignments on a scheduled basis.
+
+Typical review schedules include:
+
+- Monthly
+- Quarterly
+- Annually
+
+If access is no longer required, Microsoft Entra ID can automatically remove the assignment, helping prevent privilege creep and reducing unnecessary access.
+
+---
+
 ## Governance
 
 Enterprise Applications should follow a defined governance process.
@@ -154,6 +187,16 @@ Recommended activities include:
 - Validate business ownership.
 
 Good governance improves accountability and simplifies audits.
+
+---
+
+## Tenant Restrictions
+
+Organizations may implement **Tenant Restrictions** to control which Microsoft Entra ID tenants users can access.
+
+This helps ensure that users authenticate only to approved organizational tenants and prevents the use of unmanaged external tenants for business applications.
+
+Tenant Restrictions support organizational governance and help reduce the risk of data exfiltration through unauthorized external tenants.
 
 ---
 
