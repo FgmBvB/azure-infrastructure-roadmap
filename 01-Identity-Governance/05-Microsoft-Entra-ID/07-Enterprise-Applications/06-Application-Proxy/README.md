@@ -80,6 +80,24 @@ Application Proxy consists of several components.
 
 ---
 
+## Internal and External URLs
+
+Every published application requires both an internal and an external URL.
+
+| URL | Purpose |
+|-----|---------|
+| **Internal URL** | The address used inside the private network (for example, `https://hrportal`). |
+| **External URL** | The public address users access from the Internet. By default, Microsoft Entra ID provides a `*.msappproxy.net` address, although custom domains are also supported. |
+
+Organizations can configure custom domains by:
+
+- Uploading a valid TLS/SSL certificate.
+- Creating the required public DNS CNAME record pointing to the Microsoft Entra Application Proxy endpoint.
+
+This allows users to access applications through familiar corporate URLs.
+
+---
+
 ## Connector
 
 The Application Proxy Connector is installed inside the internal network.
@@ -89,6 +107,38 @@ It establishes an outbound HTTPS connection to Microsoft Entra ID.
 Because the connector initiates the connection, organizations typically do not need to open inbound firewall ports.
 
 Multiple connectors can be deployed for redundancy and load balancing.
+
+---
+
+## Connector Groups
+
+Multiple Application Proxy Connectors can be organized into **Connector Groups**.
+
+Connector Groups allow administrators to route specific Enterprise Applications through designated connectors.
+
+For example:
+
+- HR applications → Madrid Connector Group
+- Finance applications → Barcelona Connector Group
+
+This improves traffic routing, supports geographic distribution, and simplifies large Application Proxy deployments.
+
+Each published application is assigned to a single Connector Group.
+
+---
+
+## Network Requirements
+
+The Application Proxy Connector initiates all communication using outbound connections.
+
+Typical firewall requirements include:
+
+| Port | Purpose |
+|------|---------|
+| **TCP 443 (HTTPS)** | Secure communication with Microsoft Entra ID, authentication, and application traffic. |
+| **TCP 80 (HTTP)** | Certificate Revocation List (CRL) retrieval and connector updates. |
+
+Because all connections are outbound, inbound firewall rules are typically unnecessary.
 
 ---
 
