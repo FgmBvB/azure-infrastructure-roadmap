@@ -127,6 +127,20 @@ Organizations commonly restrict User Consent to reduce security risks associated
 
 ---
 
+## User Consent Settings
+
+Microsoft Entra ID allows administrators to configure tenant-wide user consent policies.
+
+| Setting | Description |
+|---------|-------------|
+| **Do not allow user consent** | Users cannot grant consent. Administrator approval is always required. |
+| **Allow user consent for apps from verified publishers, for selected permissions (Recommended)** | Users can consent only to applications from verified publishers requesting low-impact delegated permissions. |
+| **Allow user consent for all apps** | Users can grant consent to any application requesting delegated permissions, subject to supported permission types. This setting is generally not recommended for production environments. |
+
+These settings help organizations balance usability with security and governance.
+
+---
+
 ## Administrator Consent
 
 Administrator Consent grants permissions for the entire tenant.
@@ -196,6 +210,20 @@ Permission Already Granted?
                  ▼
           Protected Resource
 ```
+
+---
+
+## Low Impact Permissions
+
+Microsoft classifies certain delegated permissions as **low impact**, allowing organizations to permit user consent without administrator involvement.
+
+A common example is:
+
+- `User.Read` – Sign in and read the user's basic profile.
+
+Permissions that provide access to sensitive organizational data, such as mailboxes, calendars, or directory-wide information, typically require administrator consent.
+
+Organizations can configure which delegated permissions users are allowed to consent to through Microsoft Entra ID consent policies.
 
 ---
 
