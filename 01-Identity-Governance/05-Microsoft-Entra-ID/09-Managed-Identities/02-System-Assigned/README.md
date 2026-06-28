@@ -221,8 +221,8 @@ When the application requests a secret, Microsoft Entra ID issues an Access Toke
 
 | Microsoft Documentation | Purpose |
 |-------------------------|---------|
-| https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview | Managed Identities overview |
-| https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/how-to-configure-managed-identities | Configure Managed Identities |
-| https://learn.microsoft.com/azure/role-based-access-control/overview | Azure RBAC overview |
-| https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/tutorial-windows-vm-access-nonaad | Managed Identity tutorial |
-| https://learn.microsoft.com/training/modules/managed-identities-azure-resources/ | Microsoft Learn – Managed Identities |
+| [Managed Identities overview](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview) | Managed Identities overview |
+| [Managed Identities FAQ](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/managed-identities-faq) | Managed Identities concepts and lifecycle |
+| [Managed Identities for Azure VMs](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/how-managed-identities-work-vm) | System-Assigned Managed Identity and IMDS |
+| [Azure RBAC overview](https://learn.microsoft.com/azure/role-based-access-control/overview) | Azure RBAC overview |
+| [Microsoft Learn – Managed Identities](https://learn.microsoft.com/training/modules/managed-identities-azure-resources/) | Microsoft Learn module |
