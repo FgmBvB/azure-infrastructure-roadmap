@@ -60,7 +60,22 @@ Typical examples include:
 
 Applications authenticate using a Managed Identity, while Azure RBAC or Key Vault access controls determine whether access is allowed.
 
+> [!NOTE]
+>
+> Azure Key Vault supports two authorization models:
+>
+> - **Azure RBAC** (recommended)
+> - **Vault Access Policies**
+>
+> Only one authorization model is active for a Key Vault at a time.
+>
+> If the Key Vault uses **Vault Access Policies**, Azure RBAC roles such as **Key Vault Secrets User** do not grant access to secrets.
+>
+> In that case, the Managed Identity must be explicitly added to the Key Vault Access Policies.
+
 ---
+
+
 
 ## Azure Storage
 
@@ -88,6 +103,21 @@ Benefits include:
 - Elimination of SQL passwords in configuration files.
 
 Database permissions remain independent from Azure RBAC and must be configured inside SQL when required.
+
+> [!NOTE]
+>
+> Azure RBAC alone does not grant access to databases inside Azure SQL Database.
+>
+> The Managed Identity must also be created as a contained database user by a Microsoft Entra administrator.
+>
+> Example:
+>
+> ```sql
+> CREATE USER [MyManagedIdentity] FROM EXTERNAL PROVIDER;
+> ALTER ROLE db_datareader ADD MEMBER [MyManagedIdentity];
+> ```
+>
+> Database permissions are managed independently from Azure RBAC.
 
 ---
 
@@ -149,6 +179,16 @@ Examples include:
 - App Service.
 
 Applications obtain Access Tokens automatically without storing credentials.
+
+---
+
+## Azure Arc-enabled Servers
+
+Although Managed Identities are primarily designed for Azure resources, they can also be used with **Azure Arc-enabled servers**.
+
+When a server is connected to Azure Arc, the Azure Connected Machine agent exposes a local identity endpoint that allows applications to obtain Microsoft Entra ID Access Tokens in a similar way to native Azure resources.
+
+This enables hybrid and on-premises workloads to securely authenticate to Azure services without storing credentials.
 
 ---
 
