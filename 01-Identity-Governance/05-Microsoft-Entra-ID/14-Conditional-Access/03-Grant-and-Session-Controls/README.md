@@ -141,6 +141,23 @@ It is commonly used for Bring Your Own Device (BYOD) scenarios where devices are
 
 ---
 
+### Application-Enforced Restrictions
+
+Application-Enforced Restrictions allow supported Microsoft 365 applications to apply limited access for unmanaged devices.
+
+Instead of blocking access completely, applications such as **SharePoint Online**, **OneDrive**, and **Outlook on the web (OWA)** can restrict user actions.
+
+Typical restrictions include:
+
+- Prevent file downloads.
+- Prevent printing.
+- Prevent synchronization with local devices.
+- Allow browser-only viewing.
+
+This enables organizations to reduce data exposure while still allowing users to access corporate information from unmanaged devices.
+
+---
+
 ## Block Access
 
 The **Block Access** control immediately denies access whenever the policy applies.
@@ -167,6 +184,16 @@ Common Session Controls include:
 Sign-in Frequency determines how often users must reauthenticate.
 
 Organizations commonly configure shorter intervals for privileged accounts and sensitive applications.
+
+---
+
+### Sign-in Frequency and Authentication Tokens
+
+Microsoft Entra ID normally refreshes user sessions automatically using refresh tokens.
+
+When a **Sign-in Frequency** policy is configured, users are required to perform a new interactive authentication after the configured period has elapsed, even if a valid refresh token exists.
+
+This provides administrators with greater control over how frequently users must verify their identity.
 
 ---
 
