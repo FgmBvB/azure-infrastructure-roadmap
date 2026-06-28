@@ -78,6 +78,28 @@ Most production environments use **Custom Settings**.
 
 ---
 
+## Staging Mode
+
+Microsoft Entra Connect supports **Staging Mode**, allowing organizations to deploy a secondary synchronization server without exporting changes to Active Directory or Microsoft Entra ID.
+
+A server running in Staging Mode:
+
+- Imports data from Active Directory.
+- Imports data from Microsoft Entra ID.
+- Processes synchronization rules.
+- Maintains its synchronization database.
+- Does **not** export changes to either directory.
+
+Typical use cases include:
+
+- High availability and disaster recovery.
+- Migration to a new synchronization server.
+- Testing synchronization rules before production deployment.
+
+If the primary synchronization server becomes unavailable, administrators can disable Staging Mode on the secondary server to resume synchronization.
+
+---
+
 ## Connect to Active Directory
 
 The installation wizard connects to Active Directory using Enterprise Administrator credentials.
@@ -99,6 +121,21 @@ These objects become available for synchronization.
 Microsoft Entra Connect connects to Microsoft Entra ID using a Global Administrator account.
 
 The wizard registers the synchronization service and prepares the Microsoft Entra tenant for Hybrid Identity.
+
+---
+
+## Service Accounts
+
+During installation, Microsoft Entra Connect creates service identities used for synchronization.
+
+Typical examples include:
+
+| Location | Purpose |
+|----------|---------|
+| **Active Directory** | Creates a dedicated synchronization account with only the permissions required for directory synchronization. |
+| **Microsoft Entra ID** | Creates a synchronization service principal used by Microsoft Entra Connect to communicate securely with Microsoft Entra ID. |
+
+These identities replace the highly privileged administrative accounts used only during the installation process.
 
 ---
 
