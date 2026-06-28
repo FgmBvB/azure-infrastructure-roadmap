@@ -138,6 +138,26 @@ Administrators can customize attribute mappings depending on the application's s
 
 ---
 
+## Matching Precedence
+
+Provisioning must determine whether a user already exists in the target application before creating a new account.
+
+Microsoft Entra ID uses one or more **matching attributes** to identify existing users.
+
+Common matching attributes include:
+
+- User Principal Name (UPN)
+- Email Address
+- Employee ID
+
+When multiple matching attributes are configured, **Matching Precedence** determines the order in which they are evaluated.
+
+If a matching account is found, Microsoft Entra ID links the existing account instead of creating a duplicate user.
+
+Correct matching configuration helps prevent duplicate identities and provisioning errors.
+
+---
+
 ## Scope
 
 Provisioning can synchronize:
@@ -149,6 +169,24 @@ Provisioning can synchronize:
 | All Users | Synchronizes every supported user in the tenant. |
 
 Most organizations provision only assigned users and groups to reduce unnecessary accounts.
+
+---
+
+## Scoping Filters
+
+Scoping Filters provide an additional level of control over which users are provisioned.
+
+These filters evaluate user attributes before synchronization occurs.
+
+Examples include:
+
+- Department equals **Sales**
+- Country equals **United States**
+- Employee Type equals **Full-Time**
+
+Even if a user belongs to an assigned group, Microsoft Entra ID does not provision the account unless all configured Scoping Filter conditions are satisfied.
+
+Scoping Filters help reduce unnecessary provisioning and support organizational policies.
 
 ---
 
@@ -182,6 +220,25 @@ Administrators can review:
 - Deprovisioning events.
 
 Provisioning logs are an important troubleshooting resource.
+
+---
+
+## Quarantine
+
+Microsoft Entra ID automatically protects the provisioning service when repeated synchronization failures occur.
+
+Common causes include:
+
+- Expired administrator credentials.
+- Invalid API credentials.
+- Schema or attribute mapping errors.
+- Target application connectivity issues.
+
+When excessive provisioning failures are detected, the provisioning job enters **Quarantine**.
+
+While in this state, synchronization frequency is significantly reduced until the underlying issue is resolved.
+
+After correcting the problem, administrators can restart the provisioning job to resume normal synchronization.
 
 ---
 
