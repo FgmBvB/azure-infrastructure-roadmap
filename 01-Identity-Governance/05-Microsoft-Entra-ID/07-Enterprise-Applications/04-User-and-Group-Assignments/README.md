@@ -116,6 +116,32 @@ This simplifies lifecycle management and reduces administrative overhead.
 
 ---
 
+## Nested Groups
+
+Microsoft Entra ID does **not** support nested group evaluation for Enterprise Application assignments.
+
+Only **direct members** of an assigned group receive access to the application.
+
+For example:
+
+```text
+Group A
+   │
+Assigned to Application
+   │
+   ▼
+Group B
+   │
+   ▼
+User
+```
+
+In this scenario, the user in **Group B** does **not** inherit access through the nested group relationship.
+
+Administrators should assign users directly or use groups with direct membership when controlling application access.
+
+---
+
 ## App Role Assignments
 
 Enterprise Applications can expose one or more **App Roles**.
@@ -131,6 +157,16 @@ Examples include:
 | Administrator | Full application management |
 
 Assigned App Roles are included in the Access Token and can be used by the application to implement authorization.
+
+---
+
+## Default Access
+
+If an Enterprise Application does not define custom **App Roles**, Microsoft Entra ID assigns users or groups the built-in **Default Access** role.
+
+This role allows users to authenticate to the application but does not provide application-specific authorization.
+
+As a result, the Access Token typically does not contain application role values in the `roles` claim, and authorization decisions are handled by the application itself.
 
 ---
 
