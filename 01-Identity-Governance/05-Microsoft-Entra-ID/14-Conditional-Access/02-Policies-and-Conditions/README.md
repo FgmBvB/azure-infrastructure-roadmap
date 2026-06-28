@@ -238,17 +238,22 @@ For this reason, Microsoft recommends creating a Conditional Access policy that 
 
 ## Device Filter
 
-Device Filters allow administrators to evaluate device attributes.
+Device Filters allow Conditional Access policies to evaluate specific device attributes.
 
-Examples include:
+Common attributes include:
 
 - Device ownership
-- Operating system version
-- Trust type
+- Device trust type
+- Compliance state
+- Operating system
 - Display name
 - Extension attributes
 
-Filters provide granular device targeting beyond simple platform selection.
+Device Filters use logical expressions based on Microsoft Entra device properties.
+
+For example, administrators can target only compliant devices, specific trust types, or devices matching custom extension attributes.
+
+Device Filters provide granular targeting beyond operating system or device platform alone.
 
 ---
 
