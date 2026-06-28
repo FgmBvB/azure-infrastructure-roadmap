@@ -91,6 +91,30 @@ Dynamic Groups automatically update whenever matching attributes change.
 
 ---
 
+### Dynamic Membership Rules
+
+Dynamic Groups use a rule-based expression language to calculate membership automatically.
+
+Common comparison operators include:
+
+- `-eq` (equals)
+- `-ne` (not equals)
+- `-contains`
+- `-notContains`
+- `-match` (regular expression)
+
+Rules can combine multiple conditions using logical operators such as `-and`, `-or`, and `-not`.
+
+Example:
+
+```text
+(user.department -eq "Sales" -or user.department -eq "Marketing") -and (user.userType -eq "Member")
+```
+
+Before saving a Dynamic Group rule, administrators can use the **Validate Rules** feature in the Microsoft Entra admin center to test the rule against selected users or devices.
+
+---
+
 ## Group-based Licensing
 
 Group-based Licensing automatically assigns licenses to members of a licensed Security Group.
@@ -106,6 +130,24 @@ Administrators should monitor licensing errors and available license capacity.
 
 ---
 
+### Troubleshooting Group-based Licensing
+
+Group-based Licensing is evaluated automatically whenever group membership changes.
+
+If a license cannot be assigned successfully, Microsoft Entra ID reports a licensing error for the affected user.
+
+Common causes include:
+
+- No available licenses in the tenant.
+- Conflicting service plans.
+- Incompatible license combinations.
+
+The user remains a member of the group, but the affected Microsoft service is not provisioned until the licensing issue is resolved.
+
+Administrators should regularly review licensing errors in the Microsoft Entra admin center.
+
+---
+
 ## Administrative Units
 
 Administrative Units allow delegated management of users, groups, and devices within a limited administrative scope.
@@ -118,6 +160,18 @@ Typical scenarios include:
 - Business unit delegation.
 
 Administrative Units reduce the need for tenant-wide administrative permissions.
+
+---
+
+### Administrative Unit Scope
+
+Administrative Units (AUs) limit administrative permissions to the objects explicitly contained within the Administrative Unit.
+
+For example, if a Security Group belongs to an Administrative Unit, an administrator scoped to that AU can manage the group's properties and direct membership.
+
+However, managing the group does not automatically grant administrative rights over the users contained in the group.
+
+Those users must also belong directly to the same Administrative Unit for the administrator to manage their accounts.
 
 ---
 
