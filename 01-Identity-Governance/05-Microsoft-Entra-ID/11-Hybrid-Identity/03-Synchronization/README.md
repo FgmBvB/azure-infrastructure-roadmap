@@ -88,6 +88,22 @@ Cloud Sync is suitable for many organizations but currently supports fewer synch
 
 ---
 
+## Microsoft Entra Connect vs Cloud Sync
+
+| Feature | Microsoft Entra Connect | Microsoft Entra Cloud Sync |
+|---------|-------------------------|----------------------------|
+| Synchronization engine | Local synchronization engine | Cloud-managed synchronization service |
+| Infrastructure | Dedicated synchronization server | Lightweight provisioning agents |
+| Password Hash Synchronization | Supported | Supported |
+| Pass-through Authentication | Supported | Not supported |
+| Federation | Supported | Supported |
+| Advanced synchronization features | Broad feature set | Simplified feature set |
+| Typical scenario | Complex hybrid environments | Simpler or distributed environments |
+
+Microsoft Entra Connect remains the most feature-complete synchronization solution, while Cloud Sync focuses on simpler deployment and reduced infrastructure requirements.
+
+---
+
 ## Synchronization Process
 
 ```text
