@@ -237,8 +237,8 @@ Licenses are assigned automatically using Group-based Licensing.
 
 | Microsoft Documentation | Purpose |
 |-------------------------|---------|
-| https://learn.microsoft.com/entra/identity/users/groups-concept | Microsoft Entra groups |
-| https://learn.microsoft.com/entra/fundamentals/concept-group-based-licensing | Group-based licensing |
-| https://learn.microsoft.com/entra/identity/users/groups-create-rule | Dynamic membership rules |
-| https://learn.microsoft.com/microsoft-365/admin/create-groups/office-365-groups | Microsoft 365 Groups |
-| https://learn.microsoft.com/training/modules/create-users-and-groups-in-azure-active-directory/ | Microsoft Learn module |
+| [Microsoft Entra groups](https://learn.microsoft.com/entra/identity/users/groups-concept) | Group concepts and management |
+| [Group-based licensing](https://learn.microsoft.com/entra/fundamentals/concept-group-based-licensing) | Assign licenses through groups |
+| [Dynamic membership rules](https://learn.microsoft.com/entra/identity/users/groups-create-rule) | Create dynamic groups |
+| [Microsoft 365 Groups](https://learn.microsoft.com/microsoft-365/admin/create-groups/office-365-groups) | Collaboration groups |
+| [Microsoft Learn module](https://learn.microsoft.com/training/modules/create-users-and-groups-in-azure-active-directory/) | AZ-104 learning path |
