@@ -130,6 +130,45 @@ Common Microsoft licenses include Microsoft 365 and Microsoft Entra ID Premium.
 
 ---
 
+### Group-based Licensing
+
+Group-based Licensing automatically assigns licenses when users become members of a licensed security group.
+
+Benefits include:
+
+- Simplified license management.
+- Consistent license assignment.
+- Automatic onboarding and offboarding.
+- Reduced administrative effort.
+
+If a licensing issue occurs (such as insufficient available licenses or conflicting service plans), Microsoft Entra ID reports a **License Error** for the affected user.
+
+Licenses inherited through Group-based Licensing cannot be removed directly from the user's account.
+
+Instead, administrators must either:
+
+- Remove the user from the licensed group.
+- Modify the licenses or service plans assigned to the group.
+
+---
+
+### Usage Location
+
+Before assigning Microsoft cloud licenses, every user must have the **Usage Location** property configured.
+
+The value is stored as a two-letter ISO country code (for example, **ES**, **US**, or **MX**).
+
+If the **Usage Location** attribute is empty, Microsoft Entra ID blocks license assignment because Microsoft cloud services must comply with regional licensing and legal requirements.
+
+This validation applies whether licenses are assigned through:
+
+- Microsoft Entra admin center
+- Microsoft 365 admin center
+- Microsoft Graph
+- PowerShell
+
+---
+
 ## Bulk Operations
 
 Microsoft Entra ID supports bulk administration for large environments.
@@ -147,15 +186,20 @@ Bulk operations are commonly performed using CSV files, PowerShell, or Microsoft
 
 ## Deleted Users
 
-Deleted users are temporarily retained before permanent removal.
+When a user is deleted, Microsoft Entra ID performs a **soft deletion**.
 
-During the retention period administrators can:
+Soft-deleted users remain in the directory for **30 days**.
 
-- Restore the user account.
-- Recover assigned properties.
-- Reassign licenses if necessary.
+During this period, administrators can restore the account, including its group memberships and most directory properties.
 
-Permanent deletion removes the identity from Microsoft Entra ID.
+After 30 days, Microsoft Entra ID permanently removes the user through **hard deletion**.
+
+Once hard-deleted, the object cannot be restored and a new user account must be created.
+
+| State | Description |
+|--------|-------------|
+| **Soft Delete** | User can be restored within 30 days. |
+| **Hard Delete** | User is permanently removed from Microsoft Entra ID. |
 
 ---
 
