@@ -60,6 +60,40 @@ This process repeats automatically throughout the day.
 
 ---
 
+## Synchronization Engine
+
+Microsoft Entra Connect processes directory objects using an internal synchronization engine.
+
+The synchronization process consists of three logical stages:
+
+```text
+Active Directory
+        │
+        ▼
+Connector Space
+        │
+Inbound Rules
+        │
+        ▼
+Metaverse
+        │
+Outbound Rules
+        │
+        ▼
+Connector Space
+        │
+        ▼
+Microsoft Entra ID
+```
+
+- **Connector Space (CS)** stores imported objects from connected directories.
+- **Metaverse (MV)** is the central database where objects from different directories are correlated.
+- Synchronization rules determine how objects are joined, projected, and exported.
+
+Administrators can inspect synchronization operations using the **Synchronization Service Manager** (`miisclient.exe`).
+
+---
+
 ## Synchronization Schedule
 
 Microsoft Entra Connect performs synchronization automatically.
