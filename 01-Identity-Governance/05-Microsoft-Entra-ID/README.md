@@ -1,70 +1,129 @@
 # Microsoft Entra ID
 
 > [!NOTE]
-> This section covers Microsoft Entra ID concepts required for the Microsoft AZ-104 certification and for working as an Azure Administrator or Cloud Engineer.
+> This section is part of my Azure Infrastructure Roadmap while preparing for the **Microsoft AZ-104: Microsoft Azure Administrator** certification.
 >
-> Microsoft Entra ID is the identity and access management platform used across Azure. Understanding how identities, authentication, authorization, and access control work is essential before managing Azure resources securely.
-
----
-
-## Learning Path
-
-| Topic | Status | Description |
-|--------|:------:|-------------|
-| [01 - Tenant and Identity](./01-Tenant-and-Identity/) | ⬜ | Understand tenants, directories and identity concepts. |
-| [02 - Authentication](./02-Authentication/) | ⬜ | Learn how Microsoft Entra ID authenticates users and workloads. |
-| [03 - Authorization](./03-Authorization/) | ⬜ | Understand Azure RBAC and access control concepts. |
-| [04 - Users](./04-Users/) | ⬜ | Create and manage cloud, guest and synchronized users. |
-| [05 - Groups](./05-Groups/) | ⬜ | Manage Security Groups and Microsoft 365 Groups. |
-| [06 - App Registrations](./06-App-Registrations/) | ⬜ | Register applications in Microsoft Entra ID. |
-| [07 - Enterprise Applications](./07-Enterprise-Applications/) | ⬜ | Manage SaaS applications and service integrations. |
-| [08 - Service Principals](./08-Service-Principals/) | ⬜ | Understand application identities used in Azure. |
-| [09 - Managed Identities](./09-Managed-Identities/) | ⬜ | Secure Azure resources without storing credentials. |
-| [10 - Devices](./10-Devices/) | ⬜ | Register and manage devices in Microsoft Entra ID. |
-| [11 - Hybrid Identity](./11-Hybrid-Identity/) | ⬜ | Understand hybrid identity architectures. |
-| [12 - Microsoft Entra Connect](./12-Microsoft-Entra-Connect/) | ⬜ | Synchronize on-premises Active Directory with Microsoft Entra ID. |
-| [13 - Multi-Factor Authentication (MFA)](./13-MFA/) | ⬜ | Strengthen authentication using MFA. |
-| [14 - Conditional Access](./14-Conditional-Access/) | ⬜ | Control access based on conditions and risk. |
-| [15 - Administrative Roles](./15-Administrative-Roles/) | ⬜ | Learn the built-in administrative roles in Microsoft Entra ID. |
-
----
-
-## Microsoft Entra ID Overview
-
-```text
-                        Microsoft Entra ID
-                                │
-                           Entra Tenant
-                                │
-       ┌──────────┬──────────┬──────────┬──────────┐
-       │          │          │          │          │
-     Users     Groups    Devices   Applications  Identities
-                                                │
-                                   ┌────────────┴────────────┐
-                                   │                         │
-                          Service Principals     Managed Identities
-```
+> It covers Microsoft Entra ID administration, identity governance, authentication, authorization, hybrid identity, Conditional Access, and administrative security based on Microsoft Learn and official Microsoft documentation.
 
 ---
 
 ## Learning Objectives
 
-After completing this section, you should be able to:
+After completing this section you should be able to:
 
-- Explain the role of Microsoft Entra ID in Azure.
-- Understand authentication and authorization.
-- Manage identities securely.
-- Configure user and group access.
-- Secure Azure resources using RBAC and Managed Identities.
-- Understand hybrid identity scenarios.
-- Configure authentication security features such as MFA and Conditional Access.
+- Understand Microsoft Entra ID architecture.
+- Manage users, groups, and administrative roles.
+- Configure authentication and authorization.
+- Deploy and manage hybrid identity.
+- Configure Enterprise Applications and App Registrations.
+- Implement Managed Identities.
+- Manage devices and hybrid environments.
+- Configure Multi-Factor Authentication (MFA).
+- Design Conditional Access policies.
+- Delegate administration securely using RBAC.
+
+---
+
+# Microsoft Entra ID Roadmap
+
+```text
+Microsoft Entra ID
+│
+├── Tenant & Identity
+├── Authentication
+├── Authorization
+├── Users
+├── Groups
+├── App Registrations
+├── Enterprise Applications
+├── Service Principals
+├── Managed Identities
+├── Devices
+├── Hybrid Identity
+├── Microsoft Entra Connect
+├── Multi-Factor Authentication (MFA)
+├── Conditional Access
+└── Administrative Roles
+```
+
+---
+
+# Learning Path
+
+| Module | Description |
+|---------|-------------|
+| **01 - Tenant and Identity** | Microsoft Entra tenants, directories, and identity fundamentals. |
+| **02 - Authentication** | Authentication methods, password protection, SSO, and identity verification. |
+| **03 - Authorization** | Microsoft Entra RBAC, permissions, and authorization models. |
+| **04 - Users** | User lifecycle, licensing, guest users, and administration. |
+| **05 - Groups** | Security groups, Microsoft 365 Groups, dynamic groups, and group management. |
+| **06 - App Registrations** | Registering applications, authentication flows, permissions, certificates, and secrets. |
+| **07 - Enterprise Applications** | SSO, provisioning, Application Proxy, permissions, consent, and monitoring. |
+| **08 - Service Principals** | Service Principals, application identities, and Azure integrations. |
+| **09 - Managed Identities** | System-assigned and user-assigned Managed Identities, RBAC integration, and use cases. |
+| **10 - Devices** | Device registration, device management, compliance, and Microsoft Entra device identities. |
+| **11 - Hybrid Identity** | Hybrid authentication, synchronization, and identity integration with Active Directory. |
+| **12 - Microsoft Entra Connect** | Installation, synchronization engine, maintenance, staging mode, and troubleshooting. |
+| **13 - Multi-Factor Authentication (MFA)** | Authentication methods, Conditional Access integration, and deployment recommendations. |
+| **14 - Conditional Access** | Policy design, assignments, conditions, Grant Controls, Session Controls, and security best practices. |
+| **15 - Administrative Roles** | Microsoft Entra RBAC, built-in roles, role assignments, PIM, and delegated administration. |
+
+---
+
+# Skills Covered
+
+This section covers the following Microsoft Entra ID administration areas:
+
+- Identity Management
+- Authentication
+- Authorization
+- Hybrid Identity
+- Identity Synchronization
+- Microsoft Entra Connect
+- Enterprise Applications
+- Application Registration
+- Managed Identities
+- Device Identity
+- Multi-Factor Authentication
+- Conditional Access
+- Administrative Roles
+- RBAC
+- Identity Governance
+
+---
+
+## AZ-104 Exam Focus
+
+This section aligns with the Microsoft AZ-104 skills related to:
+
+- Manage Microsoft Entra users and groups.
+- Manage authentication and authorization.
+- Configure Microsoft Entra hybrid identity.
+- Configure Conditional Access.
+- Manage devices.
+- Configure Enterprise Applications.
+- Implement Managed Identities.
+- Delegate administrative permissions.
+
+---
+
+## Microsoft Learn
+
+The content of this section is primarily based on:
+
+- Microsoft Learn
+- Microsoft Learn Modules for AZ-104
+- Microsoft Entra ID Documentation
+- Azure Architecture Center
+- Microsoft Security Documentation
 
 ---
 
 ## References
 
-| Microsoft Documentation | Purpose |
-|-------------------------|---------|
-| https://learn.microsoft.com/entra/ | Microsoft Entra documentation |
-| https://learn.microsoft.com/training/browse/?products=entra | Microsoft Learn |
-| https://learn.microsoft.com/azure/role-based-access-control/overview | Azure RBAC |
+| Resource | Description |
+|----------|-------------|
+| https://learn.microsoft.com/entra | Microsoft Entra documentation |
+| https://learn.microsoft.com/training/azure | Microsoft Learn AZ-104 |
+| https://learn.microsoft.com/azure | Azure documentation |
+| https://learn.microsoft.com/security | Microsoft Security documentation |
