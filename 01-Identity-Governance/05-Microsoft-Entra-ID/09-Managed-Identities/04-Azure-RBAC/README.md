@@ -81,6 +81,44 @@ Only after a valid role assignment exists can the Managed Identity access the ta
 
 ---
 
+## Automation
+
+Azure RBAC role assignments can be created through automation.
+
+### Azure CLI
+
+```bash
+az role assignment create \
+  --assignee-object-id <ManagedIdentity-ObjectId> \
+  --role "Storage Blob Data Reader" \
+  --scope "/subscriptions/<subscription-id>/resourceGroups/<resource-group>"
+```
+
+---
+
+### Azure PowerShell
+
+```powershell
+New-AzRoleAssignment `
+    -ObjectId <ManagedIdentity-ObjectId> `
+    -RoleDefinitionName "Storage Blob Data Reader" `
+    -Scope "/subscriptions/<subscription-id>/resourceGroups/<resource-group>"
+```
+
+These commands assign Azure RBAC permissions directly to the Managed Identity.
+
+## RBAC Propagation
+
+Azure RBAC role assignments are not always available immediately after creation.
+
+It can take several minutes for new role assignments to propagate across Azure Resource Manager.
+
+During this period, applications using a Managed Identity may receive authorization errors such as **403 Forbidden**, even though the role assignment has already been created.
+
+When automating deployments, it is recommended to allow time for RBAC propagation before the application attempts to access protected resources.
+
+---
+
 ## RBAC Scope
 
 Azure RBAC permissions can be assigned at different scopes.
@@ -116,6 +154,24 @@ Typical Azure RBAC roles used with Managed Identities include:
 | Storage Blob Data Contributor | Read and write blob data |
 
 The selected role should always provide only the permissions required.
+
+---
+
+## Control Plane vs Data Plane
+
+Azure RBAC roles apply to different types of operations.
+
+| Plane | Typical Roles | Purpose |
+|-------|---------------|---------|
+| **Control Plane** | Owner, Contributor, Reader | Manage Azure resources through Azure Resource Manager (ARM). |
+| **Data Plane** | Storage Blob Data Reader, Storage Blob Data Contributor, Key Vault Secrets User | Access the data stored inside Azure resources. |
+
+For example:
+
+- A **Contributor** can create or delete a Storage Account but cannot automatically read blob data.
+- A **Storage Blob Data Reader** can read blobs but cannot modify the Storage Account itself.
+
+Managed Identities commonly require **Data Plane** roles to access application data securely.
 
 ---
 
