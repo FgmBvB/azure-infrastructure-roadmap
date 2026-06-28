@@ -204,17 +204,35 @@ Country-based locations may also use GPS information from Microsoft Authenticato
 
 ## Client Applications
 
-Policies can differentiate between authentication clients.
+Conditional Access distinguishes between modern and legacy authentication clients.
+
+### Modern Authentication
+
+Modern authentication uses OAuth 2.0, OpenID Connect, or SAML.
 
 Examples include:
 
-- Browser
-- Mobile apps
-- Desktop applications
-- Exchange ActiveSync
-- Other legacy authentication clients
+- Web browsers
+- Microsoft 365 desktop applications
+- Mobile applications
+- Modern authentication clients
 
-Blocking legacy authentication clients is a common security recommendation.
+These clients support interactive authentication, including Multi-Factor Authentication (MFA).
+
+### Legacy Authentication
+
+Legacy authentication includes older protocols such as:
+
+- IMAP
+- POP3
+- SMTP Authentication
+- MAPI
+- RPC
+- Exchange ActiveSync (legacy scenarios)
+
+These protocols do not support modern authentication challenges such as MFA.
+
+For this reason, Microsoft recommends creating a Conditional Access policy that explicitly **blocks legacy authentication**.
 
 ---
 
