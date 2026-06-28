@@ -121,9 +121,15 @@ The content of this section is primarily based on:
 
 ## References
 
-| Resource | Description |
-|----------|-------------|
-| https://learn.microsoft.com/entra | Microsoft Entra documentation |
-| https://learn.microsoft.com/training/azure | Microsoft Learn AZ-104 |
-| https://learn.microsoft.com/azure | Azure documentation |
-| https://learn.microsoft.com/security | Microsoft Security documentation |
+| Microsoft Documentation | Purpose |
+|-------------------------|---------|
+| https://learn.microsoft.com/entra | Microsoft Entra documentation hub |
+| https://learn.microsoft.com/entra/fundamentals/whatis | Microsoft Entra ID overview |
+| https://learn.microsoft.com/entra/identity | Identity documentation |
+| https://learn.microsoft.com/entra/identity/authentication | Authentication documentation |
+| https://learn.microsoft.com/entra/identity/conditional-access | Conditional Access documentation |
+| https://learn.microsoft.com/entra/identity/devices | Device identity documentation |
+| https://learn.microsoft.com/entra/identity/hybrid | Hybrid Identity documentation |
+| https://learn.microsoft.com/entra/identity/role-based-access-control | Microsoft Entra RBAC documentation |
+| https://learn.microsoft.com/training/browse/?products=entra | Microsoft Learn – Microsoft Entra learning paths |
+| https://learn.microsoft.com/credentials/certifications/azure-administrator | AZ-104 certification page |
