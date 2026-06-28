@@ -81,6 +81,21 @@ These authorization systems operate independently but often complement each othe
 
 ---
 
+## Access Management for Azure Resources
+
+By default, a **Global Administrator** in Microsoft Entra ID does **not** have administrative permissions over Azure subscriptions or Azure resources.
+
+However, a Global Administrator can enable the **Access management for Azure resources** option from the Microsoft Entra tenant properties.
+
+When enabled, Microsoft Entra ID automatically assigns the user the **User Access Administrator** role at the Azure **Root Scope (`/`)**.
+
+This allows the administrator to manage Azure RBAC role assignments across all management groups, subscriptions, and resource groups in the tenant.
+
+> [!NOTE]
+> This feature is commonly used for recovery scenarios when Azure RBAC administrators are unavailable.
+
+---
+
 ## Built-in Roles
 
 Microsoft Entra ID includes numerous built-in administrative roles.
@@ -97,6 +112,23 @@ Examples include:
 - Global Reader
 
 Each role provides only the permissions required for its administrative function.
+
+---
+
+## Custom Roles
+
+In addition to built-in roles, Microsoft Entra ID supports **Custom Roles**.
+
+Custom Roles allow organizations to delegate only the specific administrative permissions required for a job function.
+
+Characteristics include:
+
+- Available with Microsoft Entra ID Premium P1 or P2 licensing.
+- Permissions are defined using Microsoft Graph resource actions.
+- Custom Roles follow the same RBAC model as built-in roles.
+- They help implement the principle of least privilege in large environments.
+
+Custom Roles are typically used when built-in roles provide either too many or too few permissions.
 
 ---
 
@@ -125,6 +157,23 @@ For example:
 - University IT staff manage only one faculty.
 
 Administrative Units reduce unnecessary administrative privileges in large organizations.
+
+---
+
+## Role-Assignable Groups
+
+Microsoft Entra ID allows administrative roles to be assigned to special security groups known as **Role-Assignable Groups**.
+
+Unlike standard security groups, these groups are created with the **isAssignableToRole** property set to **True**.
+
+Important characteristics include:
+
+- The **isAssignableToRole** property can only be configured during group creation.
+- It cannot be modified later.
+- Only **Global Administrators** and **Privileged Role Administrators** can manage the membership of these groups.
+- Assigning roles to groups simplifies administration while maintaining centralized permission management.
+
+Role-Assignable Groups are recommended for organizations managing large administrative teams.
 
 ---
 
