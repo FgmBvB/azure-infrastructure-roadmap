@@ -110,14 +110,37 @@ Provisioning Logs are essential when troubleshooting SCIM synchronization.
 
 ## Log Retention
 
-The available retention period depends on the organization's Microsoft Entra licensing and Microsoft Sentinel or Azure Monitor integration.
+Microsoft Entra ID stores logs for a limited period depending on the organization's licensing.
 
-Organizations requiring long-term retention typically export logs to:
+| Log Type | Microsoft Entra ID Free | Microsoft Entra ID P1 / P2 |
+|----------|-------------------------|----------------------------|
+| **Sign-in Logs** | 7 days | 30 days |
+| **Audit Logs** | 30 days | 30 days |
+| **Provisioning Logs** | 30 days | 30 days |
 
-- Azure Monitor
-- Microsoft Sentinel
-- Event Hub
-- Storage Accounts
+Organizations requiring longer retention should export logs to external Azure services before the native retention period expires.
+
+---
+
+## Diagnostic Settings
+
+To retain Microsoft Entra ID logs beyond the native retention period, administrators can configure **Diagnostic Settings**.
+
+Diagnostic Settings allow selected log categories, such as:
+
+- SignInLogs
+- AuditLogs
+- ProvisioningLogs
+
+to be sent to one or more Azure destinations.
+
+| Destination | Typical Use Case |
+|-------------|------------------|
+| **Log Analytics Workspace** | KQL queries, dashboards, alerts, and investigations. |
+| **Azure Storage Account** | Long-term archival at low cost. |
+| **Azure Event Hubs** | Streaming logs to external SIEM platforms such as Microsoft Sentinel or Splunk. |
+
+This enables long-term monitoring, compliance, and advanced security analytics.
 
 ---
 
@@ -150,6 +173,22 @@ Administrators can determine whether access was:
 - Blocked by user risk
 
 This information is critical when troubleshooting authentication issues.
+
+---
+
+## Report-only Policies
+
+Conditional Access policies can operate in **Report-only** mode.
+
+When enabled, Microsoft Entra ID evaluates the policy during sign-in but does not enforce its controls.
+
+Administrators can review the Sign-in Logs to determine whether the policy would have:
+
+- Granted access
+- Required Multi-Factor Authentication (MFA)
+- Blocked the sign-in
+
+Report-only mode allows organizations to validate Conditional Access policies before enabling them in production.
 
 ---
 
