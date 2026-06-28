@@ -100,7 +100,24 @@ They cannot perform tenant-wide administrative tasks.
 
 ---
 
+### Helpdesk Administrator vs User Administrator
+
+Although both roles can perform password-related operations, their permissions are different.
+
+| Capability | Helpdesk Administrator | User Administrator |
+|------------|------------------------|--------------------|
+| Reset passwords for standard users | Yes | Yes |
+| Reset passwords for Helpdesk Administrators | No | Yes |
+| Reset passwords for User Administrators | No | Yes |
+| Reset passwords for privileged administrators (for example, Global Administrator) | No | No |
+
+The Helpdesk Administrator role is intended for first-line support and cannot manage privileged administrative accounts.
+
+The User Administrator role has broader user management capabilities but is still restricted from managing highly privileged administrator accounts.
+
 ## Groups Administrator
+
+---
 
 Groups Administrators manage:
 
@@ -127,6 +144,25 @@ They cannot assign administrative roles.
 
 ---
 
+### Application Administrator vs Cloud Application Administrator
+
+Both roles can manage application registrations and enterprise applications.
+
+The primary difference is the scope of administration.
+
+| Capability | Application Administrator | Cloud Application Administrator |
+|------------|--------------------------|---------------------------------|
+| Manage App Registrations | Yes | Yes |
+| Manage Enterprise Applications | Limited | Yes |
+| Configure Single Sign-On | Limited | Yes |
+| Manage application credentials (where permitted) | Limited | Yes |
+
+Cloud Application Administrator provides broader permissions for enterprise application management, including Single Sign-On and application configuration across the tenant.
+
+Application Administrator is typically assigned when organizations want to delegate application management with fewer permissions.
+
+---
+
 ## Authentication Administrator
 
 Authentication Administrators manage user authentication methods.
@@ -142,13 +178,20 @@ They cannot modify broader security policies.
 
 ---
 
-## Privileged Authentication Administrator
+## Authentication Administrator vs Privileged Authentication Administrator
 
-This role extends Authentication Administrator capabilities.
+Both roles manage authentication methods, but they differ in the scope of users they can administer.
 
-Additionally, it can manage authentication methods for privileged administrator accounts.
+| Capability | Authentication Administrator | Privileged Authentication Administrator |
+|------------|-----------------------------|------------------------------------------|
+| Manage authentication methods for standard users | Yes | Yes |
+| Reset passwords for standard users | Yes | Yes |
+| Manage authentication methods for privileged administrators | No | Yes |
+| Reset authentication methods for privileged administrators | No | Yes |
 
-This role should be assigned carefully.
+Because the **Privileged Authentication Administrator** can manage authentication methods for highly privileged accounts, Microsoft considers it a highly sensitive administrative role.
+
+Organizations should assign this role only to trusted administrators and protect it with Multi-Factor Authentication and Privileged Identity Management (PIM).
 
 ---
 
