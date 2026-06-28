@@ -3,47 +3,31 @@
 > [!NOTE]
 > This section is part of my Azure Infrastructure Roadmap while preparing for the Microsoft AZ-104 certification.
 >
-> The objective is to understand identity management, authentication, authorization, and application access in Microsoft Entra ID from both an administrative and architectural perspective.
+> It covers the identity and access management capabilities provided by Microsoft Entra ID, following the Microsoft Learn learning path and official Microsoft documentation.
 
 ---
 
 ## Overview
 
-Microsoft Entra ID is Microsoft's cloud-based identity and access management (IAM) service.
+Microsoft Entra ID is Microsoft's cloud-based Identity and Access Management (IAM) platform.
 
-It provides authentication, authorization, identity governance, and secure access to Microsoft and third-party applications.
+It enables organizations to manage identities, secure authentication, control authorization, protect applications, and govern access to Azure resources and third-party services.
 
-For the AZ-104 certification, Microsoft expects administrators to understand how identities are created, secured, managed, and used across Azure resources.
-
----
-
-## AZ-104 Learning Objectives
-
-According to the official Microsoft Learn learning path, candidates should be able to:
-
-- Understand Microsoft Entra ID architecture.
-- Manage users and groups.
-- Configure authentication methods.
-- Implement Multi-Factor Authentication (MFA).
-- Configure Conditional Access policies.
-- Manage administrative roles.
-- Understand App Registrations and Enterprise Applications.
-- Configure Managed Identities.
-- Implement Hybrid Identity with Microsoft Entra Connect.
-- Manage application authentication and authorization.
-- Troubleshoot identity and access issues.
+Understanding Microsoft Entra ID is fundamental for Azure administrators because almost every Azure service relies on identity-based security.
 
 ---
 
-## Topics Covered
+## Learning Objectives
 
-This section includes:
+This section follows the official Microsoft Learn objectives for the AZ-104 certification.
 
-- Tenant and Identity
+Topics include:
+
+- Microsoft Entra tenants
+- Identity management
 - Authentication
 - Authorization
-- Users
-- Groups
+- Users and groups
 - App Registrations
 - Enterprise Applications
 - Service Principals
@@ -57,44 +41,86 @@ This section includes:
 
 ---
 
-## Skills Developed
+## Skills Covered
 
-After completing this section, you should be able to:
+After completing this section, you should understand how to:
 
-- Deploy and manage Microsoft Entra ID identities.
-- Secure user and application authentication.
-- Configure application access.
-- Manage identity lifecycle.
-- Protect Azure resources using identity-based security.
-- Troubleshoot authentication and authorization problems.
-
----
-
-## Microsoft Learn
-
-The official Microsoft Learn learning path for AZ-104 is available here:
-
-- https://learn.microsoft.com/training/paths/az-104-manage-identities-governance-azure/
-
-Additional documentation:
-
-- https://learn.microsoft.com/entra/
-- https://learn.microsoft.com/azure/active-directory/
-- https://learn.microsoft.com/azure/role-based-access-control/
+- Manage Microsoft Entra tenants.
+- Create and manage users and groups.
+- Configure authentication and authorization.
+- Secure applications and identities.
+- Deploy and manage application identities.
+- Implement Conditional Access and MFA.
+- Configure hybrid identity.
+- Manage administrative roles.
+- Troubleshoot authentication and access issues.
 
 ---
 
-## Certification Focus
+## Directory Structure
 
-For the AZ-104 exam, Microsoft Entra ID is one of the core domains.
+```text
+05-Microsoft-Entra-ID
+│
+├── 01-Tenant-and-Identity
+├── 02-Authentication
+├── 03-Authorization
+├── 04-Users
+├── 05-Groups
+├── 06-App-Registrations
+├── 07-Enterprise-Applications
+├── 08-Service-Principals
+├── 09-Managed-Identities
+├── 10-Devices
+├── 11-Hybrid-Identity
+├── 12-Microsoft-Entra-Connect
+├── 13-MFA
+├── 14-Conditional-Access
+└── 15-Administrative-Roles
+```
 
-Candidates should understand:
+---
 
-- Identity management
-- Authentication
-- Authorization
-- Application identity
-- Conditional Access
-- Hybrid identity
-- Identity governance
-- Administrative roles
+## AZ-104 Focus
+
+> [!IMPORTANT]
+>
+> You should understand:
+>
+> - Microsoft Entra architecture
+> - Identity lifecycle management
+> - Authentication methods
+> - Authorization models
+> - Application identities
+> - Enterprise Applications
+> - Service Principals
+> - Managed Identities
+> - Hybrid Identity
+> - Conditional Access
+> - Multi-Factor Authentication
+> - Administrative roles
+
+---
+
+## Key Takeaways
+
+- Microsoft Entra ID is Azure's Identity and Access Management platform.
+- Identity is the security foundation of Azure.
+- Authentication verifies identity.
+- Authorization determines resource access.
+- Applications authenticate using App Registrations and Service Principals.
+- Conditional Access and MFA strengthen identity security.
+- Managed Identities eliminate the need to store credentials.
+- Hybrid identity integrates on-premises Active Directory with Microsoft Entra ID.
+
+---
+
+## References
+
+| Microsoft Documentation | Purpose |
+|-------------------------|---------|
+| https://learn.microsoft.com/training/paths/az-104-manage-identities-governance-azure/ | Official AZ-104 Microsoft Learn learning path |
+| https://learn.microsoft.com/entra/ | Microsoft Entra documentation |
+| https://learn.microsoft.com/entra/fundamentals/whatis | Microsoft Entra overview |
+| https://learn.microsoft.com/entra/identity/ | Identity management documentation |
+| https://learn.microsoft.com/azure/architecture/guide/security/identity-management | Azure identity architecture |
