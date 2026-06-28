@@ -205,6 +205,16 @@ Application Access
 
 Assignments are evaluated before access to the application is granted.
 
+> [!NOTE]
+>
+> If **Assignment required?** is enabled and a user who has not been assigned attempts to sign in, Microsoft Entra ID blocks the authentication request and returns the error:
+>
+> **AADSTS50105**
+>
+> *The signed in user is not assigned to a role for the application.*
+>
+> This is one of the most common troubleshooting scenarios for Enterprise Applications.
+
 ---
 
 ## Relationship with Conditional Access
