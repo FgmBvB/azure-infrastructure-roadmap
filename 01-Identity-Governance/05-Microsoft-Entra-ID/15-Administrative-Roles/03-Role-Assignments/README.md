@@ -68,18 +68,30 @@ Microsoft recommends limiting direct assignments whenever possible.
 
 ## Role-Assignable Groups
 
-Administrative roles can also be assigned to **Role-Assignable Groups**.
+Administrative roles can be assigned only to **Role-Assignable Groups**.
 
 Unlike standard security groups, these groups are created with the **isAssignableToRole** property enabled.
 
-Characteristics include:
+Important characteristics include:
 
-- Centralized administration.
-- Easier permission management.
-- Simplified onboarding and offboarding.
-- Suitable for large organizations.
+- Only **Security Groups** can be role-assignable.
+- Microsoft 365 Groups cannot be role-assignable.
+- Dynamic Groups cannot be role-assignable.
+- The **isAssignableToRole** property must be configured during group creation.
+- The property cannot be modified after the group has been created.
+- Only **Global Administrators** and **Privileged Role Administrators** can manage the membership of these groups.
 
-Only **Global Administrators** and **Privileged Role Administrators** can manage the membership of Role-Assignable Groups.
+Role-Assignable Groups simplify delegated administration while protecting privileged role assignments from unauthorized changes.
+
+---
+
+### Cloud-only Requirement
+
+Role-Assignable Groups must be created directly in Microsoft Entra ID.
+
+Groups synchronized from on-premises Active Directory through Microsoft Entra Connect cannot become Role-Assignable Groups because the **isAssignableToRole** property is supported only for cloud-created security groups.
+
+This restriction helps protect privileged role assignments from unauthorized changes originating from on-premises Active Directory.
 
 ---
 
@@ -99,16 +111,23 @@ This enables delegated administration for departments, campuses, subsidiaries, o
 
 ## Privileged Identity Management (PIM)
 
-Microsoft Entra Privileged Identity Management reduces permanent privileged access.
+Microsoft Entra Privileged Identity Management (PIM) reduces permanent privileged access.
 
-Users receive one of two assignment types.
+PIM supports two assignment types.
 
 | Assignment Type | Description |
 |-----------------|-------------|
-| **Active** | Administrative permissions are always available. |
-| **Eligible** | Permissions must be activated when needed. |
+| **Active** | Administrative permissions are immediately available. |
+| **Eligible** | Permissions must be activated before use. |
 
-Eligible assignments reduce standing administrative privileges.
+Both assignment types may be either:
+
+- **Permanent** — No expiration date.
+- **Time-bound** — Automatically expires after a configured period.
+
+Time-bound assignments are commonly used for temporary administrators, contractors, and project-based access.
+
+Eligible assignments remain Microsoft's recommended approach because they minimize standing administrative privileges.
 
 ---
 
