@@ -115,6 +115,40 @@ Resources are marked as either **Compliant** or **Non-compliant** based on the a
 
 ---
 
+### Resource Manager Evaluation
+
+During resource deployment, Azure Resource Manager evaluates several governance services before completing the operation.
+
+A simplified evaluation sequence is:
+
+```text
+Authentication
+      │
+      ▼
+Azure RBAC
+(Authorization)
+      │
+      ▼
+Azure Policy
+(Compliance)
+      │
+      ▼
+Resource Locks
+      │
+      ▼
+Resource Deployment
+```
+
+In general:
+
+- Azure RBAC verifies whether the identity is authorized to perform the requested operation.
+- Azure Policy evaluates whether the resource configuration complies with organizational standards.
+- Resource Locks protect existing resources from accidental modification or deletion.
+
+If a policy with the **Deny** effect applies, Azure Resource Manager stops the deployment before the resource is created.
+
+---
+
 ## Policy Effects
 
 Azure Policy supports multiple effects.
@@ -133,6 +167,19 @@ Each effect determines how Azure responds when a resource does not satisfy the p
 
 ---
 
+## Exclusions and Exemptions
+
+Azure Policy provides two mechanisms for excluding resources from policy enforcement.
+
+| Feature | Description |
+|---------|-------------|
+| **Exclusion** | Excludes a scope from a policy assignment so resources within that scope are not evaluated. |
+| **Exemption** | Excludes specific resources from compliance while keeping the policy assignment in place. Exemptions can optionally include an expiration date and justification. |
+
+Exclusions are configured during policy assignment, whereas Exemptions are intended for approved governance exceptions without removing the policy itself.
+
+---
+
 ## Compliance
 
 Azure Policy continuously tracks compliance across assigned scopes.
@@ -145,6 +192,23 @@ Administrators can:
 - Launch remediation tasks for supported policies.
 
 Compliance results are available in the Azure portal and can also be queried programmatically.
+
+---
+
+## Policy Initiatives
+
+A **Policy Initiative** (also called a **Policy Set Definition**) is a collection of multiple Policy Definitions managed as a single unit.
+
+Instead of assigning many individual policies, administrators can assign one Initiative that represents a common governance objective.
+
+Benefits include:
+
+- Simplified policy management.
+- Centralized compliance reporting.
+- Consistent governance across subscriptions.
+- Easier implementation of regulatory standards.
+
+Policy Initiatives are covered in detail in the next section of this roadmap.
 
 ---
 
