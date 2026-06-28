@@ -81,6 +81,43 @@ Deleting an Azure resource does not delete the User-Assigned Managed Identity.
 
 ---
 
+## Automation
+
+User-Assigned Managed Identities can be created and assigned through automation.
+
+### Azure CLI
+
+Create a Managed Identity:
+
+```bash
+az identity create \
+  --name MyUserIdentity \
+  --resource-group MyRG
+```
+
+Assign the identity to a Virtual Machine:
+
+```bash
+az vm identity assign \
+  --name MyVM \
+  --resource-group MyRG \
+  --identities MyUserIdentity
+```
+
+---
+
+### Azure PowerShell
+
+Create a Managed Identity:
+
+```powershell
+New-AzUserAssignedIdentity `
+    -Name MyUserIdentity `
+    -ResourceGroupName MyRG
+```
+
+---
+
 ## Identity Characteristics
 
 | Property | User-Assigned |
@@ -120,6 +157,19 @@ Common examples include:
 - Contributor
 
 Authorization is always evaluated through Azure RBAC.
+
+---
+
+## Selecting a User-Assigned Managed Identity
+
+When an Azure resource has multiple User-Assigned Managed Identities attached, the application must specify which identity should be used when requesting an Access Token from the Azure Instance Metadata Service (IMDS).
+
+The request typically includes one of the following parameters:
+
+- `client_id`
+- `mi_res_id` (Managed Identity Resource ID)
+
+If no identity is specified and multiple User-Assigned Managed Identities are attached, IMDS returns an error because it cannot determine which identity should authenticate the request.
 
 ---
 
