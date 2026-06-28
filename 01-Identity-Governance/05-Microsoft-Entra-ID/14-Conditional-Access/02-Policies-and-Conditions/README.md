@@ -181,6 +181,27 @@ Organizations commonly require MFA outside trusted corporate networks.
 
 ---
 
+### Named Locations
+
+Conditional Access supports two types of Named Locations.
+
+| Type | Description |
+|------|-------------|
+| **IP Address Ranges** | Uses IPv4 or IPv6 CIDR ranges to identify trusted networks. |
+| **Countries** | Uses IP geolocation to identify the user's country or region. |
+
+IP-based Named Locations can be marked as **Trusted Locations**.
+
+Trusted Locations are commonly used to:
+
+- Reduce unnecessary MFA prompts.
+- Exclude trusted corporate networks from specific policies.
+- Apply location-based access controls.
+
+Country-based locations may also use GPS information from Microsoft Authenticator (when available) to improve location accuracy.
+
+---
+
 ## Client Applications
 
 Policies can differentiate between authentication clients.
