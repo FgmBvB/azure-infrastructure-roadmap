@@ -112,7 +112,57 @@ Session Controls
 Access Decision
 ```
 
-If multiple Conditional Access policies apply simultaneously, all applicable policies are evaluated before a final access decision is made.
+If multiple Conditional Access policies apply simultaneously, Microsoft Entra ID evaluates all applicable policies before making a final access decision.
+
+---
+
+## Policy Evaluation Rules
+
+Multiple Conditional Access policies can apply to a single sign-in.
+
+Microsoft Entra ID follows two fundamental evaluation rules.
+
+### Block Controls Take Priority
+
+If **any** applicable policy contains a **Block access** control, access is denied immediately.
+
+A **Block** decision always overrides any **Grant** decision from other policies.
+
+### Grant Controls Are Cumulative
+
+If multiple policies require different Grant Controls, users must satisfy **all required controls** before access is granted.
+
+For example:
+
+- Policy A requires **Multi-Factor Authentication (MFA)**.
+- Policy B requires a **Compliant Device**.
+
+The user must successfully complete **both** requirements.
+
+---
+
+## Report-only Validation
+
+Conditional Access policies can be configured in **Report-only** mode.
+
+When a policy is in this mode:
+
+- The policy is fully evaluated during sign-in.
+- Grant Controls are **not enforced**.
+- Users are **not blocked**.
+- MFA is **not requested**.
+
+Instead, Microsoft Entra ID records the expected result in the **Sign-in Logs** under the **Conditional Access** tab.
+
+Possible evaluation results include:
+
+| Result | Meaning |
+|---------|---------|
+| **Success** | The user would have satisfied the policy requirements. |
+| **Failure** | The user would have failed the policy requirements. |
+| **Not Applied** | The policy did not apply because its assignments or conditions were not met. |
+
+Report-only mode allows administrators to validate new policies safely before enabling enforcement.
 
 ---
 
@@ -148,7 +198,7 @@ Common Grant Controls include:
 - Require approved client application
 - Block access
 
-Policies may combine multiple Grant Controls to increase security.
+Multiple Grant Controls can be combined to increase security.
 
 ---
 
@@ -167,6 +217,25 @@ Session Controls help maintain security after authentication has completed.
 
 ---
 
+## Best Practice: Emergency Access Accounts
+
+Microsoft recommends maintaining at least **two emergency access (break-glass) accounts**.
+
+These accounts provide administrative access if Conditional Access policies accidentally prevent all administrators from signing in.
+
+Recommendations include:
+
+- Exclude the accounts from all Conditional Access policies.
+- Use long, highly secure passwords.
+- Do not associate the accounts with individual employees.
+- Store credentials securely.
+- Monitor sign-in activity regularly.
+- Test the accounts periodically.
+
+Emergency access accounts help prevent tenant lockout during configuration errors or service disruptions.
+
+---
+
 ## Enterprise Scenario
 
 A company protects Microsoft 365 and Azure resources using Conditional Access.
@@ -176,6 +245,25 @@ Employees signing in from compliant corporate devices inside trusted locations r
 When users attempt to sign in from an unmanaged device or an unfamiliar location, Conditional Access requires Multi-Factor Authentication before access is granted.
 
 Administrators test all new policies in **Report-only** mode before enabling enforcement.
+
+---
+
+## Emergency Access Accounts
+
+Microsoft recommends maintaining at least **two emergency access (break-glass) accounts**.
+
+These accounts provide administrative access if Conditional Access policies accidentally prevent all administrators from signing in.
+
+Best practices include:
+
+- Exclude the accounts from all Conditional Access policies.
+- Use long, highly secure passwords.
+- Do not associate the accounts with individual employees.
+- Store credentials securely.
+- Monitor sign-in activity regularly.
+- Test the accounts periodically.
+
+Emergency access accounts help prevent tenant lockout during configuration errors or service disruptions.
 
 ---
 
