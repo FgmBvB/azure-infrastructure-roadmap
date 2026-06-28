@@ -52,6 +52,27 @@ A device can exist in Microsoft Entra ID without being managed by Microsoft Intu
 
 ---
 
+## MDM and MAM User Scopes
+
+Microsoft Entra ID integrates with Microsoft Intune through **Mobility (MDM and MAM)** settings.
+
+Administrators configure:
+
+| Setting | Purpose |
+|---------|---------|
+| **MDM User Scope** | Determines which users automatically enroll their devices in Microsoft Intune. |
+| **MAM User Scope** | Determines which users receive Mobile Application Management (MAM) policies without requiring device enrollment. |
+
+The MDM User Scope can be configured for:
+
+- All users
+- Selected security groups
+- None
+
+If a user is outside the configured MDM User Scope, the device can still be registered in Microsoft Entra ID, but it will not automatically enroll in Microsoft Intune.
+
+---
+
 ## Device Identity
 
 Microsoft Entra ID is responsible for:
@@ -96,6 +117,16 @@ Typical compliance checks include:
 - Device not rooted or jailbroken.
 
 Compliance results can be used by Conditional Access policies.
+
+---
+
+## Compliance State
+
+Microsoft Intune evaluates whether a device complies with the organization's security requirements.
+
+After evaluation, Intune updates the device object in Microsoft Entra ID with its compliance state.
+
+Conditional Access policies use this information when evaluating requirements such as **Require device to be marked as compliant** before granting access to protected resources.
 
 ---
 
@@ -160,6 +191,19 @@ Each device is Microsoft Entra Joined and enrolled in Microsoft Intune.
 Intune applies security baselines, configures BitLocker, deploys Microsoft 365 Apps, and evaluates compliance.
 
 Conditional Access allows access to corporate resources only from compliant devices.
+
+---
+
+## Administrative Roles
+
+Different Microsoft Entra and Microsoft Intune roles are responsible for device administration.
+
+| Role | Responsibilities |
+|------|------------------|
+| **Cloud Device Administrator** | Manage device objects in Microsoft Entra ID, including enabling, disabling, and deleting devices. |
+| **Intune Administrator** | Manage device enrollment, compliance policies, configuration profiles, and device management through Microsoft Intune. |
+
+Using dedicated administrative roles helps implement the principle of least privilege.
 
 ---
 
