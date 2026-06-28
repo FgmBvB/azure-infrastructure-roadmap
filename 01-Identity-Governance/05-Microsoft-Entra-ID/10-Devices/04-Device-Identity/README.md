@@ -54,6 +54,19 @@ Device identities improve security by allowing organizations to evaluate both th
 
 ---
 
+## Device Identifiers
+
+Each device registered in Microsoft Entra ID has multiple identifiers.
+
+| Identifier | Purpose |
+|------------|---------|
+| **Device ID** | Uniquely identifies the physical or virtual device and is shared with the operating system. |
+| **Object ID** | Identifies the Device Object stored in Microsoft Entra ID and is used by directory services and Microsoft Graph. |
+
+Although both values are GUIDs, they serve different administrative purposes and should not be confused.
+
+---
+
 ## Device Object
 
 Every registered device has a corresponding **Device Object** stored in Microsoft Entra ID.
@@ -70,6 +83,16 @@ Typical properties include:
 - Enabled state
 
 This object represents the device throughout its lifecycle.
+
+---
+
+## BitLocker Recovery Keys
+
+For supported Microsoft Entra Joined and Hybrid Joined Windows devices, BitLocker recovery information can be backed up to Microsoft Entra ID.
+
+Authorized administrators can retrieve BitLocker recovery keys from the device's properties in the Microsoft Entra admin center when recovery is required.
+
+This simplifies recovery operations while maintaining centralized management.
 
 ---
 
@@ -98,6 +121,16 @@ A device identity can exist in different administrative states.
 | **Deleted** | The device identity has been removed from Microsoft Entra ID. |
 
 Disabling a device is often preferred over immediate deletion during investigations.
+
+---
+
+## Device Activity
+
+Microsoft Entra ID records the approximate last sign-in time for each device.
+
+Administrators can use this information to identify inactive devices and support lifecycle management processes.
+
+Reviewing device activity helps organizations remove obsolete device identities and reduce unnecessary security exposure.
 
 ---
 
