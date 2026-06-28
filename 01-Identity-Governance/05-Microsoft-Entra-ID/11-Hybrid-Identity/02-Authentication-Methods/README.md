@@ -51,6 +51,22 @@ Password Hash Synchronization synchronizes a hash of the user's password hash fr
 
 Authentication occurs entirely in Microsoft Entra ID.
 
+---
+
+### Password Hash Synchronization Security
+
+Password Hash Synchronization does not synchronize the user's plain-text password to Microsoft Entra ID.
+
+It also does not synchronize the original Active Directory password hash directly.
+
+Microsoft Entra Connect processes the on-premises password hash before synchronizing it to Microsoft Entra ID, making the cloud-stored hash different from the original Active Directory hash.
+
+Password Hash Synchronization can also be enabled as a backup authentication method when using Pass-through Authentication or Federation.
+
+This provides resilience if on-premises authentication infrastructure becomes unavailable.
+
+---
+
 ### Advantages
 
 - Simplest deployment.
@@ -70,6 +86,20 @@ Authentication occurs entirely in Microsoft Entra ID.
 Pass-through Authentication validates passwords directly against the on-premises Active Directory.
 
 Microsoft Entra ID forwards the authentication request to a PTA agent installed on-premises.
+
+---
+
+### PTA Network Requirements
+
+Pass-through Authentication agents establish outbound connections to Microsoft services.
+
+No inbound firewall ports are required from the Internet to the on-premises network.
+
+PTA agents communicate with Microsoft Entra ID using outbound HTTPS traffic, typically over TCP port 443.
+
+This reduces perimeter network exposure compared with traditional federation infrastructure.
+
+---
 
 ### Advantages
 
@@ -113,6 +143,26 @@ Microsoft Entra ID redirects authentication requests to the federation service.
 | Infrastructure complexity | Low | Medium | High |
 | High availability | High | Agent redundancy recommended | Requires highly available federation infrastructure |
 | Microsoft recommendation | Yes (most scenarios) | Supported | Specific business requirements |
+
+---
+
+## Seamless Single Sign-On
+
+**Seamless Single Sign-On (Seamless SSO)** allows users on domain-joined corporate devices to access Microsoft Entra ID integrated applications without repeatedly entering credentials.
+
+It is commonly used together with Password Hash Synchronization or Pass-through Authentication.
+
+During configuration, Microsoft Entra Connect creates a computer account in on-premises Active Directory named `AZUREADSSOACC`.
+
+Seamless SSO uses Kerberos to authenticate users silently when they access supported Microsoft Entra ID services from the corporate network.
+
+For browser-based SSO, administrators typically configure Group Policy so that the following URL is part of the Local Intranet zone:
+
+```text
+https://autologon.microsoftazuread-sso.com
+```
+
+This enables Integrated Windows Authentication for supported browsers and clients.
 
 ---
 
