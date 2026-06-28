@@ -58,6 +58,32 @@ These four roles are the most frequently tested in the AZ-104 exam.
 
 ---
 
+## Role Relationships
+
+The four most common Azure RBAC roles have different responsibilities.
+
+A useful way to understand them is:
+
+```text
+Owner
+│
+├── Contributor
+│      └── Manage Azure resources
+│
+└── User Access Administrator
+       └── Manage Azure RBAC assignments
+```
+
+In practice:
+
+- **Contributor** manages Azure resources.
+- **User Access Administrator** manages access permissions.
+- **Owner** combines both capabilities.
+
+This relationship helps administrators choose the minimum level of privilege required for each responsibility.
+
+---
+
 ## Owner
 
 The **Owner** role provides full administrative access to Azure resources.
@@ -131,6 +157,23 @@ These roles grant access to the data stored inside Azure resources rather than t
 
 ---
 
+## Service-Specific Built-in Roles
+
+Azure provides many built-in roles designed for specific services.
+
+Some commonly encountered roles in the AZ-104 exam include:
+
+| Role | Typical Responsibility |
+|------|------------------------|
+| **Virtual Machine Contributor** | Manage virtual machines without managing networking or access permissions. |
+| **Network Contributor** | Manage Azure networking resources such as VNets, Load Balancers, and Network Security Groups. |
+| **Storage Account Contributor** | Manage Storage Accounts without automatically granting access to blob or file data. |
+| **Storage Blob Data Contributor** | Read, write, and delete blob data. |
+
+These specialized roles support least-privilege administration by limiting permissions to specific Azure services.
+
+---
+
 ## Choosing the Correct Role
 
 | Requirement | Recommended Role |
@@ -140,6 +183,20 @@ These roles grant access to the data stored inside Azure resources rather than t
 | Read-only access | Reader |
 | Manage Azure RBAC assignments | User Access Administrator |
 | Access Storage blobs | Storage Blob Data Contributor |
+
+---
+
+## Resource Locks and RBAC
+
+Azure Resource Locks protect resources from accidental modification or deletion.
+
+Important considerations include:
+
+- **Contributor** cannot create, modify, or delete Resource Locks.
+- **Owner** can manage Resource Locks because the role includes full management permissions.
+- Resource Locks are evaluated before resource operations, helping prevent accidental changes even by highly privileged users.
+
+Resource Locks provide an additional layer of protection beyond Azure RBAC permissions.
 
 ---
 
