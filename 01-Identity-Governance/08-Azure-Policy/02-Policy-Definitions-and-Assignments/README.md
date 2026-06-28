@@ -68,6 +68,35 @@ Azure provides both **Built-in Policies** and **Custom Policies**.
 
 ---
 
+## Policy Rule Structure
+
+Every Azure Policy Definition contains a **policyRule** section.
+
+The rule consists of two logical blocks:
+
+| Block | Purpose |
+|--------|----------|
+| **if** | Defines the condition to evaluate. |
+| **then** | Defines the effect applied when the condition is true. |
+
+The **if** block commonly evaluates resource properties using fields such as:
+
+- `type`
+- `location`
+- `name`
+- `tags`
+
+Conditions use operators such as:
+
+- `equals`
+- `notEquals`
+- `in`
+- `like`
+
+If the condition evaluates to **true**, Azure Policy applies the configured effect in the **then** block.
+
+---
+
 ## Policy Assignments
 
 A **Policy Assignment** applies a Policy Definition to a specific scope.
@@ -161,6 +190,28 @@ Policy assignments support two enforcement modes.
 
 ---
 
+## Compliance Evaluation Timing
+
+Azure Policy evaluates resources during deployment and also performs periodic compliance scans.
+
+As a result, compliance reports may not update immediately after:
+
+- Creating a new policy assignment.
+- Modifying a resource.
+- Running a remediation task.
+
+Administrators can trigger an on-demand compliance scan when immediate results are required.
+
+Example using Azure CLI:
+
+```bash
+az policy state trigger-scan --resource-group <resource-group>
+```
+
+Manual scans are commonly used after deploying new policies or completing remediation tasks.
+
+---
+
 ## Remediation Tasks
 
 Some policy effects support automatic remediation.
@@ -173,6 +224,20 @@ For example:
 - Configure supported resource settings.
 
 Remediation tasks use a managed identity to perform corrective actions on existing non-compliant resources.
+
+---
+
+## Managed Identity for Remediation
+
+Policies that use the **Modify** or **DeployIfNotExists** effects require a Managed Identity to perform remediation.
+
+During policy assignment, Azure Policy can create or use a Managed Identity to execute the required changes.
+
+However, the Managed Identity does not automatically receive permissions.
+
+Administrators must assign an appropriate Azure RBAC role (such as **Contributor** or another resource-specific role) at the required scope.
+
+Without the necessary RBAC permissions, remediation tasks fail because the Managed Identity is not authorized to modify or deploy Azure resources.
 
 ---
 
