@@ -89,6 +89,21 @@ Dynamic membership reduces administrative effort in large organizations.
 
 ---
 
+### Dynamic Group Limitations
+
+Dynamic Groups automatically calculate membership based on Microsoft Entra attributes.
+
+Important limitations include:
+
+- A Dynamic Group can be configured as either **Dynamic User** or **Dynamic Device**.
+- A single Dynamic Group cannot contain both users and devices.
+- Dynamic Groups evaluate only the supported object type defined during creation.
+- Dynamic membership requires Microsoft Entra ID Premium P1 or P2 licensing for the users covered by the rule.
+
+Dynamic Groups simplify administration by automatically updating membership whenever the evaluated attributes change.
+
+---
+
 ## Group Ownership
 
 Groups can have one or more owners.
@@ -122,9 +137,14 @@ Benefits include:
 
 Security Groups can contain other Security Groups in supported scenarios.
 
-Nested groups simplify permission management in complex environments.
+Important considerations include:
 
-Administrators should avoid excessive nesting because it increases troubleshooting complexity.
+- Microsoft 365 Groups do **not** support nested group membership.
+- Dynamic Groups cannot contain other groups as members.
+- Excessive nesting increases administrative complexity and can complicate troubleshooting.
+- Not every Microsoft Entra feature evaluates nested group membership in the same way.
+
+Administrators should validate whether a specific Azure service supports nested groups before relying on indirect membership for authorization.
 
 ---
 
@@ -140,6 +160,19 @@ Administrators can:
 - Configure dynamic membership.
 
 Group management is available through the Microsoft Entra admin center, PowerShell, Microsoft Graph, and Azure CLI.
+
+---
+
+## Deleted Groups
+
+The recovery behavior depends on the group type.
+
+| Group Type | Recovery |
+|------------|----------|
+| **Microsoft 365 Group** | Supports soft deletion for 30 days and can be restored. |
+| **Security Group** | Recovery capabilities depend on the deletion mechanism and Microsoft Entra features available in the tenant. |
+
+Restoring a Microsoft 365 Group also restores its associated collaboration resources, such as the SharePoint site, Outlook mailbox, Microsoft Teams team, and Planner content.
 
 ---
 
