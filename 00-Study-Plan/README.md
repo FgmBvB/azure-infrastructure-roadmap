@@ -1,144 +1,128 @@
-# 📚 Study Plan
+# 📚 Azure Administrator Roadmap (AZ-104)
 
-![AZ-104](https://img.shields.io/badge/Certification-AZ--104-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white)
+![AZ-104](https://img.shields.io/badge/Certification-AZ--104-0078D4?style=for-the-badge\&logo=microsoftazure\&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-orange?style=for-the-badge)
-![Roadmap](https://img.shields.io/badge/Roadmap-Azure%20Infrastructure-0A66C2?style=for-the-badge)
+![Microsoft](https://img.shields.io/badge/Microsoft-Learn-5E5E5E?style=for-the-badge\&logo=microsoft\&logoColor=white)
 
 ---
 
-# 🎯 Current Goal
+# 🎯 Purpose
 
-- ✅ Build practical Azure Administration skills.
-- ✅ Prepare for the Microsoft AZ-104 certification.
-- ✅ Develop a professional Azure portfolio on GitHub.
+This repository documents my learning journey toward becoming a **Microsoft Azure Administrator** while preparing for the **Microsoft AZ-104 certification**.
 
----
+The objective is not only to pass the exam, but also to build a solid understanding of Azure administration through structured documentation, architecture diagrams, best practices, troubleshooting guidance, and practical hands-on labs.
 
-# 📊 Overall Progress
-
-| Module | Status |
-|---------|:------:|
-| 🏛️ Identity & Governance | ⬜ |
-| 💻 Compute | ⬜ |
-| 💾 Storage | ⬜ |
-| 🌐 Networking | ⬜ |
-| 📊 Monitoring & BCDR | ⬜ |
-| 💰 Cost Management | ⬜ |
-| ⚙️ Automation | ⬜ |
-| 🔐 Security | ⬜ |
-| 🧪 Real Labs | ⬜ |
+Every topic is written as a long-term reference that can also support future certifications such as **AZ-305**, **AZ-500**, and **SC-300**.
 
 ---
 
-# 🗺️ Learning Roadmap
+# 🚀 Objectives
 
-## 🏛️ Module 1 — Identity & Governance
-
-- [ ] Azure Architecture
-- [ ] Azure Regions & Availability
-- [ ] Azure Subscriptions
-- [ ] Resource Groups
-- [ ] Microsoft Entra ID
-- [ ] Users
-- [ ] Groups
-- [ ] RBAC
-- [ ] Azure Policy
-- [ ] Resource Locks
-- [ ] Tags
+* Build a comprehensive Azure Administrator knowledge base.
+* Prepare for the Microsoft AZ-104 certification.
+* Develop practical Azure administration skills.
+* Document real-world Azure concepts and operational procedures.
+* Create a professional Azure portfolio on GitHub.
+* Build reusable documentation for future Azure learning.
 
 ---
 
-## 💻 Module 2 — Compute
+# 📖 Repository Structure
 
-- [ ] Virtual Machines
-- [ ] Availability Sets
-- [ ] Availability Zones
-- [ ] VM Scale Sets
-- [ ] Azure Bastion
-- [ ] Custom Images
-
----
-
-## 💾 Module 3 — Storage
-
-- [ ] Storage Accounts
-- [ ] Blob Storage
-- [ ] Azure Files
-- [ ] Managed Disks
-- [ ] Shared Access Signatures (SAS)
-- [ ] Lifecycle Management
-- [ ] Storage Replication
+| Module                                       | Description                                                                                                                                        |
+| -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 🏛️ **01 - Identity & Governance**           | Azure architecture, Microsoft Entra ID, subscriptions, RBAC, Azure Policy, governance, resource locks, and tags.                                   |
+| 💻 **02 - Compute**                          | Virtual Machines, App Service, Azure Functions, Containers, availability, administration, and compute best practices.                              |
+| 💾 **03 - Storage**                          | Storage Accounts, Blob Storage, Azure Files, Queue Storage, Table Storage, Data Lake Storage Gen2, security, redundancy, and lifecycle management. |
+| 🌐 **04 - Networking**                       | Virtual Networks, DNS, routing, network security, VPN, ExpressRoute, load balancing, and networking best practices.                                |
+| 📊 **05 - Monitoring & Business Continuity** | Azure Monitor, Log Analytics, Alerts, Azure Backup, Azure Site Recovery, and operational monitoring.                                               |
+| 💰 **06 - Cost Management**                  | Cost Analysis, Budgets, Azure Advisor, Reservations, and cost optimization strategies.                                                             |
+| ⚙️ **07 - Automation**                       | Azure CLI, Azure PowerShell, ARM Templates, Bicep, Cloud Shell, and Infrastructure as Code.                                                        |
+| 🔐 **08 - Security**                         | Microsoft Defender for Cloud, Managed Identities, Azure Key Vault, Zero Trust, and security best practices.                                        |
+| 🧪 **09 - Real Labs**                        | End-to-end deployment scenarios, troubleshooting exercises, and practical Azure administration labs.                                               |
 
 ---
 
-## 🌐 Module 4 — Networking
+# 🏗️ Learning Methodology
 
-- [ ] Virtual Networks
-- [ ] Subnets
-- [ ] Network Security Groups
-- [ ] Route Tables
-- [ ] DNS
-- [ ] VPN Gateway
-- [ ] VNet Peering
-- [ ] Azure Load Balancer
-- [ ] Application Gateway
-- [ ] Azure Firewall
-- [ ] Private Endpoints
+Each module follows the same structure to provide a consistent learning experience.
 
----
+* Overview
+* Architecture concepts
+* Core Azure services
+* Administration tasks
+* Security considerations
+* Best practices
+* Common pitfalls
+* Enterprise scenarios
+* AZ-104 exam focus
+* References to official Microsoft documentation
 
-## 📊 Module 5 — Monitoring & BCDR
-
-- [ ] Azure Monitor
-- [ ] Log Analytics
-- [ ] Alerts
-- [ ] Azure Backup
-- [ ] Azure Site Recovery
+This approach prioritizes understanding Azure technologies rather than memorizing certification questions.
 
 ---
 
-## 💰 Module 6 — Cost Management
+# 📚 Documentation Principles
 
-- [ ] Cost Analysis
-- [ ] Budgets
-- [ ] Azure Advisor
-- [ ] Reservations
-- [ ] Cost Optimization
+This repository is built around several core principles:
 
----
-
-## ⚙️ Module 7 — Automation
-
-- [ ] Azure PowerShell
-- [ ] Azure CLI
-- [ ] Azure Cloud Shell
-- [ ] ARM Templates
-- [ ] Bicep
+* Based on official Microsoft documentation.
+* Written entirely in English for technical consistency.
+* Focused on practical Azure administration.
+* Structured for long-term reference.
+* Updated as Azure services evolve.
+* Designed to be reusable beyond the AZ-104 certification.
 
 ---
 
-## 🔐 Module 8 — Security
+# 🛠️ Technologies Covered
 
-- [ ] Microsoft Defender for Cloud
-- [ ] Managed Identities
-- [ ] Azure Key Vault
-- [ ] Least Privilege
-- [ ] Zero Trust
+The roadmap includes practical knowledge of:
+
+* Microsoft Entra ID
+* Azure Resource Manager (ARM)
+* Azure RBAC
+* Azure Policy
+* Azure Virtual Machines
+* Azure App Service
+* Azure Functions
+* Azure Storage
+* Azure Networking
+* Azure Monitor
+* Azure Backup
+* Azure Site Recovery
+* Azure PowerShell
+* Azure CLI
+* Bicep
+* Azure Key Vault
+* Microsoft Defender for Cloud
 
 ---
 
-# 🏆 Certification Goal
+# 🎓 Learning Path
 
-- [ ] Microsoft AZ-104 Azure Administrator
+This repository is intended to support the following Microsoft certifications:
 
----
-
-# 🚀 Future Certifications
-
-- ⬜ AZ-305 Azure Solutions Architect
-- ⬜ AZ-500 Azure Security Engineer
-- ⬜ SC-300 Microsoft Entra ID Administrator
+* AZ-104 — Microsoft Azure Administrator
+* AZ-305 — Designing Microsoft Azure Infrastructure Solutions
+* AZ-500 — Microsoft Azure Security Technologies
+* SC-300 — Microsoft Identity and Access Administrator
 
 ---
 
-> **Progress is measured by completed labs and practical knowledge rather than memorizing exam questions.**
+# 📑 References
+
+All technical content is based on official Microsoft documentation and Microsoft Learn.
+
+Primary reference sources include:
+
+* Microsoft Learn
+* Azure Documentation
+* Azure Architecture Center
+* Azure Well-Architected Framework
+* Microsoft Cloud Adoption Framework
+
+---
+
+> **"Learn the platform, not the exam. Certifications expire, knowledge doesn't."**
+
