@@ -91,6 +91,35 @@ Azure Files can be mounted simultaneously by multiple virtual machines.
 
 ---
 
+## Azure Files Protocols
+
+Azure Files supports two file-sharing protocols with different capabilities.
+
+| Protocol | Characteristics |
+|----------|-----------------|
+| **SMB** | Supports Windows-compatible file sharing, identity-based authentication, and NTFS permissions. |
+| **NFS 4.1** | Designed for Linux workloads and high-performance applications. Available only on Premium FileStorage accounts. |
+
+Important considerations:
+
+- **NFS 4.1** requires Premium FileStorage accounts.
+- NFS access is intended for secure private network environments such as Virtual Networks and Private Endpoints.
+- SMB uses TCP port **445** for file sharing.
+
+Some organizations or Internet Service Providers block outbound TCP port 445.
+
+When SMB connectivity over the Internet is unavailable, Microsoft recommends solutions such as:
+
+- Azure File Sync
+- Site-to-Site VPN
+- Point-to-Site VPN
+- ExpressRoute
+
+> [!IMPORTANT]
+> SMB and NFS are designed for different workloads and authentication models. Select the protocol according to application requirements.
+
+---
+
 ## Queue Storage
 
 Azure Queue Storage provides reliable message storage for asynchronous communication between applications.
@@ -150,6 +179,39 @@ Selecting the correct blob type improves performance and efficiency.
 
 ---
 
+## Blob Type Characteristics
+
+Each Blob type is optimized for a specific access pattern.
+
+### Block Blobs
+
+- Optimized for storing files.
+- Most common Blob type.
+- Suitable for documents, images, backups, and multimedia.
+
+---
+
+### Append Blobs
+
+Append Blobs are optimized for append-only operations.
+
+Characteristics:
+
+- Existing blocks cannot be modified.
+- New data is always appended to the end of the blob.
+- Ideal for log files, auditing, and telemetry.
+
+### Page Blobs
+
+Page Blobs support random read and write operations using fixed-size pages.
+
+Typical use cases include:
+
+- Unmanaged Virtual Machine disks (VHDs)
+- Applications requiring random I/O
+
+Selecting the correct Blob type improves storage efficiency and application performance.
+
 ## Access Tiers
 
 Blob Storage supports multiple access tiers.
@@ -182,6 +244,39 @@ The appropriate access tier depends on access frequency, retention requirements,
 A manufacturing company stores product images in Blob Storage, department documents in Azure Files, processing tasks in Queue Storage, device telemetry in Table Storage, and analytical datasets in Azure Data Lake Storage Gen2.
 
 All services operate within Azure Storage Accounts while sharing centralized security, monitoring, redundancy, and networking configurations.
+
+---
+
+## Azure Files Identity Integration
+
+Azure Files supports identity-based access for SMB file shares.
+
+Access control is implemented in two layers.
+
+### Share-Level Permissions
+
+Access to the file share is granted using Azure RBAC roles such as:
+
+- Storage File Data SMB Share Reader
+- Storage File Data SMB Share Contributor
+- Storage File Data SMB Share Elevated Contributor
+
+---
+
+### File and Directory Permissions
+
+After accessing the share, users are authorized using traditional NTFS Access Control Lists (ACLs).
+
+Azure Files supports integration with:
+
+- Active Directory Domain Services (AD DS)
+- Microsoft Entra Domain Services
+- Microsoft Entra ID (for supported SMB scenarios)
+
+This layered model allows organizations to combine Azure RBAC for share access with NTFS permissions for file and folder security.
+
+> [!TIP]
+> Azure RBAC determines who can access the file share, while NTFS permissions determine what users can do within the share.
 
 ---
 
