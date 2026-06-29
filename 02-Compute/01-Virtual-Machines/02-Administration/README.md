@@ -329,11 +329,15 @@ Azure Monitor confirms the VM returns to normal operation.
 
 ## References
 
-| Microsoft Documentation | Purpose |
-|-------------------------|---------|
-| https://learn.microsoft.com/azure/virtual-machines/ | Azure Virtual Machines documentation |
-| https://learn.microsoft.com/azure/virtual-machines/extensions/overview | VM Extensions |
-| https://learn.microsoft.com/azure/virtual-machines/run-command | Run Command |
-| https://learn.microsoft.com/azure/virtual-machines/boot-diagnostics | Boot Diagnostics |
-| https://learn.microsoft.com/azure/virtual-machines/troubleshooting/serial-console-overview | Azure Serial Console |
-| https://learn.microsoft.com/training/modules/create-windows-virtual-machine-in-azure/ | Microsoft Learn module |
+| Microsoft Documentation | URL |
+|-------------------------|-----|
+| Azure Virtual Machines documentation | https://learn.microsoft.com/azure/virtual-machines/ |
+| VM Extensions | https://learn.microsoft.com/azure/virtual-machines/extensions/overview |
+| Run Command | https://learn.microsoft.com/azure/virtual-machines/run-command |
+| Boot Diagnostics | https://learn.microsoft.com/azure/virtual-machines/boot-diagnostics |
+| Azure Serial Console | https://learn.microsoft.com/azure/virtual-machines/troubleshooting/serial-console-overview |
+| Azure VM Agent | https://learn.microsoft.com/azure/virtual-machines/extensions/agent-windows |
+| Azure VM Agent (Linux) | https://learn.microsoft.com/azure/virtual-machines/extensions/agent-linux |
+| Resize Virtual Machines | https://learn.microsoft.com/azure/virtual-machines/sizes/resize-vm |
+| Redeploy a Virtual Machine | https://learn.microsoft.com/azure/virtual-machines/redeploy-to-new-node |
+| Microsoft Learn – Create and manage Azure Virtual Machines | https://learn.microsoft.com/training/modules/create-windows-virtual-machine-in-azure/ |
