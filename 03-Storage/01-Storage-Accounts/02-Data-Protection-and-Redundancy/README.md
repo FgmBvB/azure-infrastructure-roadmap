@@ -72,6 +72,34 @@ Replication is managed entirely by Azure.
 
 ---
 
+## Last Sync Time
+
+Geo-redundant replication is **asynchronous**, meaning there is always a small delay between writes to the primary region and replication to the secondary region.
+
+Azure exposes the **Last Sync Time** property for Storage Accounts using geo-redundant replication.
+
+Last Sync Time indicates the latest point at which Azure guarantees that all data has been successfully replicated to the secondary region.
+
+Example:
+
+```text
+Current time:     10:30 PM
+Last Sync Time:   10:15 PM
+```
+
+Potential Recovery Point Objective (RPO):
+
+```text
+15 minutes
+```
+
+If a failover occurs before newer writes are replicated, any data written after the Last Sync Time may be lost.
+
+> [!IMPORTANT]
+> Before initiating a customer-managed failover, administrators should review the **Last Sync Time** to estimate the potential amount of data loss.
+
+---
+
 ## Account Failover
 
 If Microsoft declares a regional disaster, a geo-redundant Storage Account can be failed over to the secondary region.
@@ -84,6 +112,24 @@ Characteristics:
 - Because replication is asynchronous, the most recent writes may not exist in the secondary region.
 
 Failover should only be initiated when necessary because it permanently changes the account's primary region.
+
+---
+
+## Customer-Managed Account Failover
+
+For supported geo-redundant Storage Accounts, administrators can initiate a **customer-managed failover** without waiting for Microsoft to declare a regional disaster.
+
+During the failover:
+
+- The secondary region becomes the new primary region.
+- Storage service endpoints continue using the same account name.
+- Azure updates the underlying DNS resolution to direct traffic to the new primary region.
+- Because replication is one-way, the redundancy configuration is reduced to **Locally Redundant Storage (LRS)** in the new primary region.
+
+After the original region becomes available again, administrators must reconfigure geo-redundant replication if regional protection is still required.
+
+> [!TIP]
+> Customer-managed failover should only be performed when business requirements outweigh the potential loss of data that has not yet been replicated.
 
 ---
 
@@ -156,6 +202,31 @@ It works together with:
 - Soft Delete
 
 This feature simplifies recovery after accidental deletion or ransomware incidents.
+
+---
+
+## Point-in-Time Restore Requirements
+
+Point-in-Time Restore (PITR) depends on several Blob Storage protection features working together.
+
+Before PITR can be enabled, the following features must already be configured:
+
+- **Blob Versioning**
+- **Blob Change Feed**
+- **Blob Soft Delete**
+
+These services work together to provide complete recovery capability:
+
+| Feature | Purpose |
+|----------|---------|
+| **Blob Versioning** | Maintains previous blob versions. |
+| **Blob Change Feed** | Records all blob operations in chronological order. |
+| **Blob Soft Delete** | Prevents immediate permanent deletion. |
+
+If any required feature is disabled, Point-in-Time Restore cannot be enabled.
+
+> [!IMPORTANT]
+> Point-in-Time Restore is available only for Blob Storage and depends on these underlying protection mechanisms.
 
 ---
 
