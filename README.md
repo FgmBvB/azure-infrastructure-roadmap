@@ -1,57 +1,133 @@
 # ☁️ Azure Infrastructure Roadmap
 
-<p align="center">
-
-![Azure](https://img.shields.io/badge/Microsoft-Azure-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white)
-![AZ-104](https://img.shields.io/badge/Certification-AZ--104-0078D4?style=for-the-badge)
+![Microsoft](https://img.shields.io/badge/Microsoft-Azure-0078D4?style=for-the-badge\&logo=microsoftazure\&logoColor=white)
+![Certification](https://img.shields.io/badge/Certification-AZ--104-0A66C2?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-orange?style=for-the-badge)
 
-</p>
+A structured Azure Administrator roadmap focused on **real-world administration**, **Microsoft best practices**, and **hands-on learning** while preparing for the **AZ-104: Microsoft Azure Administrator** certification.
 
 ---
 
-## 📖 About
+# 📖 About
 
-This repository documents my journey towards becoming an Azure Infrastructure Engineer while preparing for the **Microsoft AZ-104: Azure Administrator** certification.
+This repository is a comprehensive study and reference guide for Microsoft Azure administration.
 
-Rather than focusing only on the exam, this project emphasizes practical Azure administration through hands-on labs, technical documentation, automation, and real-world scenarios.
+Rather than being a collection of exam notes, it is designed as long-term technical documentation covering Azure infrastructure, governance, networking, storage, security, monitoring, automation, and practical administration scenarios.
 
----
-
-# 🗂️ Repository
-
-| Module | Description |
-|---------|-------------|
-| 📚 **00 - Study Plan** | Certification roadmap and progress tracking |
-| 🏛️ **01 - Identity & Governance** | Entra ID, RBAC, Policies and Governance |
-| 💻 **02 - Compute** | Azure Virtual Machines and Compute Services |
-| 💾 **03 - Storage** | Storage Accounts, Blob Storage and Azure Files |
-| 🌐 **04 - Networking** | Virtual Networks, NSG, VPN, Firewall and Connectivity |
-| 📊 **05 - Monitoring & BCDR** | Monitoring, Backup and Disaster Recovery |
-| 💰 **06 - Cost Management** | Cost optimization and governance |
-| ⚙️ **07 - Automation** | Azure CLI, PowerShell and Bicep |
-| 🔐 **08 - Security** | Defender for Cloud, Key Vault and Managed Identities |
-| 🧪 **09 - Real Labs** | End-to-end practical Azure scenarios |
+The content is based on **official Microsoft documentation**, practical experience, and Azure best practices.
 
 ---
 
-# 🎯 Repository Goals
+# 🎯 Objectives
 
-- Learn Azure through practical laboratories.
-- Develop production-oriented administration skills.
-- Document every lab in professional technical English.
-- Build a GitHub portfolio that demonstrates real infrastructure knowledge.
-
----
-
-# 🚀 Current Focus
-
-> **Microsoft AZ-104 — Azure Administrator**
+* Build practical Azure Administrator skills.
+* Prepare for the Microsoft AZ-104 certification.
+* Create a reusable Azure knowledge base.
+* Document Azure services with real administration scenarios.
+* Build a professional Azure portfolio on GitHub.
 
 ---
 
-<p align="center">
+# 🗂️ Repository Structure
 
-⭐ This repository will continuously grow with new labs, documentation and automation projects.
+```text
+Azure-Infrastructure-Roadmap
+│
+├── 00-Study-Plan
+├── 01-Identity-Governance
+├── 02-Compute
+├── 03-Storage
+├── 04-Networking
+├── 05-Monitoring-BCDR
+├── 06-Cost-Management
+├── 07-Automation
+├── 08-Security
+└── 09-Real-Labs
+```
 
-</p>
+---
+
+# 📚 Learning Modules
+
+| Module                    | Topics                                                        |
+| ------------------------- | ------------------------------------------------------------- |
+| 🏛️ Identity & Governance | Entra ID, RBAC, Policy, Governance, Resource Locks            |
+| 💻 Compute                | Virtual Machines, App Service, Containers                     |
+| 💾 Storage                | Storage Accounts, Blob Storage, Azure Files, Data Protection  |
+| 🌐 Networking             | Virtual Networks, DNS, Routing, Security, VPN, Load Balancing |
+| 📊 Monitoring & BCDR      | Azure Monitor, Backup, Site Recovery                          |
+| 💰 Cost Management        | Budgets, Cost Analysis, Advisor                               |
+| ⚙️ Automation             | Azure CLI, PowerShell, ARM, Bicep                             |
+| 🔐 Security               | Defender for Cloud, Key Vault, Managed Identities             |
+| 🧪 Real Labs              | End-to-end Azure administration scenarios                     |
+
+---
+
+# 🏗️ Documentation Standard
+
+Every module follows a consistent structure:
+
+* Overview
+* Architecture
+* Core Concepts
+* Administration
+* Security
+* Best Practices
+* Common Pitfalls
+* Enterprise Scenarios
+* AZ-104 Exam Focus
+* Official Microsoft References
+
+---
+
+# ⭐ Repository Highlights
+
+* Complete AZ-104 coverage
+* Based on Microsoft Learn and official documentation
+* Architecture diagrams
+* Administration examples
+* Azure CLI examples
+* Azure PowerShell examples
+* Best practices
+* Common pitfalls
+* Troubleshooting guidance
+* Enterprise scenarios
+* Long-term reference documentation
+
+---
+
+# 🎓 Certification Roadmap
+
+| Certification | Purpose                                     |
+| ------------- | ------------------------------------------- |
+| **AZ-104**    | Microsoft Azure Administrator               |
+| **AZ-305**    | Azure Solutions Architect                   |
+| **AZ-500**    | Azure Security Engineer                     |
+| **SC-300**    | Microsoft Identity and Access Administrator |
+
+---
+
+# 📑 References
+
+Primary sources used throughout this repository:
+
+* Microsoft Learn
+* Azure Documentation
+* Azure Architecture Center
+* Azure Well-Architected Framework
+* Microsoft Cloud Adoption Framework
+
+---
+
+# ⚠️ Disclaimer
+
+This repository is an independent learning project.
+
+It is not affiliated with or endorsed by Microsoft.
+
+All product names, trademarks, and documentation remain the property of Microsoft.
+
+---
+
+> **"Learn Azure by understanding the platform, not by memorizing exam questions."**
+
