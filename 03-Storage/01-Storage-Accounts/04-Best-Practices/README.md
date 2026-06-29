@@ -151,6 +151,29 @@ Reduce storage costs by:
 
 ---
 
+## Access Tier Cost Considerations
+
+Azure Blob Storage supports multiple access tiers for cost optimization.
+
+| Access Tier | Minimum Retention Period | Typical Use |
+|------------|---------------------------|-------------|
+| **Hot** | None | Frequently accessed data |
+| **Cool** | 30 days | Infrequently accessed data |
+| **Cold** | 90 days | Rarely accessed data |
+| **Archive** | 180 days | Long-term offline archive |
+
+Important cost considerations:
+
+- Moving data to cheaper tiers reduces storage cost but can increase access costs.
+- Deleting or moving blobs before the minimum retention period may trigger early deletion charges.
+- Archive tier is offline and requires rehydration before data can be read.
+- Archive rehydration can take several hours depending on the selected priority.
+
+> [!IMPORTANT]
+> Archive tier is not suitable for data that must be accessed immediately.
+
+---
+
 ## Monitoring
 
 Monitor Storage Accounts using:
@@ -172,6 +195,31 @@ Configure alerts for:
 
 ---
 
+## Lifecycle Management Rules
+
+Azure Storage Lifecycle Management automates blob tiering and deletion.
+
+Lifecycle rules run automatically in the background and can move or delete blobs based on conditions such as:
+
+- Blob age
+- Last modified date
+- Last access time
+- Blob type
+- Blob prefix
+- Blob index tags
+
+Prefix filters allow administrators to apply lifecycle actions only to specific containers or virtual folder paths.
+
+Example use cases:
+
+- Move `logs/archive/` blobs to Archive after 180 days.
+- Delete temporary files under `tmp/` after 30 days.
+- Move infrequently accessed backup files to Cool or Cold tiers.
+
+Using filters prevents lifecycle policies from affecting unrelated or sensitive data.
+
+---
+
 ## Governance
 
 Microsoft recommends:
@@ -181,6 +229,35 @@ Microsoft recommends:
 - Use consistent resource tags.
 - Standardize naming conventions.
 - Separate production, development, and testing environments.
+
+---
+
+## Resource Locks and Storage Data
+
+Resource Locks protect the Storage Account resource at the Azure Resource Manager control plane.
+
+For example, a **CanNotDelete** lock can prevent administrators from deleting the Storage Account itself.
+
+However, Resource Locks do **not** protect the data stored inside the account.
+
+A user or application with sufficient data-plane permissions can still:
+
+- Delete blobs.
+- Delete containers.
+- Modify files.
+- Run lifecycle management policies.
+- Change blob versions where permitted.
+
+To protect storage data, use data-plane protection features such as:
+
+- Blob Soft Delete
+- Container Soft Delete
+- Blob Versioning
+- Immutable Storage
+- Azure RBAC for data access
+
+> [!IMPORTANT]
+> Resource Locks protect the Storage Account resource, not the individual blobs, files, queues, or tables stored inside it.
 
 ---
 
