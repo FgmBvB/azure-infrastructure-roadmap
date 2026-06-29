@@ -60,6 +60,39 @@ Unlike Virtual Machines, containers share the host operating system kernel, maki
 
 ---
 
+## Persistent Storage
+
+Containers are designed to be ephemeral.
+
+If a container is deleted or recreated, any data stored inside the container filesystem is lost.
+
+To provide persistent storage, Azure supports mounting external storage volumes.
+
+Common options include:
+
+- Azure Files
+- Azure Disks
+- Azure NetApp Files
+
+Azure Files is commonly used to provide shared persistent storage for Azure Container Instances and Azure Kubernetes Service.
+
+```text
+Container
+     │
+     ▼
+Mounted Volume
+     │
+     ▼
+Azure Files
+```
+
+Persistent storage allows new container instances to continue using the same application data even after container replacement or scaling events.
+
+> [!TIP]
+> Stateless applications should avoid storing data inside the container itself. Persistent application data should be stored in external storage services.
+
+---
+
 ## Azure Container Instances (ACI)
 
 Azure Container Instances provide the fastest way to run containers in Azure.
@@ -81,6 +114,43 @@ Typical workloads include:
 
 ---
 
+## Container Groups
+
+The fundamental deployment unit in Azure Container Instances is the **Container Group**.
+
+A Container Group is a collection of one or more containers that:
+
+- Run on the same Azure host.
+- Share the same lifecycle.
+- Share network resources.
+- Can share storage volumes.
+- Share a single IP address.
+
+```text
+Container Group
+      │
+ ┌────┴─────┐
+ ▼          ▼
+Main App   Sidecar
+Container  Container
+      │
+      ▼
+Shared Network
+Shared Storage
+Shared Lifecycle
+```
+
+Container Groups are conceptually similar to **Pods** in Kubernetes.
+
+Typical scenarios include:
+
+- Main application + logging sidecar
+- Reverse proxy + web application
+- Monitoring agents
+- Helper containers
+
+---
+
 ## Azure Kubernetes Service (AKS)
 
 Azure Kubernetes Service (AKS) is Azure's managed Kubernetes platform.
@@ -94,6 +164,48 @@ Microsoft manages the Kubernetes control plane while customers manage:
 - Scaling policies
 
 AKS is designed for large-scale containerized applications.
+
+---
+
+## AKS Control Plane and Worker Nodes
+
+Azure Kubernetes Service separates the Kubernetes infrastructure into two logical components.
+
+| Component | Managed By |
+|-----------|------------|
+| **Control Plane** | Microsoft |
+| **Worker Nodes (Node Pools)** | Customer |
+
+---
+
+### Control Plane
+
+Microsoft manages:
+
+- Kubernetes API Server
+- Scheduler
+- etcd
+- Controller Manager
+
+Administrators cannot directly access the Control Plane virtual machines.
+
+By default, customers pay only for the worker nodes, although additional Control Plane SLA options are available.
+
+---
+
+### Worker Nodes
+
+Customers manage:
+
+- Node Pools
+- Virtual Machine size
+- Scaling
+- Operating system updates
+- Applications
+- Networking
+- Storage
+
+Worker Nodes are implemented using **Virtual Machine Scale Sets (VMSS)**.
 
 ---
 
