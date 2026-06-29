@@ -97,6 +97,50 @@ For most deployments, Microsoft recommends **General-purpose v2 (StorageV2)**.
 
 ---
 
+## Hierarchical Namespace (HNS)
+
+Azure Data Lake Storage Gen2 is built on top of Azure Blob Storage by enabling the **Hierarchical Namespace (HNS)** feature.
+
+Without HNS:
+
+- Blob Storage uses a **flat namespace**.
+- Folder structures are virtual and represented as part of the blob name.
+
+With HNS enabled:
+
+- Directories become first-class filesystem objects.
+- File and directory operations are optimized.
+- Rename and move operations become atomic metadata operations instead of copy-and-delete operations.
+
+```text
+Without HNS
+photos/
+   image1.jpg
+   image2.jpg
+
+→ "photos/" is only part of the blob name.
+
+With HNS
+
+photos/
+   ├── image1.jpg
+   └── image2.jpg
+
+→ "photos" is an actual directory object.
+```
+
+Hierarchical Namespace is required for:
+
+- Azure Data Lake Storage Gen2
+- Hadoop-compatible analytics workloads
+- Azure Synapse Analytics
+- Azure Databricks
+
+> [!IMPORTANT]
+> HNS significantly improves performance for analytics workloads that frequently rename, move, or reorganize large directory structures.
+
+---
+
 ## Performance Tiers
 
 Storage Accounts are available with different performance characteristics.
@@ -107,6 +151,27 @@ Storage Accounts are available with different performance characteristics.
 | **Premium** | SSD-backed storage for low latency and high IOPS workloads. |
 
 Premium Storage is available only for selected storage services.
+
+---
+
+## Premium Storage Account Limitations
+
+Premium Storage Accounts are specialized for specific Azure Storage services.
+
+Unlike **General-purpose v2 (StorageV2)** accounts, Premium accounts do not support every storage service.
+
+Examples include:
+
+| Account Type | Supported Service |
+|---------------|------------------|
+| **BlockBlobStorage** | Block Blobs only |
+| **FileStorage** | Azure Files only |
+| **PageBlobStorage** | Page Blobs only |
+
+Because each Premium account supports only its corresponding service, organizations often deploy multiple Storage Accounts when different Premium workloads are required.
+
+> [!IMPORTANT]
+> General-purpose v2 (StorageV2) remains Microsoft's recommended Storage Account type for most Azure workloads because it supports multiple storage services within a single account.
 
 ---
 
@@ -124,6 +189,33 @@ https://contosostorage.table.core.windows.net
 ```
 
 Applications use these endpoints to access Azure Storage resources.
+
+---
+
+## Secondary Endpoints
+
+When a Storage Account uses **Read-Access Geo-Redundant Storage (RA-GRS)** or **Read-Access Geo-Zone-Redundant Storage (RA-GZRS)**, Azure automatically creates secondary read-only endpoints.
+
+Example:
+
+Primary endpoint
+
+```text
+https://contosostorage.blob.core.windows.net
+```
+
+Secondary endpoint
+
+```text
+https://contosostorage-secondary.blob.core.windows.net
+```
+
+Applications can use the secondary endpoint to read replicated data from the paired Azure region.
+
+This allows read-only access even if the primary region becomes unavailable, provided the account uses a read-access geo-redundant replication option.
+
+> [!TIP]
+> The secondary endpoint is read-only. Write operations continue to target the primary region until Microsoft performs an official account failover.
 
 ---
 
