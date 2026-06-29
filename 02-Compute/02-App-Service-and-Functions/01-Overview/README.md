@@ -93,6 +93,39 @@ Multiple App Services can share the same App Service Plan.
 
 ---
 
+## App Service Plan Architecture
+
+An **App Service Plan** defines the compute resources used by one or more App Services.
+
+The plan provides:
+
+- CPU
+- Memory
+- Storage
+- Scaling capabilities
+- Pricing tier
+
+Multiple Web Apps can share the same App Service Plan.
+
+```text
+App Service Plan
+        │
+ ┌──────┼─────────┐
+ ▼      ▼         ▼
+Web App API App  Web App
+```
+
+Because all applications share the same underlying compute resources:
+
+- High CPU usage in one application can affect the others.
+- Memory is shared across all hosted applications.
+- Scaling the App Service Plan scales every application hosted in that plan.
+
+> [!TIP]
+> For production workloads with different performance requirements, Microsoft recommends using separate App Service Plans to provide workload isolation.
+
+---
+
 ## Azure Functions
 
 Azure Functions is Azure's serverless compute platform.
@@ -124,6 +157,22 @@ Azure Functions supports multiple hosting plans, including Consumption, Premium,
 
 ---
 
+## Always On and Cold Start
+
+App Service applications hosted on supported pricing tiers can enable **Always On**.
+
+Always On prevents the application from becoming idle after periods without requests.
+
+For Azure Functions:
+
+- **Consumption Plan** automatically scales to zero when idle, reducing costs.
+- The first request after inactivity may experience additional startup latency, commonly known as **Cold Start**.
+- **Premium** and **Dedicated (App Service Plan)** hosting keep workers available, significantly reducing or eliminating Cold Start delays.
+
+When running Azure Functions on a Dedicated App Service Plan, Microsoft recommends enabling **Always On** to ensure trigger responsiveness.
+
+---
+
 ## Scaling
 
 Both services support automatic scaling.
@@ -134,6 +183,26 @@ Both services support automatic scaling.
 | **Azure Functions** | Automatic scaling based on incoming events (depending on the hosting plan) |
 
 Scaling occurs without requiring administrators to provision additional Virtual Machines manually.
+
+---
+
+## Azure Functions Execution Limits
+
+The maximum execution time of a Function depends on the selected hosting plan.
+
+| Hosting Plan | Execution Characteristics |
+|--------------|---------------------------|
+| **Consumption** | Optimized for short-lived event-driven execution with configurable execution limits. |
+| **Premium** | Supports significantly longer-running executions and pre-warmed instances. |
+| **Dedicated (App Service Plan)** | Intended for continuously running applications and long-running workloads. |
+
+For workflows requiring extended processing or orchestration, Microsoft recommends:
+
+- Premium hosting
+- Dedicated App Service Plans
+- Durable Functions
+
+Choosing the appropriate hosting plan is essential for balancing cost, performance, and execution requirements.
 
 ---
 
