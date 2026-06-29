@@ -93,6 +93,27 @@ If the requested size is unavailable on the current hardware cluster, Azure may 
 
 ---
 
+## Resize Constraints
+
+When a Virtual Machine is running, it is allocated to a specific Azure host.
+
+Not every host supports every VM size or hardware generation.
+
+If the requested VM size is unavailable on the current host, Azure may return an allocation error during the resize operation.
+
+In these situations, administrators should:
+
+1. Deallocate the Virtual Machine.
+2. Change the VM size.
+3. Start the Virtual Machine again.
+
+After deallocation, Azure is free to place the VM on another host that supports the requested VM size.
+
+> [!TIP]
+> Deallocating a VM releases the underlying compute resources, allowing Azure to select a different physical host during the next startup.
+
+---
+
 ## Redeploy
 
 The **Redeploy** operation moves a Virtual Machine to a new Azure host while preserving its Managed Disks and configuration.
@@ -121,6 +142,27 @@ Typical use cases include:
 - Repair startup issues
 
 This feature communicates with the Azure VM Agent.
+
+---
+
+## Run Command vs Custom Script Extension
+
+Although both features execute scripts inside a Virtual Machine, they are designed for different purposes.
+
+| Feature | Run Command | Custom Script Extension |
+|----------|-------------|-------------------------|
+| Typical use | Troubleshooting and quick administration | Post-deployment configuration |
+| Execution | Immediate | During or after deployment |
+| Script source | Sent through Azure API | Azure Storage, GitHub, or other supported locations |
+| Requires VM Agent | Yes | Yes |
+| Typical scenarios | Diagnostics, configuration changes | Software installation, configuration automation |
+
+Microsoft recommends:
+
+- Use **Run Command** for short-lived administrative or troubleshooting tasks.
+- Use **Custom Script Extension** for deployment automation and post-deployment configuration.
+
+Neither feature should be used for long-running configuration management solutions.
 
 ---
 
@@ -184,6 +226,25 @@ It is required for several Azure features, including:
 - Some monitoring capabilities
 
 Many management operations depend on a healthy VM Agent.
+
+---
+
+## Azure VM Agent Requirements
+
+The Azure VM Agent enables communication between Azure and the guest operating system.
+
+Marketplace images include the Azure VM Agent by default.
+
+If a Virtual Machine is created from a custom image, administrators should verify that the VM Agent is installed and functioning correctly.
+
+If the Azure VM Agent becomes unavailable:
+
+- VM Extensions cannot be installed or updated.
+- Run Command is unavailable.
+- Some Azure Backup operations may fail.
+- Certain guest management features stop functioning.
+
+The Virtual Machine itself continues running normally, but Azure loses the ability to perform several management operations inside the guest operating system.
 
 ---
 
