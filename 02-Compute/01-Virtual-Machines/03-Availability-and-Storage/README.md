@@ -64,6 +64,23 @@ Managed Disks simplify storage management compared to unmanaged disks.
 
 ---
 
+## Host Caching
+
+Managed Disks support host caching to improve storage performance.
+
+| Cache Mode | Description | Typical Use |
+|------------|-------------|-------------|
+| **ReadOnly** | Frequently accessed data is cached for read operations. | OS Disks and read-intensive workloads |
+| **ReadWrite** | Read and write operations are cached. | General-purpose workloads where supported |
+| **None** | All operations go directly to Managed Storage. | Write-intensive databases and transaction logs |
+
+Selecting the appropriate caching mode improves storage performance while maintaining application reliability.
+
+> [!IMPORTANT]
+> Microsoft generally recommends using **None** for transaction logs and write-intensive database workloads to avoid data consistency issues.
+
+---
+
 ## Disk Types
 
 Azure offers several Managed Disk types.
@@ -75,6 +92,34 @@ Azure offers several Managed Disk types.
 | **Premium SSD** | Production applications and databases |
 | **Premium SSD v2** | Performance-sensitive transactional workloads |
 | **Ultra Disk** | High-performance databases requiring extremely low latency |
+
+---
+
+## Ephemeral OS Disks
+
+An **Ephemeral OS Disk** stores the operating system locally on the Azure host instead of using a remote Managed Disk.
+
+Benefits include:
+
+- Faster provisioning
+- Lower latency
+- No Managed Disk storage cost
+- Faster VM reimaging
+
+Ephemeral OS Disks are well suited for stateless workloads such as:
+
+- Virtual Machine Scale Sets
+- AKS worker nodes
+- Build agents
+- Temporary application servers
+
+Limitations include:
+
+- The operating system disk is recreated if the VM is redeployed or deallocated.
+- Not supported on every VM size.
+- Not suitable for workloads requiring persistent operating system storage.
+
+Applications requiring persistent data should continue using Managed Disks.
 
 ---
 
@@ -134,6 +179,36 @@ Azure uses two concepts:
 Availability Sets are intended for Virtual Machines located within a single Azure datacenter.
 
 ---
+
+## Availability Set Limits
+
+Availability Sets distribute Virtual Machines across **Fault Domains** and **Update Domains** to improve availability.
+
+### Fault Domains
+
+A Fault Domain represents a group of hardware that shares common infrastructure, such as:
+
+- Power source
+- Network switch
+- Physical rack
+
+Depending on the Azure region, an Availability Set supports **2 or 3 Fault Domains**.
+
+---
+
+### Update Domains
+
+An Update Domain represents a logical group of Virtual Machines that can be restarted together during planned Azure maintenance.
+
+Characteristics:
+
+- Default: **5 Update Domains**
+- Maximum: **20 Update Domains**
+
+Azure updates one Update Domain at a time, reducing the impact of planned maintenance.
+
+> [!TIP]
+> Availability Sets reduce the impact of both planned maintenance and unexpected hardware failures, but they do not protect against an entire datacenter outage. For that level of resilience, use **Availability Zones**.
 
 ## Availability Zones
 
