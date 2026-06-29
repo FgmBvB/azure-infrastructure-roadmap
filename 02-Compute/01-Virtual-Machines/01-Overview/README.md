@@ -67,6 +67,38 @@ Every Azure Virtual Machine is composed of several Azure resources.
 
 ---
 
+## Temporary Disk
+
+Many Azure Virtual Machine sizes include a local **Temporary Disk**.
+
+Typical locations are:
+
+- **Windows:** `D:`
+- **Linux:** `/mnt` or another temporary mount point depending on the distribution.
+
+Unlike Managed Disks, the Temporary Disk is physically attached to the Azure host server and is **not persistent**.
+
+It is intended for:
+
+- Page files
+- Swap files
+- Temporary caches
+- Scratch data
+- Temporary logs
+
+Do **not** store application or business data on the Temporary Disk.
+
+The contents can be lost during operations such as:
+
+- VM redeployment
+- VM resizing
+- Host maintenance
+- VM deallocation
+
+Only Managed Disks provide persistent storage.
+
+---
+
 ## Supported Operating Systems
 
 Azure supports both Microsoft and third-party operating systems.
@@ -161,6 +193,43 @@ Understanding the difference between **Stopped** and **Stopped (Deallocated)** i
 
 ---
 
+## VM Power States
+
+Understanding Azure VM power states is important for both cost management and troubleshooting.
+
+| Power State | Description | Compute Charges |
+|-------------|-------------|-----------------|
+| **Running** | The VM is running normally. | Yes |
+| **Stopped** | The operating system has been shut down from inside the VM, but Azure still reserves the compute resources. | Yes |
+| **Stopped (Deallocated)** | The VM has been stopped from Azure (Portal, CLI, PowerShell, or API), releasing the underlying compute resources. | No |
+
+Examples:
+
+Windows:
+
+```powershell
+Stop-Computer
+```
+
+Linux:
+
+```bash
+shutdown -h now
+```
+
+Azure CLI:
+
+```bash
+az vm deallocate --resource-group <resource-group> --name <vm-name>
+```
+
+> [!TIP]
+> If a VM is **Deallocated**, Azure releases the underlying compute resources and stops compute billing. Storage charges continue because the managed disks remain allocated.
+
+If the VM uses a **dynamic public IP address**, the IP may change when the VM is started again after being deallocated.
+
+---
+
 ## Availability Options
 
 Azure offers several mechanisms to improve availability.
@@ -189,6 +258,23 @@ Administrators commonly perform tasks such as:
 - Configure networking
 - Install VM Extensions
 - Monitor VM health
+
+---
+
+## Redeploy
+
+The **Redeploy** operation moves a Virtual Machine to a new Azure host while preserving its configuration and Managed Disks.
+
+Redeploy is commonly used to recover from hardware-related issues affecting the underlying Azure host.
+
+During a redeployment:
+
+- Managed OS and Data Disks are preserved.
+- Network configuration is retained.
+- The VM is restarted on a different physical host.
+- The contents of the Temporary Disk are lost.
+
+Redeploy is a useful troubleshooting option when a Virtual Machine experiences unexpected availability or connectivity issues caused by the Azure host infrastructure.
 
 ---
 
