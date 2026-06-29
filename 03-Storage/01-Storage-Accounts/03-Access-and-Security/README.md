@@ -103,6 +103,25 @@ SAS tokens can define:
 
 ---
 
+## SAS Revocation Considerations
+
+Not all Shared Access Signatures are revoked in the same way.
+
+| SAS Type | Revocation Method |
+|----------|-------------------|
+| **Service SAS** | Requires rotating the Storage Account access key or modifying the stored access policy (if used). |
+| **Account SAS** | Requires rotating the Storage Account access key. |
+| **User Delegation SAS** | Controlled through Microsoft Entra ID and the user delegation key lifetime. |
+
+Because **Service SAS** and **Account SAS** are signed using Storage Account keys, rotating those keys invalidates existing SAS tokens but may also interrupt legitimate applications using the same keys.
+
+User Delegation SAS provides finer identity-based control and is Microsoft's recommended option for Blob Storage.
+
+> [!TIP]
+> Prefer **User Delegation SAS** whenever possible to reduce dependency on long-lived Storage Account keys.
+
+---
+
 ## Shared Keys
 
 Every Storage Account contains two access keys.
@@ -115,6 +134,24 @@ Characteristics:
 - Should be protected carefully.
 
 Microsoft recommends avoiding Shared Keys whenever Microsoft Entra ID authentication is supported.
+
+---
+
+## Disable Shared Key Authorization
+
+Azure Storage Accounts can disable Shared Key authentication by setting the **Allow storage account key access** option to **Disabled** (`allowSharedKeyAccess = false`).
+
+When Shared Key authorization is disabled:
+
+- Storage Account access keys cannot be used.
+- **Service SAS** tokens are rejected.
+- **Account SAS** tokens are rejected.
+- Authentication must use **Microsoft Entra ID**.
+
+Because **User Delegation SAS** is signed using Microsoft Entra ID credentials rather than Storage Account keys, it continues to function.
+
+> [!IMPORTANT]
+> Microsoft recommends disabling Shared Key authorization whenever applications support Microsoft Entra ID authentication. This reduces the risk associated with long-lived account keys.
 
 ---
 
@@ -131,6 +168,28 @@ Supported options include:
 - Private Endpoints
 
 By default, Storage Accounts are accessible through public endpoints unless network restrictions are configured.
+
+---
+
+## Trusted Microsoft Services
+
+When a Storage Account firewall restricts public network access, some Azure services may also lose access unless explicitly allowed.
+
+Azure provides the **Allow trusted Microsoft services to access this storage account** option.
+
+When enabled, selected Microsoft-managed services can access the Storage Account even when firewall rules restrict general public access.
+
+Examples of supported services include:
+
+- Azure Backup
+- Azure Monitor
+- Azure Site Recovery
+- Other supported Microsoft services documented by Azure
+
+This exception applies only to specific trusted services maintained by Microsoft and does **not** grant unrestricted access to all Azure services.
+
+> [!IMPORTANT]
+> Enabling this option simplifies integration with Azure platform services while maintaining Storage Account firewall protection for other traffic.
 
 ---
 
