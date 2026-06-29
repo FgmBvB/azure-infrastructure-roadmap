@@ -89,6 +89,33 @@ Best practices include:
 
 ---
 
+## Azure File Sync
+
+Azure File Sync extends Azure Files to on-premises Windows Servers.
+
+It allows organizations to centralize file storage in Azure while maintaining local access through Windows Server file shares.
+
+Benefits include:
+
+- Centralized file storage.
+- Hybrid file access.
+- Simplified backup.
+- Multi-office synchronization.
+- Reduced on-premises storage requirements.
+
+With **Cloud Tiering** enabled:
+
+- Frequently accessed files remain cached locally.
+- Less frequently used files are stored in Azure Files.
+- Placeholder files allow users to access cloud data transparently when needed.
+
+This enables organizations to provide access to datasets that are much larger than the available local storage capacity.
+
+> [!IMPORTANT]
+> Azure File Sync is a hybrid storage solution that integrates on-premises Windows Servers with Azure Files.
+
+---
+
 ## Queue Storage
 
 Recommendations include:
@@ -103,6 +130,24 @@ Applications should always assume that a message may be delivered more than once
 
 ---
 
+## Queue Storage Message Size
+
+Azure Queue Storage is intended for lightweight asynchronous messaging.
+
+Important considerations:
+
+- Individual messages have a maximum size of **64 KiB**.
+- Messages should contain only the information required to process the workload.
+
+For large payloads, Microsoft recommends the **Claim Check pattern**:
+
+1. Store the file or large object in Azure Blob Storage.
+2. Store only the Blob URL or identifier in the queue message.
+
+Applications requiring advanced messaging capabilities such as larger messages, transactions, sessions, or ordered delivery should consider **Azure Service Bus** instead of Queue Storage.
+
+---
+
 ## Table Storage
 
 Microsoft recommends:
@@ -114,6 +159,39 @@ Microsoft recommends:
 - Use Table Storage only for simple NoSQL workloads.
 
 For advanced querying requirements, evaluate Azure Cosmos DB.
+
+---
+
+## Table Storage Query Design
+
+Azure Table Storage is optimized for key-based lookups.
+
+The only native index is the combination of:
+
+- **PartitionKey**
+- **RowKey**
+
+Queries that use both values are highly efficient.
+
+Example:
+
+```text
+PartitionKey = "Sales"
+RowKey = "10025"
+```
+
+Queries that filter only on non-indexed properties require scanning large portions of the table.
+
+Example:
+
+```text
+CustomerEmail = "user@contoso.com"
+```
+
+Such queries are significantly slower and consume more transactions.
+
+> [!TIP]
+> Design the data model so that the most common queries use **PartitionKey** and **RowKey** whenever possible.
 
 ---
 
