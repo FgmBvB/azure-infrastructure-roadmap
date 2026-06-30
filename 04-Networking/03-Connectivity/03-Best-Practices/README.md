@@ -105,6 +105,33 @@ Gateway sharing reduces both cost and administrative complexity.
 
 ---
 
+# GatewaySubnet Sizing
+
+GatewaySubnet sizing directly affects future scalability.
+
+Microsoft recommends using:
+
+- **/27** as the minimum size for most production environments.
+- **/26** when future expansion or gateway coexistence is expected.
+
+A properly sized GatewaySubnet allows Azure to deploy multiple gateway instances for:
+
+- High availability
+- Maintenance operations
+- Gateway upgrades
+- Gateway coexistence (VPN Gateway and ExpressRoute Gateway)
+
+Small GatewaySubnets can prevent:
+
+- Gateway deployment
+- SKU upgrades
+- ExpressRoute and VPN Gateway coexistence
+
+> [!IMPORTANT]
+> GatewaySubnet should be sized for future growth rather than current requirements. Resizing after deployment can be operationally disruptive.
+
+---
+
 # Use Virtual Network Peering Correctly
 
 When designing peered environments:
@@ -116,6 +143,49 @@ When designing peered environments:
 - Monitor peering health regularly.
 
 Use direct peering only when workloads require direct communication.
+
+---
+
+# Peering Scalability
+
+Virtual Network Peering is **not transitive**, even in large enterprise topologies.
+
+Example:
+
+```text
+Hub 1
+
+│
+
+Spoke A
+
+│
+
+Hub 2
+
+│
+
+Spoke B
+```
+
+Although:
+
+- Spoke A is peered with Hub 1.
+- Hub 1 is peered with Hub 2.
+- Hub 2 is peered with Spoke B.
+
+Azure does **not** automatically provide connectivity across the entire chain.
+
+Each peering relationship operates independently.
+
+To enable communication across multiple hubs, organizations typically use one of the following approaches:
+
+- Additional direct peerings.
+- Azure Firewall or Network Virtual Appliances with User-Defined Routes.
+- Azure Virtual WAN for large-scale global transit architectures.
+
+> [!IMPORTANT]
+> Gateway Transit and Allow Forwarded Traffic work only across directly connected peerings. They do not make chained peerings transitive.
 
 ---
 
