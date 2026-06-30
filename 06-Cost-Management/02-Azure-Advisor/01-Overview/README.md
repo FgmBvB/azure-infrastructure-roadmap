@@ -179,6 +179,37 @@ This prioritization helps administrators address the most valuable recommendatio
 
 ---
 
+# Advisor Score
+
+Azure Advisor includes an **Advisor Score** that helps organizations measure how closely their Azure environment aligns with Microsoft's recommended best practices.
+
+Scores are presented:
+
+- Overall Advisor Score
+- Individual scores for each recommendation category
+
+Categories include:
+
+- Reliability
+- Security
+- Performance
+- Operational Excellence
+- Cost
+
+Applying recommendations generally improves the corresponding score, while unresolved recommendations may reduce it.
+
+The Advisor Score helps administrators:
+
+- Measure governance maturity.
+- Track operational improvements.
+- Monitor optimization progress over time.
+- Report cloud health to management.
+
+> [!TIP]
+> Advisor Score is intended as a governance indicator rather than a formal compliance metric.
+
+---
+
 # Azure Advisor and Cost Optimization
 
 Azure Advisor plays a key role in Azure cost optimization.
@@ -241,6 +272,71 @@ Each month administrators review Azure Advisor to:
 - Apply security recommendations.
 
 This continuous review improves both operational efficiency and financial governance.
+
+---
+
+# Scope and Resource Filtering
+
+Azure Advisor supports filtering recommendations across different Azure scopes.
+
+Recommendations can be reviewed at:
+
+- Management Group
+- Subscription
+- Resource Group
+
+Filtering allows administrators to focus on specific environments without affecting other workloads.
+
+Typical scenarios include:
+
+- Reviewing only production subscriptions.
+- Analyzing a single business unit.
+- Investigating one Resource Group.
+- Separating development and production environments.
+
+Using appropriate scopes simplifies operational reviews and improves governance in large Azure environments.
+
+> [!TIP]
+> Filtering recommendations helps administrators prioritize business-critical workloads while reducing operational noise.
+
+---
+
+# Managing Recommendations
+
+Not every recommendation requires immediate implementation.
+
+Azure Advisor provides two mechanisms for managing recommendations.
+
+---
+
+## Snooze
+
+Snoozing temporarily hides a recommendation.
+
+Typical use cases include:
+
+- Planned maintenance windows.
+- Seasonal workloads.
+- Temporary operational exceptions.
+
+After the selected period expires, the recommendation becomes visible again.
+
+---
+
+## Dismiss
+
+Dismiss permanently hides a recommendation that is not applicable to the environment.
+
+Typical examples include:
+
+- Business-approved architectural decisions.
+- Unsupported optimization scenarios.
+- Accepted operational risks.
+
+This helps administrators keep the Advisor dashboard focused on actionable recommendations.
+
+> [!IMPORTANT]
+> Recommendations should only be dismissed after confirming they are not appropriate for the workload.
 
 ---
 
