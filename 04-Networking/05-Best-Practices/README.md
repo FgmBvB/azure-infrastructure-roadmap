@@ -164,6 +164,63 @@ Simple routing reduces operational risk.
 
 ---
 
+# Effective Routes
+
+When troubleshooting Azure networking, always verify the **Effective Routes** of the Virtual Machine.
+
+Azure determines the final route using the following evaluation order:
+
+1. Longest Prefix Match
+2. Route Source Priority
+
+If multiple routes match the same destination:
+
+- User-Defined Routes (UDRs)
+- BGP Routes
+- System Routes
+
+Example:
+
+```text
+Destination
+
+10.1.0.25
+
+↓
+
+Matching Routes
+
+10.1.0.0/24
+
+↓
+
+0.0.0.0/0
+
+↓
+
+Selected Route
+
+10.1.0.0/24
+```
+
+The more specific prefix always wins.
+
+---
+
+The **Effective Routes** view available from the Virtual Machine's Network Interface (NIC) combines:
+
+- System Routes
+- User-Defined Routes
+- BGP Routes
+- Peering Routes
+
+into a single routing table showing the actual next hop Azure will use.
+
+> [!TIP]
+> Always use **Effective Routes** instead of inspecting only Route Tables when troubleshooting routing issues.
+
+---
+
 # Secure Public Applications
 
 Internet-facing applications require additional protection.
@@ -191,6 +248,28 @@ Preferred outbound solutions:
 - Standard Load Balancer Outbound Rules
 
 Explicit outbound connectivity improves predictability and scalability.
+
+---
+
+# Azure NAT Gateway vs Azure Firewall
+
+Both services provide outbound Internet connectivity, but they solve different problems.
+
+| Feature | NAT Gateway | Azure Firewall |
+|----------|-------------|----------------|
+| Outbound Internet | Yes | Yes |
+| Packet Inspection | No | Yes |
+| Layer | Layer 3/4 | Layer 3–7 |
+| FQDN Filtering | No | Yes |
+| Threat Intelligence | No | Yes |
+| Recommended For | Outbound connectivity | Centralized security |
+
+Use **Azure NAT Gateway** when workloads simply require scalable Internet access.
+
+Use **Azure Firewall** when outbound traffic must be inspected, filtered, logged, or restricted according to organizational security policies.
+
+> [!IMPORTANT]
+> NAT Gateway is designed for scalable outbound connectivity, while Azure Firewall is designed for network security.
 
 ---
 
@@ -360,6 +439,32 @@ The environment provides centralized management, private connectivity, layered s
 - Standard SKU networking resources, Health Probes, explicit outbound connectivity, and continuous monitoring improve reliability and operational stability.
 - Proper IP planning, DNS configuration, routing, and governance significantly reduce troubleshooting complexity.
 - Following Microsoft's networking best practices results in secure, highly available, and production-ready Azure infrastructures.
+
+---
+
+# Advanced Topic — Azure DNS Private Resolver
+
+Large hybrid environments often require DNS resolution between Azure and on-premises networks.
+
+Azure DNS Private Resolver provides a managed DNS forwarding service without requiring DNS forwarder Virtual Machines.
+
+It supports:
+
+- Inbound Endpoints
+- Outbound Endpoints
+- Conditional DNS forwarding
+- Hybrid DNS resolution
+
+Typical scenarios include:
+
+- Private Endpoints
+- Hybrid networking
+- Hub-and-Spoke architectures
+- ExpressRoute
+- Site-to-Site VPN
+
+> [!NOTE]
+> Azure DNS Private Resolver is covered in greater depth in the AZ-700 certification but is useful to understand when designing enterprise Azure networking architectures.
 
 ---
 
