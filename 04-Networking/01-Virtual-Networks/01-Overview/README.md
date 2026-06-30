@@ -104,6 +104,36 @@ Address spaces cannot overlap with directly connected networks such as:
 
 ---
 
+## Expanding Address Spaces
+
+Azure Virtual Networks can be expanded by adding additional address spaces after deployment.
+
+Example:
+
+```text
+Initial VNet
+
+10.0.0.0/16
+
+Later expansion
+
+10.1.0.0/16
+```
+
+Modern Azure networking allows address spaces to be added even when Virtual Network Peering is already configured.
+
+Requirements include:
+
+- The new address space must not overlap with connected VNets.
+- Connected peers may require synchronization so that the updated address space is recognized.
+
+This flexibility simplifies network growth without recreating the Virtual Network.
+
+> [!TIP]
+> Plan generous address spaces during the design phase, but remember that Azure supports future expansion when additional capacity is required.
+
+---
+
 # Subnets
 
 Subnets divide a Virtual Network into smaller network segments.
@@ -133,6 +163,34 @@ Benefits include:
 * Service delegation
 
 Every Azure resource connects to a subnet.
+
+---
+
+## Reserved IP Addresses
+
+Azure reserves five IP addresses in every subnet for internal platform operations.
+
+For example, in the subnet **10.0.1.0/24**:
+
+| Address | Purpose |
+|----------|---------|
+| **10.0.1.0** | Network address |
+| **10.0.1.1** | Azure default gateway |
+| **10.0.1.2** | Azure DNS service |
+| **10.0.1.3** | Reserved for Azure platform services |
+| **10.0.1.255** | Broadcast address (reserved) |
+
+Because these addresses are unavailable, the number of usable IP addresses is always reduced by five.
+
+Example:
+
+| Subnet | Total Addresses | Usable Addresses |
+|---------|----------------:|-----------------:|
+| /24 | 256 | 251 |
+| /29 | 8 | 3 |
+
+> [!IMPORTANT]
+> Azure always reserves five IP addresses in every subnet, regardless of subnet size.
 
 ---
 
@@ -177,6 +235,27 @@ Characteristics:
 * Can be IPv4 or IPv6.
 
 Not every Azure resource requires a Public IP.
+
+---
+
+## Public IP SKU Considerations
+
+Azure Public IP addresses are deployed using **Standard SKU** for modern production workloads.
+
+Standard Public IPs provide several advantages:
+
+- Secure by default.
+- Support Availability Zones.
+- Support zone-redundant deployments.
+- Improved reliability and scalability.
+
+Unlike legacy Basic Public IPs, Standard Public IPs deny inbound traffic unless explicitly allowed through security controls such as:
+
+- Network Security Groups (NSGs)
+- Azure Firewall
+
+> [!IMPORTANT]
+> Microsoft recommends Standard SKU Public IPs for all new deployments.
 
 ---
 
