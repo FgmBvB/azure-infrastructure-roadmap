@@ -110,6 +110,51 @@ Avoid creating overly permissive rules.
 
 ---
 
+# Default NSG Rules
+
+Every Network Security Group includes built-in security rules.
+
+These rules:
+
+- Cannot be deleted.
+- Cannot be modified.
+- Have priorities between **65000** and **65500**.
+
+Examples include:
+
+### Default Inbound Rules
+
+| Priority | Rule | Action |
+|----------|------|--------|
+| 65000 | AllowVNetInBound | Allow |
+| 65001 | AllowAzureLoadBalancerInBound | Allow |
+| 65500 | DenyAllInbound | Deny |
+
+### Default Outbound Rules
+
+| Priority | Rule | Action |
+|----------|------|--------|
+| 65000 | AllowVNetOutBound | Allow |
+| 65001 | AllowInternetOutBound | Allow |
+| 65500 | DenyAllOutBound | Deny |
+
+Custom rules always take precedence because they use lower priority numbers.
+
+Example:
+
+```text
+Priority 100
+
+Deny Web → Database
+```
+
+This rule overrides the default **AllowVNetInBound** rule.
+
+> [!IMPORTANT]
+> Resources located in different subnets of the same Virtual Network can communicate by default unless a custom NSG rule explicitly blocks the traffic.
+
+---
+
 # Centralize Traffic Inspection
 
 Deploy Azure Firewall when centralized filtering is required.
@@ -155,6 +200,42 @@ Recommendations:
 - Use Private DNS Zones.
 - Remove unnecessary Service Endpoints.
 - Monitor Private Endpoint connections.
+
+---
+
+# Service Endpoints and Data Exfiltration
+
+Service Endpoints and Private Endpoints provide different levels of isolation.
+
+### Service Endpoints
+
+Service Endpoints secure traffic by keeping it on the Microsoft backbone network.
+
+However:
+
+- Azure services continue using public endpoints.
+- Access control depends on the service firewall configuration.
+- Administrators should restrict access to specific Virtual Networks and approved resources.
+
+Poorly configured service firewalls can increase the risk of unintended access.
+
+---
+
+### Private Endpoints
+
+Private Endpoints assign a dedicated private IP address to a specific Azure resource.
+
+Benefits include:
+
+- Direct private connectivity.
+- No public endpoint exposure (when public access is disabled).
+- Resource-specific access.
+- Stronger protection against unintended data exfiltration.
+
+Because communication targets a specific private IP address, Private Endpoints provide a higher level of network isolation than Service Endpoints.
+
+> [!IMPORTANT]
+> Microsoft generally recommends **Private Endpoints** over **Service Endpoints** for highly sensitive workloads and environments with strict data exfiltration protection requirements.
 
 ---
 
@@ -206,6 +287,51 @@ Configure alerts for:
 - DDoS attacks.
 - Administrative changes.
 - Unusual network activity.
+
+---
+
+# Network Watcher Troubleshooting
+
+Azure Network Watcher provides several diagnostic tools.
+
+### IP Flow Verify
+
+IP Flow Verify evaluates whether a specific network packet is allowed or denied.
+
+It analyzes:
+
+- Source IP
+- Destination IP
+- Source Port
+- Destination Port
+- Protocol
+
+The tool identifies:
+
+- Which NSG evaluated the traffic.
+- Which specific rule allowed or denied the packet.
+
+This is the preferred tool for troubleshooting NSG connectivity problems.
+
+---
+
+### Connection Troubleshoot
+
+Connection Troubleshoot performs end-to-end connectivity testing.
+
+It can identify problems involving:
+
+- Network Security Groups
+- Route Tables (UDRs)
+- DNS resolution
+- Network appliances
+- Azure Firewall
+- Connectivity between Azure resources
+
+Unlike IP Flow Verify, it validates the complete network path.
+
+> [!TIP]
+> Use **IP Flow Verify** to troubleshoot NSG rule evaluation and **Connection Troubleshoot** to diagnose complete connectivity issues.
 
 ---
 
