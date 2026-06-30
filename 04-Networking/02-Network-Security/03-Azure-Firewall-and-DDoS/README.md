@@ -74,6 +74,37 @@ Administrators manage:
 
 ---
 
+## Azure Firewall Deployment Requirements
+
+Azure Firewall requires dedicated infrastructure resources.
+
+### AzureFirewallSubnet
+
+Azure Firewall must be deployed into a dedicated subnet.
+
+Requirements:
+
+- The subnet name must be exactly **AzureFirewallSubnet**.
+- Minimum supported subnet size is **/26**.
+- No other Azure resources can be deployed in this subnet.
+
+---
+
+### Public IP Address
+
+Azure Firewall also requires at least one **Standard SKU Public IP address**.
+
+This public IP is used for:
+
+- Outbound Source NAT (SNAT)
+- Inbound Destination NAT (DNAT)
+- Internet connectivity
+
+Additional Public IP addresses can be associated with Azure Firewall to support larger or more complex deployments.
+
+> [!IMPORTANT]
+> Azure Firewall cannot be deployed without a dedicated **AzureFirewallSubnet** and at least one **Standard Public IP address**.
+
 # Azure Firewall Features
 
 Azure Firewall provides:
@@ -103,9 +134,67 @@ Azure Firewall evaluates three primary rule types.
 
 ---
 
+## Firewall Rule Processing
+
+Azure Firewall evaluates traffic using a well-defined processing order.
+
+### Inbound Traffic
+
+For inbound connections, Azure Firewall evaluates:
+
+1. Threat Intelligence
+2. DNAT Rules
+
+If a matching DNAT rule is found, the destination address is translated and the packet is forwarded to the internal resource.
+
+---
+
+### Outbound Traffic
+
+For outbound connections, Azure Firewall evaluates:
+
+1. Threat Intelligence
+2. Network Rules
+3. Application Rules
+
+Network Rules are evaluated before Application Rules.
+
+If traffic matches a Network Rule, Azure Firewall allows the connection immediately without evaluating Application Rules.
+
+Example:
+
+```text
+Destination:
+
+https://facebook.com
+
+↓
+
+Network Rule
+
+Allow TCP 443 to Any
+
+↓
+
+Traffic Allowed
+
+↓
+
+Application Rule
+
+(Not Evaluated)
+```
+
+> [!WARNING]
+> Broad Network Rules (for example, allowing TCP 443 to any destination) can bypass Application Rules based on FQDN filtering.
+>
+> Design Network Rules carefully to avoid unintentionally disabling Layer 7 filtering.
+
 # DNAT vs SNAT
 
 Azure Firewall supports both destination and source address translation.
+
+---
 
 ### Destination NAT (DNAT)
 
