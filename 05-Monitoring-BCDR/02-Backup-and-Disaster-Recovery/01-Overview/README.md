@@ -318,17 +318,26 @@ Lower RTO requires faster recovery procedures.
 
 ---
 
-# Soft Delete
+## Soft Delete
 
-Azure Backup protects deleted backup data using Soft Delete.
+Soft Delete provides an additional layer of protection against accidental or malicious deletion of backup data.
 
-Benefits include:
+When backup protection is stopped and backup data is deleted, Azure retains the recovery points for a temporary protection period instead of removing them immediately.
 
-- Protection against accidental deletion.
-- Protection against malicious deletion.
-- Additional recovery window.
+During this period:
 
-Soft Delete is enabled by default for supported backup workloads.
+- Backup data remains recoverable.
+- Protected items appear as deleted.
+- Administrators can restore protection using the **Undelete** operation.
+
+Soft Delete helps protect organizations against:
+
+- Accidental administrator actions.
+- Malicious deletion attempts.
+- Ransomware attacks targeting backup infrastructure.
+
+> [!IMPORTANT]
+> Microsoft enables Soft Delete by default for supported Azure Backup workloads. Recovery data remains recoverable during the Soft Delete retention period before permanent deletion occurs.
 
 ---
 
