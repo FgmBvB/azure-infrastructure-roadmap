@@ -310,6 +310,52 @@ BGP is recommended for enterprise hybrid environments.
 
 ---
 
+## Hybrid Route Preference
+
+Azure selects routes using multiple evaluation steps.
+
+1. Longest Prefix Match
+2. Route source precedence
+
+When multiple routes advertise the same destination prefix, Azure applies the following priority:
+
+1. User-Defined Routes (UDRs)
+2. BGP Routes
+3. System Routes
+
+When identical BGP routes are learned through both ExpressRoute and VPN Gateway, Azure normally prefers the ExpressRoute path.
+
+This behavior allows architectures such as:
+
+```text
+Primary
+
+↓
+
+ExpressRoute
+
+↓
+
+Azure
+
+Backup
+
+↓
+
+VPN Gateway
+
+↓
+
+Azure
+```
+
+If ExpressRoute becomes unavailable, traffic can automatically switch to the VPN connection through BGP.
+
+> [!TIP]
+> Combining ExpressRoute with VPN Gateway provides both high availability and disaster recovery for hybrid connectivity.
+
+---
+
 # Gateway Subnet
 
 Every VPN Gateway and ExpressRoute Gateway requires a dedicated subnet.
