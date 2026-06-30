@@ -244,6 +244,35 @@ Configure alerts for:
 - Route changes.
 - Tunnel failures.
 
+## Connection Monitor
+
+Connection Monitor continuously validates network connectivity between Azure resources and hybrid environments.
+
+It supports monitoring between:
+
+- Azure Virtual Machines
+- On-premises servers
+- ExpressRoute-connected networks
+- VPN-connected networks
+
+Important performance metrics include:
+
+| Metric | Purpose |
+|---------|----------|
+| **Round-Trip Time (RTT)** | Measures network latency. |
+| **Packet Loss** | Detects dropped packets and unstable connectivity. |
+
+Connection Monitor helps identify issues involving:
+
+- Network latency
+- VPN connectivity
+- ExpressRoute performance
+- Routing problems
+- Network interruptions
+
+> [!TIP]
+> Connection Monitor is designed for continuous monitoring, while Connection Troubleshoot is intended for on-demand diagnostics.
+
 ---
 
 # Governance
