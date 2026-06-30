@@ -297,6 +297,31 @@ Azure DDoS Network Protection is associated with one or more Virtual Networks.
 
 ---
 
+## DDoS Cost Protection
+
+Azure DDoS Network Protection includes financial protection against verified DDoS attacks.
+
+During a large-scale attack, Azure resources such as:
+
+- Virtual Machine Scale Sets
+- Load Balancers
+- Bandwidth consumption
+
+may automatically scale to absorb malicious traffic.
+
+For eligible attacks covered by Azure DDoS Network Protection, Microsoft provides cost protection that can help offset unexpected resource consumption resulting directly from the attack.
+
+Benefits include:
+
+- Financial protection for qualified scaling events.
+- Access to DDoS Rapid Response (for eligible customers).
+- Detailed attack telemetry and reporting.
+
+> [!TIP]
+> Cost protection helps reduce the financial impact of verified DDoS attacks, but it does not replace proper capacity planning or security architecture.
+
+---
+
 # Azure Firewall vs NSG
 
 | Feature | Azure Firewall | Network Security Group |
