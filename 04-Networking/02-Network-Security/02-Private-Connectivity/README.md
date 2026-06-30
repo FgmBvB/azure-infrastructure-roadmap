@@ -148,6 +148,51 @@ Microsoft provides recommended Private DNS Zones for supported services.
 
 ---
 
+## Private Endpoint DNS Resolution
+
+Private Endpoints rely on DNS to transparently redirect clients to a private IP address.
+
+When a Private Endpoint is created for an Azure service, Azure automatically changes public DNS resolution by returning a **CNAME** record that points to a **privatelink** domain.
+
+Example:
+
+```text
+Application
+
+↓
+
+mystorage.blob.core.windows.net
+
+↓
+
+CNAME
+
+↓
+
+mystorage.privatelink.blob.core.windows.net
+
+↓
+
+Private DNS Zone
+
+↓
+
+10.0.3.4
+```
+
+If the Virtual Network is linked to the corresponding Private DNS Zone, the service name resolves to the Private Endpoint IP address.
+
+If the Private DNS Zone is missing or not linked:
+
+- DNS resolution continues through the public Azure DNS infrastructure.
+- The service resolves to its public endpoint.
+- Connections may fail if public network access has been disabled.
+
+> [!IMPORTANT]
+> Private DNS configuration is an essential component of every Private Endpoint deployment.
+
+---
+
 # Service Endpoints vs Private Endpoints
 
 | Feature | Service Endpoint | Private Endpoint |
@@ -158,6 +203,67 @@ Microsoft provides recommended Private DNS Zones for supported services.
 | Internet Exposure | Public endpoint remains accessible | Private connectivity only (if public access is disabled) |
 | DNS Changes Required | No | Usually Yes |
 | Recommended for Production | Good | Best Practice |
+
+---
+
+## Hybrid Connectivity
+
+Service Endpoints and Private Endpoints behave differently when accessed from on-premises environments.
+
+---
+
+### Service Endpoints
+
+Service Endpoints are available only to resources located inside supported Azure Virtual Networks.
+
+Traffic originating from on-premises networks through:
+
+- Site-to-Site VPN
+- ExpressRoute
+
+cannot use Service Endpoints directly.
+
+---
+
+### Private Endpoints
+
+Private Endpoints receive a private IP address inside a Virtual Network.
+
+Because they are regular private IP addresses, they can be accessed from:
+
+- Azure Virtual Networks
+- Peered Virtual Networks
+- On-premises networks connected through VPN
+- On-premises networks connected through ExpressRoute
+
+This makes Private Endpoints the preferred solution for hybrid architectures.
+
+> [!TIP]
+> When secure access from both Azure and on-premises environments is required, Microsoft generally recommends Private Endpoints.
+
+---
+
+## Private Endpoint Network Policies
+
+By default, Azure manages traffic destined for Private Endpoints.
+
+Administrators can enable **Private Endpoint network policies** on the subnet hosting the Private Endpoint to support additional network controls.
+
+Depending on the configuration, this allows:
+
+- Network Security Groups (NSGs)
+- User-Defined Routes (UDRs)
+
+to participate in traffic filtering and routing for Private Endpoint traffic.
+
+This capability enables advanced scenarios such as:
+
+- Centralized traffic inspection through Azure Firewall.
+- Network Virtual Appliances (NVAs).
+- Additional subnet-level security controls.
+
+> [!IMPORTANT]
+> Private Endpoint network policies are configured at the **subnet** level and must be explicitly enabled when required.
 
 ---
 
