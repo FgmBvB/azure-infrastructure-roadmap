@@ -108,6 +108,55 @@ These options enable Hub-and-Spoke architectures.
 
 ---
 
+## Peering Connection States
+
+A Virtual Network Peering consists of **two independent peering objects**.
+
+One peering must be created from:
+
+- VNet A → VNet B
+
+and another from:
+
+- VNet B → VNet A
+
+Both peerings are required before traffic can flow.
+
+---
+
+### Connection States
+
+| State | Description |
+|--------|-------------|
+| **Initiated** | One side of the peering has been created, but the reciprocal peering does not yet exist. |
+| **Connected** | Both peerings exist and communication is fully operational. |
+| **Disconnected** | One side of the peering has been removed or the peering relationship is no longer valid. |
+
+Example:
+
+```text
+VNet A
+
+↓
+
+Peering
+
+↓
+
+Initiated
+
+↓
+
+Traffic
+
+✖ Not Allowed
+```
+
+Only when both peerings reach the **Connected** state can resources communicate.
+
+> [!IMPORTANT]
+> Virtual Network Peering is always configured as two independent peering resources, even though communication becomes bidirectional after both are established.
+
 # Gateway Transit
 
 Gateway Transit allows multiple Spoke VNets to share a single gateway deployed in the Hub.
@@ -148,6 +197,44 @@ Benefits include:
 - Centralized connectivity
 - Simplified management
 - Easier hybrid networking
+
+---
+
+## Peering Is Not Transitive
+
+Virtual Network Peering is **not transitive**.
+
+Example:
+
+```text
+Spoke A
+
+↓
+
+Hub
+
+↓
+
+Spoke B
+```
+
+Even though both Spokes are peered with the Hub:
+
+- Spoke A cannot communicate directly with Spoke B.
+- Azure does not automatically forward traffic between peered VNets.
+
+To enable communication between Spokes, administrators must either:
+
+- Create a direct peering between the Spokes.
+
+or
+
+- Route traffic through Azure Firewall or a Network Virtual Appliance (NVA) using User-Defined Routes (UDRs).
+
+When routing traffic through an intermediary appliance, **Allow Forwarded Traffic** must be enabled on the peering connections.
+
+> [!IMPORTANT]
+> Gateway Transit shares VPN Gateway or ExpressRoute connectivity. It does **not** make Virtual Network Peering transitive.
 
 ---
 
@@ -193,6 +280,35 @@ Spokes:
 - Production environments
 
 The Hub centralizes shared networking services.
+
+---
+
+## Shared Services Across Peering
+
+Several Azure services can be shared across peered Virtual Networks.
+
+### Azure Bastion
+
+A single Azure Bastion deployment in the Hub Virtual Network can securely administer Virtual Machines located in connected Spoke VNets.
+
+This reduces both deployment complexity and operational cost.
+
+---
+
+### Private Endpoints
+
+Resources in Spoke VNets can access Private Endpoints located in the Hub Virtual Network.
+
+For successful connectivity:
+
+- The Virtual Networks must be peered.
+- DNS resolution must return the Private Endpoint IP address.
+- The required Azure Private DNS Zone must be linked to every Virtual Network that needs name resolution.
+
+Without proper DNS integration, applications may resolve the public endpoint instead of the private address.
+
+> [!TIP]
+> Network connectivity alone is not sufficient for Private Endpoints. Proper Private DNS configuration is equally important.
 
 ---
 
