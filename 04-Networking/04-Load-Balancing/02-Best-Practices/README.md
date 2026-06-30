@@ -50,6 +50,31 @@ Avoid using legacy Basic SKUs for new deployments.
 
 ---
 
+# Outbound Internet Access
+
+Inbound and outbound connectivity are configured independently.
+
+For modern Azure deployments, backend Virtual Machines should **not** rely on implicit outbound Internet access.
+
+Microsoft recommends one of the following outbound connectivity options:
+
+- Azure NAT Gateway (recommended)
+- Public IP addresses
+- Azure Firewall
+- Standard Load Balancer Outbound Rules
+
+Azure NAT Gateway is the preferred solution because it provides:
+
+- Predictable outbound connectivity
+- Scalable SNAT
+- Simplified management
+- Dedicated outbound public IP addresses
+
+> [!IMPORTANT]
+> Modern Azure networking no longer recommends relying on default outbound Internet access for Virtual Machines. Production workloads should use an explicit outbound connectivity solution such as Azure NAT Gateway.
+
+---
+
 # Design for High Availability
 
 Applications should tolerate backend failures.
@@ -82,6 +107,28 @@ Poor probe configuration can remove healthy servers or keep failed servers in pr
 
 ---
 
+## Health Probe Behavior
+
+Health Probes continuously determine whether backend instances are available.
+
+Typical behavior:
+
+- Azure periodically sends probe requests to each backend instance.
+- If multiple consecutive probes fail, the backend is marked as **Unhealthy**.
+- Unhealthy instances immediately stop receiving new connections.
+- Once probe responses become successful again, Azure automatically returns the backend to service.
+
+Proper probe configuration should:
+
+- Monitor application availability rather than simple network connectivity.
+- Use realistic response endpoints.
+- Avoid probe configurations that generate false positives.
+
+> [!TIP]
+> A poorly designed Health Probe can remove healthy servers from the backend pool or continue sending traffic to failed applications.
+
+---
+
 # Optimize Session Persistence
 
 Choose session persistence only when required.
@@ -109,6 +156,41 @@ For public web applications:
 - Keep TLS policies up to date.
 
 Never expose production applications without appropriate protection.
+
+---
+
+## Web Application Firewall Modes
+
+Azure Application Gateway Web Application Firewall (WAF) supports two operating modes.
+
+### Detection Mode
+
+Detection mode inspects requests against the OWASP Core Rule Set (CRS).
+
+Requests are:
+
+- Logged
+- Reported
+- Allowed to continue
+
+This mode is recommended during initial deployments to identify false positives before enforcing security policies.
+
+---
+
+### Prevention Mode
+
+Prevention mode actively protects applications.
+
+Malicious requests are:
+
+- Blocked
+- Logged
+- Returned with an HTTP **403 Forbidden** response
+
+Prevention mode is the recommended configuration for production environments after WAF rules have been validated.
+
+> [!IMPORTANT]
+> Deploying WAF in Detection mode first helps minimize service disruptions caused by incorrectly blocked legitimate traffic.
 
 ---
 
