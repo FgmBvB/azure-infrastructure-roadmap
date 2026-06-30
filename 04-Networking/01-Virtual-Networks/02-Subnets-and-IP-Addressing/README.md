@@ -132,6 +132,64 @@ Future        10.10.20.0/24
 
 ---
 
+## Azure Reserved Subnets
+
+Some Azure services require dedicated subnets with predefined names.
+
+---
+
+## Subnet Delegation
+
+Subnet Delegation allows Azure to assign administrative control of a subnet to a specific Platform as a Service (PaaS) resource.
+
+Examples include:
+
+- Microsoft.Web/serverFarms (Azure App Service)
+- Microsoft.ContainerInstance/containerGroups (Azure Container Instances)
+
+When a subnet is delegated:
+
+- Only supported instances of the delegated service can be deployed.
+- Azure automatically manages network configuration required by that service.
+- General-purpose resources such as Virtual Machines cannot be deployed unless supported by the delegation.
+
+Subnet Delegation simplifies the deployment of Azure services that require direct integration with Virtual Networks.
+
+> [!TIP]
+> Delegation is commonly used by App Service, Azure Container Instances, and other Azure PaaS services that require VNet integration.
+
+---
+
+### GatewaySubnet
+
+The **GatewaySubnet** hosts Azure Virtual Network Gateways used for:
+
+- Site-to-Site VPN
+- Point-to-Site VPN
+- VNet-to-VNet VPN
+- ExpressRoute Gateway
+
+Requirements:
+
+- The subnet name must be exactly **GatewaySubnet**.
+- Microsoft recommends a subnet size of **/27** or larger to support future scalability.
+- No Virtual Machines or other workloads should be deployed in this subnet.
+
+---
+
+### AzureFirewallSubnet
+
+Azure Firewall requires its own dedicated subnet.
+
+Requirements:
+
+- The subnet name must be exactly **AzureFirewallSubnet**.
+- The subnet must have a minimum size of **/26**.
+- No other Azure resources can be deployed in this subnet.
+
+> [!IMPORTANT]
+> Reserved subnets are dedicated to Azure-managed services and cannot host general-purpose workloads.
+
 # Private IP Address Allocation
 
 Azure supports two allocation methods.
@@ -143,6 +201,30 @@ Azure supports two allocation methods.
 - Azure manages allocation.
 
 Recommended for most workloads.
+
+---
+
+## Dynamic Private IP Behavior
+
+Azure supports both **Dynamic** and **Static** private IP allocation.
+
+Although dynamically assigned, a private IP address normally remains unchanged while the network interface exists.
+
+A Dynamic private IP is retained when:
+
+- The Virtual Machine is restarted.
+- The operating system is rebooted.
+- The Virtual Machine enters the **Stopped (Allocated)** state.
+
+A Dynamic private IP may change when:
+
+- The Virtual Machine is **Stopped (Deallocated)**.
+- The network interface (NIC) is removed or replaced.
+
+Workloads that require a permanent private address should use **Static** allocation.
+
+> [!IMPORTANT]
+> Configure Static private IP addresses in Azure, not inside the guest operating system.
 
 ---
 
