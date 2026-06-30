@@ -69,6 +69,49 @@ Tags enable:
 
 ---
 
+# Tag Inheritance
+
+Tags are essential for governance and cost allocation.
+
+However, Azure Resource Manager **does not automatically inherit tags** from a Resource Group to the resources it contains.
+
+Example:
+
+```text
+Resource Group
+CostCenter = Finance
+
+↓
+
+Virtual Machine
+
+↓
+
+No tags assigned automatically
+```
+
+This behavior can lead to incomplete Cost Analysis reports and inaccurate chargeback calculations.
+
+---
+
+## Automating Tag Inheritance
+
+Microsoft recommends using **Azure Policy** to enforce organizational tagging standards.
+
+Common built-in policies can:
+
+- Copy tags from the Resource Group.
+- Require mandatory tags.
+- Append missing tags.
+- Modify resources during deployment.
+
+These policies help maintain consistent financial reporting without manual intervention.
+
+> [!IMPORTANT]
+> Resource Group tags are **not inherited automatically**. Azure Policy should be used whenever automatic tag inheritance is required.
+
+---
+
 # Create Budgets Early
 
 Budgets should be created before significant workloads are deployed.
@@ -207,6 +250,36 @@ Use Azure Advisor recommendations whenever possible.
 
 ---
 
+# Virtual Machine Power States and Cost
+
+Stopping a Virtual Machine does not always stop billing.
+
+Azure distinguishes between two important VM states.
+
+| VM State | Compute Charges | Description |
+|----------|-----------------|-------------|
+| **Stopped** | Yes | The operating system has shut down, but Azure still reserves the underlying compute resources. |
+| **Stopped (Deallocated)** | No | Azure releases the compute resources. Charges continue only for storage and other allocated resources such as managed disks or static public IP addresses. |
+
+---
+
+## Best Practice
+
+Development and testing Virtual Machines should always be **Stopped (Deallocated)** when not in use.
+
+This can be automated using:
+
+- Azure Automation
+- Azure CLI
+- Azure PowerShell
+- Azure Functions
+- Logic Apps
+
+> [!TIP]
+> Shutting down a VM from inside the guest operating system does **not** stop compute billing.
+
+---
+
 # Optimize Storage Costs
 
 Storage costs accumulate over time.
@@ -251,6 +324,46 @@ Recommendations:
 - Review recommendations from Azure Advisor.
 
 Reservations significantly reduce long-term operational costs.
+
+---
+
+# Azure Hybrid Benefit and Reservation Matching
+
+Microsoft provides additional cost-saving mechanisms beyond Reservations.
+
+---
+
+## Azure Hybrid Benefit
+
+Azure Hybrid Benefit allows eligible Windows Server and SQL Server licenses with Software Assurance or qualifying subscription benefits to be reused in Azure.
+
+Benefits include:
+
+- Lower Virtual Machine licensing costs.
+- Reduced SQL Server licensing costs.
+- Better return on existing Microsoft licensing investments.
+
+Azure Hybrid Benefit can be combined with Reservations or Savings Plans where supported.
+
+---
+
+## Reservation Matching
+
+Reservations are billing discounts rather than resource assignments.
+
+Azure automatically evaluates eligible running resources and applies Reservation discounts whenever a matching resource exists.
+
+Matching considers factors such as:
+
+- Region
+- Resource type
+- VM size or VM family
+- Reservation scope
+
+No manual assignment to individual Virtual Machines is required.
+
+> [!IMPORTANT]
+> Reservations reduce billing automatically only while matching resources are running within the selected reservation scope.
 
 ---
 
