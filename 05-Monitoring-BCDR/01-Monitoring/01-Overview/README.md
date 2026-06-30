@@ -116,6 +116,47 @@ Multiple Azure resources can send telemetry to the same workspace.
 
 ---
 
+## Log Analytics Retention and Data Lifecycle
+
+Log Analytics supports configurable data retention policies to balance operational requirements and storage costs.
+
+Two storage stages are available:
+
+### Interactive Retention
+
+Interactive data can be queried immediately using Kusto Query Language (KQL).
+
+Retention can be configured according to organizational requirements and Microsoft-supported limits.
+
+---
+
+### Archived Logs
+
+Older data can be moved to the Archive tier for long-term retention.
+
+Archived data:
+
+- Costs less to store.
+- Is not immediately queryable.
+- Can be restored temporarily or searched using Search Jobs.
+
+Archive is commonly used to satisfy long-term compliance requirements.
+
+---
+
+### Data Purge
+
+Log Analytics is designed as an append-only platform.
+
+Individual records cannot be deleted through normal queries.
+
+To satisfy legal or regulatory requirements (such as GDPR), Azure provides a dedicated **Workspace Purge** operation through the Azure REST API.
+
+> [!IMPORTANT]
+> Retention policies reduce storage costs, while Archive and Purge address compliance and regulatory requirements.
+
+---
+
 ## Activity Log
 
 The Activity Log records management operations performed on Azure resources.
@@ -130,6 +171,28 @@ Examples:
 - Network configuration changes
 
 The Activity Log operates at the Azure subscription level.
+
+---
+
+## Activity Log Retention
+
+Azure Activity Log records subscription-level management operations.
+
+By default:
+
+- Activity Log is retained by Azure for a limited period.
+- Long-term auditing requires exporting the data.
+
+Organizations requiring extended audit history should configure **Diagnostic Settings** to continuously export Activity Log data to:
+
+- Log Analytics Workspace
+- Azure Storage Account
+- Event Hubs
+
+This enables long-term retention, centralized analysis, and compliance reporting.
+
+> [!TIP]
+> Diagnostic Settings should be configured early in the deployment lifecycle to avoid losing historical management events.
 
 ---
 
@@ -160,6 +223,52 @@ Alert sources include:
 - Resource Health
 
 Alerts trigger **Action Groups**.
+
+---
+
+## Metric Alerts vs Log Alerts
+
+Azure Monitor supports two primary alert types.
+
+| Feature | Metric Alerts | Log Alerts |
+|----------|---------------|------------|
+| Data Source | Azure Metrics | Log Analytics queries |
+| Response Time | Near real-time | Depends on log ingestion |
+| Query Language | Not required | KQL |
+| Typical Use Cases | CPU, Memory, Network | Security, auditing, complex conditions |
+| Cost | Lower | Depends on log ingestion and query execution |
+
+### Metric Alerts
+
+Metric Alerts evaluate platform metrics at frequent intervals.
+
+Typical scenarios include:
+
+- High CPU utilization
+- Memory pressure
+- Network throughput
+- Disk performance
+
+They provide the fastest response for infrastructure monitoring.
+
+---
+
+### Log Alerts
+
+Log Alerts evaluate Kusto Query Language (KQL) queries against Log Analytics data.
+
+Typical scenarios include:
+
+- Security events
+- Azure Firewall activity
+- Failed sign-in attempts
+- Administrative operations
+- Compliance monitoring
+
+Because Log Alerts depend on data ingestion into Log Analytics, they typically have higher latency than Metric Alerts.
+
+> [!IMPORTANT]
+> Use Metric Alerts for infrastructure health and Log Alerts for operational, security, and compliance scenarios.
 
 ---
 
