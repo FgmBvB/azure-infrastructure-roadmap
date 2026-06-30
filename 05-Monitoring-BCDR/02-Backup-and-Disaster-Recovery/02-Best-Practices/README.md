@@ -102,6 +102,43 @@ Crash-consistent backups should only be relied upon when application consistency
 
 ---
 
+# Instant Restore Architecture
+
+Azure Virtual Machine backups occur in two stages.
+
+## Snapshot Phase
+
+Azure first creates a snapshot of the managed disks.
+
+Characteristics:
+
+- Fast backup completion.
+- Low Recovery Time Objective (RTO).
+- Recovery directly from disk snapshots.
+- Short-term retention for rapid restores.
+
+This mechanism is known as **Instant Restore**.
+
+---
+
+## Vault Transfer Phase
+
+After the snapshot is created, Azure transfers backup data asynchronously to the Recovery Services Vault.
+
+Benefits include:
+
+- Long-term retention.
+- Geo-redundant protection (when configured).
+- Compliance retention.
+- Protection against disk loss.
+
+Restores from the vault generally take longer than Instant Restore because backup data must be retrieved from vault storage.
+
+> [!TIP]
+> Instant Restore minimizes recovery time, while the Recovery Services Vault provides durable long-term protection.
+
+---
+
 # Test Recovery Regularly
 
 Backups that are never tested cannot be trusted.
@@ -132,6 +169,28 @@ Use ASR when workloads require:
 - Infrastructure recovery.
 
 Backups alone do not provide business continuity.
+
+---
+
+# Azure Site Recovery Network Preparation
+
+Successful failover requires more than replication.
+
+Before a disaster occurs, administrators should prepare the recovery environment.
+
+Recommendations include:
+
+- Create the destination Virtual Network.
+- Configure Network Mapping between source and target VNets.
+- Validate subnet mappings.
+- Verify Network Security Groups.
+- Ensure sufficient regional resource quotas.
+- Validate storage and compute availability.
+
+Proper network preparation allows replicated Virtual Machines to start correctly after failover.
+
+> [!IMPORTANT]
+> Azure Site Recovery replicates workloads, but administrators remain responsible for preparing the target networking environment before disaster recovery operations.
 
 ---
 
@@ -196,6 +255,28 @@ Recommendations:
 - Separate operational duties where possible.
 
 Backup infrastructure should be considered part of the security perimeter.
+
+---
+
+# Multi-User Authorization (MUA)
+
+Microsoft recommends protecting critical backup operations using **Multi-User Authorization (MUA)**.
+
+MUA uses a **Resource Guard** to require additional authorization before sensitive backup operations can be performed.
+
+Protected operations include:
+
+- Disabling Soft Delete.
+- Deleting backup data.
+- Reducing backup retention.
+- Modifying critical vault settings.
+
+The Resource Guard is typically managed by a different administrative team or subscription.
+
+This separation prevents a compromised Backup Administrator account from performing destructive operations without additional authorization.
+
+> [!IMPORTANT]
+> Resource Guard provides an additional security layer for Recovery Services Vaults by enforcing separation of duties for critical backup operations.
 
 ---
 
