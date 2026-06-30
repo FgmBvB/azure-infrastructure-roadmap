@@ -227,6 +227,25 @@ Filtering helps administrators:
 
 ---
 
+# Azure Advisor Permissions
+
+Azure Advisor uses Azure RBAC to control access to recommendations.
+
+Typical roles include:
+
+| Role | Capability |
+|------|------------|
+| Reader | View recommendations. |
+| Contributor | View recommendations for managed resources. |
+| Advisor Configuration Contributor | Manage Advisor configuration, including recommendation preferences and administrative actions where supported. |
+
+Organizations should follow the principle of least privilege when delegating Advisor administration.
+
+> [!IMPORTANT]
+> Azure RBAC controls access to Azure Advisor. Administrative configuration requires additional permissions beyond simple read access.
+
+---
+
 # Track Advisor Trends
 
 Advisor should be reviewed over time rather than as isolated snapshots.
@@ -240,6 +259,27 @@ Track:
 - Previously implemented recommendations.
 
 Trend analysis supports continuous improvement.
+
+---
+
+# Azure Resource Graph Integration
+
+Azure Advisor recommendations can be queried at scale using **Azure Resource Graph**.
+
+This enables administrators to retrieve recommendations across multiple subscriptions from a single query.
+
+Typical use cases include:
+
+- Find underutilized Virtual Machines.
+- Identify unattached managed disks.
+- Review Cost recommendations across the organization.
+- Generate governance reports.
+- Build enterprise dashboards.
+
+Azure Resource Graph provides fast, large-scale querying without requiring administrators to review each subscription individually.
+
+> [!TIP]
+> Azure Resource Graph is particularly valuable in enterprise environments with many subscriptions and management groups.
 
 ---
 
@@ -272,6 +312,51 @@ Examples include:
 - Governance reporting.
 
 Automation improves consistency across large environments.
+
+---
+
+# Azure Advisor Alerts
+
+Azure Advisor recommendations can be integrated with **Azure Monitor Alerts** to notify administrators when new recommendations are generated.
+
+Typical workflow:
+
+```text
+Azure Advisor
+
+↓
+
+New Recommendation
+
+↓
+
+Azure Monitor Alert
+
+↓
+
+Action Group
+
+↓
+
+Email
+SMS
+Webhook
+Logic App
+Automation
+ITSM
+```
+
+Common use cases include:
+
+- Notify FinOps teams about new Cost recommendations.
+- Alert Operations teams when Reliability recommendations appear.
+- Open ITSM incidents automatically.
+- Trigger automation workflows.
+
+This integration reduces the need for administrators to manually review the Azure portal.
+
+> [!TIP]
+> Azure Advisor Alerts help organizations react more quickly to new optimization opportunities.
 
 ---
 
