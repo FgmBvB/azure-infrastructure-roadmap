@@ -170,6 +170,52 @@ Advantages include:
 
 ---
 
+## ExpressRoute Peering
+
+ExpressRoute supports different peering models depending on the destination service.
+
+### Private Peering
+
+Private Peering connects your on-premises network directly to Azure Virtual Networks.
+
+Characteristics:
+
+- Private IP connectivity
+- Hybrid applications
+- Virtual Machines
+- Internal Azure services
+
+---
+
+### Microsoft Peering
+
+Microsoft Peering provides connectivity to Microsoft public services through the ExpressRoute circuit.
+
+Examples include:
+
+- Azure Storage (public endpoints)
+- Azure SQL Database (public endpoints)
+- Microsoft 365 services (supported scenarios)
+
+Traffic remains on the provider network rather than traversing the public Internet.
+
+---
+
+### Encryption
+
+ExpressRoute provides private connectivity but does **not** automatically encrypt traffic.
+
+Organizations requiring encryption in transit can deploy:
+
+- IPsec VPN over ExpressRoute
+- Application-level encryption
+- TLS
+
+> [!IMPORTANT]
+> ExpressRoute provides isolation from the public Internet, but encryption remains the customer's responsibility when required by security or compliance policies.
+
+---
+
 # VPN Gateway vs ExpressRoute
 
 | Feature | VPN Gateway | ExpressRoute |
