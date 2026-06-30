@@ -106,6 +106,37 @@ One vault can protect multiple workloads.
 
 ---
 
+## Recovery Services Vault Redundancy
+
+When creating a Recovery Services Vault, administrators must select the storage redundancy option.
+
+Available options include:
+
+- Locally Redundant Storage (LRS)
+- Geo-Redundant Storage (GRS)
+- Zone-Redundant Storage (ZRS)
+
+The selected redundancy determines how backup data is protected against infrastructure failures.
+
+---
+
+### Important Deployment Consideration
+
+The redundancy setting can be modified **only while the vault does not protect any resources**.
+
+Once the first backup item is registered (such as a Virtual Machine or Azure File Share), the storage redundancy configuration becomes locked.
+
+Changing to another redundancy option later requires:
+
+- Stopping protection for all backup items.
+- Removing backup data.
+- Recreating the Recovery Services Vault.
+
+> [!IMPORTANT]
+> Always choose the appropriate vault redundancy before protecting production workloads, as changing it later can require a complete vault migration.
+
+---
+
 # Backup Vault
 
 Backup Vault is Microsoft's newer vault type designed primarily for modern backup workloads.
@@ -148,6 +179,42 @@ Recovery points allow administrators to restore:
 - Azure Files
 
 The number of available recovery points depends on the configured retention policy.
+
+---
+
+## Recovery Point Consistency
+
+Azure Backup creates different types of recovery points depending on workload capabilities and operating system support.
+
+### Application-Consistent Recovery Points
+
+Application-consistent backups coordinate with the operating system and supported applications before creating the snapshot.
+
+Typical characteristics:
+
+- Flush in-memory transactions to disk.
+- Preserve application integrity.
+- Minimize recovery operations.
+- Recommended for databases and transactional workloads.
+
+On Windows Virtual Machines, Azure Backup uses **Volume Shadow Copy Service (VSS)** when supported.
+
+---
+
+### Crash-Consistent Recovery Points
+
+Crash-consistent backups capture the disks exactly as they exist at the moment of the snapshot.
+
+Characteristics include:
+
+- Similar to an unexpected power loss.
+- File systems may require integrity checks after recovery.
+- Recent in-memory transactions may not be preserved.
+
+Crash-consistent backups are still valid but may require additional recovery actions depending on the workload.
+
+> [!TIP]
+> Application-consistent recovery points provide the highest level of protection for business-critical applications such as SQL Server.
 
 ---
 
