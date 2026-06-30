@@ -197,6 +197,58 @@ Each Virtual Network can contain only one gateway of each supported type.
 
 ---
 
+## VPN Gateway Generations and SKUs
+
+Azure VPN Gateway is available in two hardware generations.
+
+### Generation 1
+
+Generation 1 gateways support basic hybrid networking scenarios.
+
+They are compatible with older gateway SKUs and provide lower maximum throughput.
+
+---
+
+### Generation 2
+
+Generation 2 gateways provide:
+
+- Higher throughput
+- Improved scalability
+- Support for newer VPN Gateway SKUs
+- Better performance for enterprise deployments
+
+Microsoft recommends Generation 2 for new production environments whenever supported.
+
+---
+
+### VPN Gateway SKUs
+
+Modern Azure deployments typically use the **VpnGw** family.
+
+Examples include:
+
+- VpnGw1
+- VpnGw2
+- VpnGw3
+- VpnGw4
+- VpnGw5
+
+Zone-redundant variants are also available:
+
+- VpnGw1AZ
+- VpnGw2AZ
+- VpnGw3AZ
+- VpnGw4AZ
+- VpnGw5AZ
+
+Zone-redundant gateways provide higher availability by distributing gateway instances across Availability Zones.
+
+> [!IMPORTANT]
+> The Basic VPN Gateway SKU has significant limitations, including reduced throughput, limited Site-to-Site connections, and no support for BGP or ExpressRoute coexistence.
+
+---
+
 # Border Gateway Protocol (BGP)
 
 BGP is a dynamic routing protocol supported by both VPN Gateway and ExpressRoute.
