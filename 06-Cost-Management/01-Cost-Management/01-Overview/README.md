@@ -84,6 +84,53 @@ Administrators can filter, group, and visualize spending trends over time.
 
 ---
 
+## Cost Processing and Cost Views
+
+Cost information is not updated instantly.
+
+Azure first processes resource consumption before publishing billing information to Cost Management.
+
+Because of this processing pipeline:
+
+- Recently deployed resources may not appear immediately.
+- Budget evaluations are based on processed billing data.
+- Cost reports should not be considered real-time monitoring tools.
+
+---
+
+## Actual Cost vs Amortized Cost
+
+Azure Cost Analysis supports different cost views.
+
+| View | Purpose |
+|------|---------|
+| Actual Cost | Displays charges as they appear on the Azure invoice. |
+| Amortized Cost | Distributes reservation and Savings Plan costs across the resources consuming those benefits. |
+
+### Actual Cost
+
+Best suited for:
+
+- Invoice reconciliation.
+- Monthly billing reviews.
+- Financial accounting.
+
+---
+
+### Amortized Cost
+
+Best suited for:
+
+- Internal chargeback.
+- Showback reporting.
+- Department cost allocation.
+- Reservation utilization analysis.
+
+> [!IMPORTANT]
+> Amortized Cost provides a more accurate picture of actual resource consumption when Reservations or Savings Plans are used.
+
+---
+
 ## Budgets
 
 Budgets define expected spending limits.
@@ -106,6 +153,47 @@ Typical thresholds include:
 - 100%
 
 When thresholds are reached, Azure triggers notifications through Azure Monitor.
+
+---
+
+## Budgets and Automated Cost Control
+
+Budgets monitor spending but never stop Azure resources by themselves.
+
+However, budgets can trigger automated responses.
+
+Typical workflow:
+
+```text
+Budget Threshold
+
+↓
+
+Azure Monitor Alert
+
+↓
+
+Action Group
+
+↓
+
+Automation Runbook / Azure Function / Logic App
+
+↓
+
+Corrective Action
+```
+
+Possible automated actions include:
+
+- Stop development Virtual Machines.
+- Deallocate idle compute resources.
+- Send approval requests.
+- Notify administrators.
+- Trigger operational workflows.
+
+> [!TIP]
+> Budgets provide financial governance, while Azure Automation and Azure Functions enable automatic cost remediation.
 
 ---
 
@@ -261,6 +349,46 @@ Individual Resource
 ```
 
 Higher scopes provide consolidated financial visibility.
+
+---
+
+## Billing Scopes vs Azure Resource Scopes
+
+Azure separates resource management from billing management.
+
+Although both appear inside the Azure portal, they use different permission models.
+
+### Azure Resource Scopes
+
+Azure Resource Manager (ARM) manages resources using Azure RBAC.
+
+Common scopes include:
+
+- Management Group
+- Subscription
+- Resource Group
+- Resource
+
+These scopes determine who can manage Azure resources.
+
+---
+
+### Billing Scopes
+
+Billing information is managed separately.
+
+Examples include:
+
+- Billing Account
+- Billing Profile
+- Invoice Section
+
+Access is granted through billing-specific roles rather than Azure RBAC.
+
+Depending on the organization's billing agreement (for example, Enterprise Agreement or Microsoft Customer Agreement), administrators may need additional billing permissions before cost information becomes visible.
+
+> [!IMPORTANT]
+> Having Azure RBAC permissions on a subscription does not always guarantee access to billing or cost information.
 
 ---
 
