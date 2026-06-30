@@ -103,6 +103,30 @@ Example:
 
 ---
 
+## Gateway Route Propagation
+
+Route Tables include an option called **Propagate gateway routes**.
+
+When enabled (default):
+
+- Routes learned through VPN Gateway or ExpressRoute using BGP are automatically added to the subnet.
+
+When disabled:
+
+- BGP-learned routes are ignored for that Route Table.
+- Only System Routes and User-Defined Routes are evaluated.
+
+Disabling gateway route propagation is commonly used when:
+
+- Building DMZ architectures.
+- Forcing all traffic through Azure Firewall.
+- Preventing direct routing to on-premises networks.
+
+> [!TIP]
+> Gateway route propagation provides greater flexibility when implementing centralized security and traffic inspection.
+
+---
+
 # Next Hop Types
 
 Azure supports several Next Hop types.
@@ -116,6 +140,31 @@ Azure supports several Next Hop types.
 | None | Drop traffic |
 
 Choosing the appropriate Next Hop determines how packets leave a subnet.
+
+---
+
+## IP Forwarding
+
+By default, Azure Virtual Machines process only traffic addressed to their own network interfaces.
+
+If a Virtual Machine is used as a:
+
+- Network Virtual Appliance (NVA)
+- Router
+- Firewall
+- Proxy
+
+the associated Network Interface must have **IP Forwarding** enabled.
+
+Without IP Forwarding:
+
+- Packets forwarded by User-Defined Routes are discarded.
+- Transit traffic cannot pass through the Virtual Machine.
+
+IP Forwarding is configured on the Azure Network Interface (NIC), not inside the guest operating system.
+
+> [!IMPORTANT]
+> User-Defined Routes alone are not sufficient for Network Virtual Appliances. IP Forwarding must also be enabled on the NIC.
 
 ---
 
@@ -161,6 +210,45 @@ Selected:
 ```
 
 The most specific matching prefix is always selected.
+
+---
+
+## Route Precedence
+
+Azure always evaluates routes using **Longest Prefix Match**.
+
+When multiple routes have the same destination prefix, Azure applies the following precedence:
+
+1. User-Defined Routes (UDRs)
+2. BGP Routes
+3. System Routes
+
+Example:
+
+```text
+Destination:
+
+0.0.0.0/0
+
+Available Routes:
+
+UDR → Azure Firewall
+
+BGP → On-premises Gateway
+
+System Route → Internet
+```
+
+Result:
+
+```text
+Traffic → Azure Firewall
+```
+
+because the User-Defined Route has the highest priority.
+
+> [!IMPORTANT]
+> Azure first selects the most specific prefix. Only when multiple routes have the same prefix length does Azure evaluate route precedence.
 
 ---
 
