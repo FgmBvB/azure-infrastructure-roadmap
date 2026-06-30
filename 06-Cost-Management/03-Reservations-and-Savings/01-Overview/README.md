@@ -141,6 +141,47 @@ Administrators do not manually assign reservations to individual resources.
 
 ---
 
+# Instance Size Flexibility
+
+Virtual Machine Reservations support **Instance Size Flexibility (ISF)** for many VM series.
+
+Instead of matching only a single VM size, Azure can automatically apply a reservation to different VM sizes within the same supported family.
+
+Example:
+
+```text
+Reservation
+
+↓
+
+Standard_E4s_v3
+
+↓
+
+Automatically matches
+
+• 1 × Standard_E4s_v3
+
+or
+
+• 2 × Standard_E2s_v3
+
+(if supported by the flexibility ratio)
+```
+
+Azure uses an internal flexibility ratio to determine how reservation capacity is distributed across eligible VM sizes.
+
+Benefits include:
+
+- Better reservation utilization.
+- Greater operational flexibility.
+- Reduced waste when resizing Virtual Machines.
+
+> [!TIP]
+> Instance Size Flexibility allows reservations to continue providing savings even when Virtual Machines are resized within the same supported VM family.
+
+---
+
 # Azure Savings Plans
 
 Azure Savings Plans provide pricing discounts for compute workloads without requiring commitment to a specific VM family.
@@ -190,6 +231,47 @@ Organizations often combine both approaches.
 
 ---
 
+# Discount Application Order
+
+Azure applies available pricing benefits automatically following a defined order.
+
+```text
+Eligible Compute Resource
+
+↓
+
+Azure Reservation
+
+↓
+
+Azure Savings Plan
+
+↓
+
+Pay-As-You-Go
+```
+
+### Azure Reservations
+
+Reservations are evaluated first because they apply to specific eligible resources.
+
+---
+
+### Azure Savings Plans
+
+If no Reservation applies, Azure evaluates any available Savings Plan commitment.
+
+---
+
+### Pay-As-You-Go
+
+Any remaining eligible usage that is not covered by Reservations or Savings Plans is billed at standard Pay-As-You-Go rates.
+
+> [!IMPORTANT]
+> Administrators do not manually select which discount is applied. Azure Billing automatically applies the pricing benefit that best matches the eligible resource usage.
+
+---
+
 # Azure Hybrid Benefit
 
 Azure Hybrid Benefit allows organizations to reuse eligible Windows Server and SQL Server licenses in Azure.
@@ -231,6 +313,41 @@ Renew or Modify Strategy
 ```
 
 Administrators should periodically review reservation utilization to maximize savings.
+
+---
+
+# Reservation Exchanges and Cancellations
+
+Business requirements may change during the reservation term.
+
+Azure supports options for modifying reservation commitments.
+
+---
+
+## Reservation Exchanges
+
+Where supported, eligible reservations can be exchanged for different reservations.
+
+Typical scenarios include:
+
+- Changing VM families.
+- Moving to different regions.
+- Increasing reservation value.
+
+The replacement reservation must satisfy Microsoft's exchange requirements.
+
+---
+
+## Reservation Cancellations
+
+Microsoft also supports reservation cancellations in eligible scenarios.
+
+Cancellation policies, refund eligibility, and financial limits are governed by Microsoft's current reservation terms and billing agreement.
+
+Administrators should always verify the current Microsoft documentation before planning reservation cancellations.
+
+> [!IMPORTANT]
+> Reservation exchanges and cancellations are subject to Microsoft's current policies, which may change over time depending on the billing agreement and reservation type.
 
 ---
 
