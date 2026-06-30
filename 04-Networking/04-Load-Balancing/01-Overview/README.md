@@ -80,6 +80,35 @@ Typical workloads include:
 
 ---
 
+## Load Balancer SKUs
+
+Azure provides the **Standard Load Balancer** for modern production deployments.
+
+Historically, Azure also offered a **Basic Load Balancer**, but Microsoft recommends Standard for all new implementations.
+
+| Feature | Basic (Legacy) | Standard |
+|----------|----------------|----------|
+| Backend Pool | Limited | Up to 1,000 instances |
+| Availability Zones | No | Yes |
+| High Availability | Limited | Zone-redundant supported |
+| Security | Open by default | Secure by default |
+| NSG Required | No | Yes (for inbound traffic) |
+| Monitoring | Basic metrics | Full Azure Monitor integration |
+| Production Recommendation | No | Yes |
+
+Standard Load Balancer provides:
+
+- Better scalability
+- Higher availability
+- Improved diagnostics
+- Zone redundancy
+- Secure-by-default networking
+
+> [!IMPORTANT]
+> Standard Load Balancer is the Microsoft-recommended option for production workloads and is the expected choice for current AZ-104 scenarios.
+
+---
+
 # Public vs Internal Load Balancer
 
 ## Public Load Balancer
@@ -248,6 +277,59 @@ Session persistence helps maintain user affinity across multiple requests.
 
 ---
 
+## Load Balancing Algorithms
+
+Azure Load Balancer distributes traffic using hash-based algorithms.
+
+The selected algorithm depends on the configured session persistence mode.
+
+### None (5-Tuple Hash)
+
+Default behavior.
+
+Azure calculates a hash using:
+
+- Source IP
+- Source Port
+- Destination IP
+- Destination Port
+- Protocol
+
+Because the source port typically changes between new client connections, requests from the same client may be distributed across different backend instances.
+
+---
+
+### Client IP (2-Tuple Hash)
+
+Azure uses:
+
+- Source IP
+- Destination IP
+
+All requests from the same client are consistently routed to the same backend instance.
+
+Typical use cases:
+
+- Legacy applications
+- Session-based workloads
+
+---
+
+### Client IP and Protocol (3-Tuple Hash)
+
+Azure uses:
+
+- Source IP
+- Destination IP
+- Protocol
+
+If a client changes protocol (for example, TCP to UDP), Azure may select a different backend instance.
+
+> [!IMPORTANT]
+> Azure Load Balancer provides **flow affinity**, not true application session management. Applications requiring session state should implement their own persistence or use Application Gateway cookie-based affinity.
+
+---
+
 # High Availability Ports
 
 HA Ports allow Azure Load Balancer to balance all TCP and UDP ports.
@@ -275,6 +357,45 @@ Capabilities include:
 - Web Application Firewall (WAF)
 - End-to-end TLS
 - HTTP header inspection
+
+---
+
+## Application Gateway Infrastructure Requirements
+
+Azure Application Gateway requires a dedicated subnet within the Virtual Network.
+
+Requirements include:
+
+- A dedicated subnet reserved exclusively for Application Gateway.
+- No Virtual Machines or other application resources can be deployed in the same subnet.
+- Microsoft recommends a subnet size of **/26** or larger for Application Gateway v2 deployments to support autoscaling.
+
+Application Gateway acts as a reverse proxy:
+
+```text
+Client
+
+↓
+
+Application Gateway
+
+↓
+
+TLS Termination
+
+↓
+
+New Connection
+
+↓
+
+Backend Server
+```
+
+Because every client connection is terminated and re-established, Application Gateway must control its own networking resources within a dedicated subnet.
+
+> [!IMPORTANT]
+> Proper subnet sizing is essential for Application Gateway v2 because additional instances may be deployed automatically during scaling events.
 
 ---
 
