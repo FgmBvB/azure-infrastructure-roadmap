@@ -68,6 +68,32 @@ This virtual IP address is provided by Azure and is available in every region.
 
 ---
 
+## Azure DNS Virtual IP
+
+Azure provides the virtual IP address:
+
+```text
+168.63.129.16
+```
+
+This address is a special Azure platform virtual IP used for multiple infrastructure services, including:
+
+- Azure-provided DNS
+- Load Balancer health probes
+- Virtual Machine Agent communication
+- Platform monitoring services
+
+Characteristics:
+
+- Available in every Azure region.
+- Accessible only from within Azure Virtual Networks.
+- Not reachable from on-premises networks through VPN or ExpressRoute.
+
+> [!IMPORTANT]
+> Do not block **168.63.129.16** with Network Security Groups, Azure Firewall, or guest operating system firewalls unless explicitly required and fully understood, as doing so can disrupt Azure platform functionality.
+
+---
+
 # Public DNS Zones
 
 Azure DNS Public Zones host Internet-accessible DNS records.
@@ -137,6 +163,23 @@ Resolution links support multiple VNets.
 
 ---
 
+## Private DNS Auto-Registration
+
+Azure Private DNS can automatically create and remove DNS records for Virtual Machines.
+
+Important considerations:
+
+- A Virtual Network can be linked to multiple Private DNS Zones for name resolution.
+- Only one Private DNS Zone can enable **auto-registration** for a given Virtual Network.
+- DNS records are automatically updated when supported Virtual Machines are created or deleted.
+
+This simplifies internal name resolution without requiring manual DNS administration.
+
+> [!TIP]
+> Use auto-registration for Virtual Machine hostnames and standard Azure workloads. Additional DNS records can always be managed manually when required.
+
+---
+
 # Azure Private DNS
 
 Azure Private DNS simplifies internal name resolution.
@@ -177,6 +220,34 @@ Custom DNS servers can run:
 - In another cloud environment.
 
 ---
+
+## DNS Configuration Precedence
+
+Azure resolves DNS configuration using the following precedence:
+
+1. DNS settings configured on the Network Interface (NIC).
+2. DNS settings configured on the Virtual Network.
+3. Azure-provided DNS.
+
+If no custom configuration exists, Azure automatically uses the Azure-provided DNS service.
+
+---
+
+### Applying DNS Changes
+
+Changing the DNS server configuration of a Virtual Network does not immediately update existing Virtual Machines.
+
+The new DNS settings are obtained through DHCP.
+
+To apply the new configuration, administrators should:
+
+- Restart the Virtual Machine, or
+- Renew the DHCP lease from within the guest operating system.
+
+Until the DHCP configuration is refreshed, Virtual Machines continue using their previous DNS server settings.
+
+> [!IMPORTANT]
+> Plan DNS migrations carefully to avoid temporary name resolution issues during infrastructure changes.
 
 # DNS Resolution Flow
 
