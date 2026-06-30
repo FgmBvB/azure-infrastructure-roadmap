@@ -96,6 +96,64 @@ NSGs can be associated with:
 
 ---
 
+## NSG Processing Order
+
+Network Security Groups can be associated with both:
+
+- Subnets
+- Network Interfaces (NICs)
+
+When both associations exist, Azure evaluates security rules in a specific order.
+
+### Inbound Traffic
+
+```text
+Internet
+
+↓
+
+Subnet NSG
+
+↓
+
+NIC NSG
+
+↓
+
+Virtual Machine
+```
+
+The packet must be allowed by **both** Network Security Groups.
+
+If either NSG contains a matching **Deny** rule, the traffic is blocked.
+
+---
+
+### Outbound Traffic
+
+```text
+Virtual Machine
+
+↓
+
+NIC NSG
+
+↓
+
+Subnet NSG
+
+↓
+
+Destination
+```
+
+Again, both NSGs must allow the traffic.
+
+> [!IMPORTANT]
+> NSGs operate as layered security controls. A single matching **Deny** rule at either the subnet or NIC level immediately blocks the traffic.
+
+---
+
 # Application Security Groups (ASGs)
 
 Application Security Groups simplify NSG rule management.
@@ -155,6 +213,24 @@ DDoS Protection Standard integrates with Virtual Networks and protects Internet-
 
 ---
 
+# Azure DDoS Protection
+
+Azure automatically protects all public IP resources with **DDoS Infrastructure Protection**.
+
+For enhanced protection, organizations can enable **Azure DDoS Network Protection**.
+
+| Protection Level | Description |
+|------------------|-------------|
+| **Infrastructure Protection** | Automatically included for all Azure services. Protects against common network-layer attacks. |
+| **Azure DDoS Network Protection** | Provides advanced mitigation, attack analytics, telemetry, and cost protection for Internet-facing workloads. |
+
+Azure DDoS Network Protection integrates with Virtual Networks and protects supported public IP resources deployed within those VNets.
+
+> [!IMPORTANT]
+> Azure DDoS Network Protection is recommended for production environments that expose critical Internet-facing applications.
+
+---
+
 # Service Endpoints
 
 Service Endpoints extend a Virtual Network identity to supported Azure services.
@@ -193,6 +269,28 @@ Benefits include:
 - Browser-based administration.
 - Encrypted connections.
 - Reduced attack surface.
+
+---
+
+## Azure Bastion Deployment Requirements
+
+Azure Bastion requires a dedicated subnet within the Virtual Network.
+
+Requirements include:
+
+- The subnet must be named exactly **AzureBastionSubnet**.
+- The minimum supported subnet size is **/26**.
+- No other Azure resources can be deployed in this subnet.
+
+Because Azure Bastion is a managed platform service, administrators should avoid configurations that interfere with its operation, such as blocking required management traffic.
+
+Azure Bastion also requires:
+
+- A Standard SKU Public IP address.
+- Deployment within the same Virtual Network as the Virtual Machines it manages.
+
+> [!IMPORTANT]
+> Azure Bastion uses a dedicated subnet that is reserved exclusively for the service. It should not host Virtual Machines or other workloads.
 
 ---
 
