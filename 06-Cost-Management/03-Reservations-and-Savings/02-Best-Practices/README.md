@@ -96,6 +96,43 @@ Review VM families before purchasing Reservations.
 
 ---
 
+## Instance Size Flexibility Ratios
+
+Azure uses an internal **Instance Size Flexibility Ratio** to determine how reservation capacity can be distributed across supported Virtual Machine sizes within the same VM family.
+
+Example:
+
+```text
+Reservation Capacity
+
+↓
+
+1 × Large VM
+
+↓
+
+Equivalent reservation capacity
+
+↓
+
+2 × Medium VMs
+
+or
+
+4 × Small VMs
+
+(if supported by the VM family flexibility ratio)
+```
+
+Azure automatically applies reservation capacity according to the published flexibility ratios for each supported VM family.
+
+This allows organizations to resize Virtual Machines without necessarily losing reservation benefits.
+
+> [!TIP]
+> Instance Size Flexibility increases reservation utilization by allowing discounts to follow supported VM size changes within the same family.
+
+---
+
 # Select the Correct Scope
 
 Reservation scope directly affects utilization.
@@ -159,6 +196,39 @@ Azure Billing automatically applies the best available pricing benefit.
 
 ---
 
+## Reservation Consumption Model
+
+Reservations are evaluated continuously as Azure processes eligible resource usage for billing.
+
+Pricing benefits are applied automatically using the following priority:
+
+```text
+Eligible Compute Usage
+
+↓
+
+Azure Reservations
+
+↓
+
+Azure Savings Plans
+
+↓
+
+Pay-As-You-Go
+```
+
+Reservation capacity is not accumulated for future use.
+
+If no eligible resources are running during a billing period, the unused reservation benefit for that period is lost.
+
+For this reason, Microsoft recommends monitoring reservation utilization regularly to maximize long-term savings.
+
+> [!IMPORTANT]
+> Azure automatically applies the most appropriate available pricing benefit. Administrators do not manually select which discount is consumed.
+
+---
+
 # Monitor Reservation Utilization
 
 Regularly review:
@@ -214,6 +284,24 @@ Before cancelling:
 - Validate workload requirements.
 
 Cancellation should normally be the last option.
+
+---
+
+# Reservation Cancellation Policies
+
+Reservation cancellations are governed by Microsoft's billing policies.
+
+Before cancelling a reservation, administrators should evaluate:
+
+- Remaining reservation value.
+- Business impact.
+- Exchange eligibility.
+- Current Microsoft cancellation policy.
+
+In many cases, exchanging a reservation is preferable to cancelling it because it allows organizations to adapt to changing infrastructure requirements while preserving the reservation investment.
+
+> [!IMPORTANT]
+> Microsoft applies eligibility rules and financial limits to reservation cancellations. These policies may change over time and should always be verified in the current Azure documentation before planning large reservation changes.
 
 ---
 
