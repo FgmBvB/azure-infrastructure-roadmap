@@ -106,6 +106,32 @@ Policy-based governance reduces configuration drift.
 
 ---
 
+# Azure Policy Effects
+
+Azure Policy uses effects to determine what happens when a resource does not comply with a policy rule.
+
+## Deny
+
+The **Deny** effect blocks non-compliant resource creation or updates during the Azure Resource Manager validation phase.
+
+Example:
+
+```text
+User deploys resource
+
+↓
+
+Azure Policy evaluation
+
+↓
+
+Policy violation detected
+
+↓
+
+Deployment blocked
+
+```
 # Protect Secrets Properly
 
 Never store secrets inside:
@@ -129,6 +155,44 @@ Store:
 Applications should authenticate using Managed Identities whenever possible.
 
 ---
+
+# Key Vault Access Models
+
+Azure Key Vault supports two access control models for the data plane.
+
+| Model | Description |
+|-------|-------------|
+| Vault Access Policies | Legacy model managed directly inside the Key Vault. |
+| Azure RBAC | Recommended model using Azure role assignments. |
+
+## Vault Access Policies
+
+Vault Access Policies grant permissions directly at the Key Vault level.
+
+They are simpler but less flexible for large environments.
+
+---
+
+## Azure RBAC for Key Vault
+
+Azure RBAC provides more granular and centralized access management.
+
+Benefits include:
+
+- Consistent permission management.
+- Role assignments at different scopes.
+- Better least-privilege control.
+- Integration with Microsoft Entra ID and Azure governance.
+
+Typical roles include:
+
+- Key Vault Administrator
+- Key Vault Secrets Officer
+- Key Vault Secrets User
+- Key Vault Crypto User
+
+> [!IMPORTANT]
+> Microsoft recommends using Azure RBAC for Key Vault access control whenever possible.
 
 # Encrypt Data Everywhere
 
