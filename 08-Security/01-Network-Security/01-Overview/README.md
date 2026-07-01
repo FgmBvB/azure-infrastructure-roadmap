@@ -92,6 +92,29 @@ ASGs improve scalability and readability.
 
 ---
 
+# Application Security Group Scope
+
+Application Security Groups (ASGs) simplify NSG management by grouping virtual machines according to their application role.
+
+However, ASGs have an important limitation.
+
+An NSG can reference an Application Security Group only when the associated network interfaces belong to the **same Virtual Network**.
+
+ASGs cannot be used to create security rules between virtual machines located in different Virtual Networks, even if those VNets are connected through Virtual Network Peering.
+
+For cross-VNet scenarios, administrators should use:
+
+- IP addresses
+- CIDR prefixes
+- Service Tags
+- Azure Firewall
+- Network Virtual Appliances (NVAs)
+
+> [!NOTE]
+> ASGs simplify security rule management inside a Virtual Network but are not intended to replace routing or security controls across multiple VNets.
+
+---
+
 ## Azure Firewall
 
 Azure Firewall is Microsoft's managed firewall service.
@@ -204,6 +227,91 @@ Azure Resource
 ```
 
 Traffic is evaluated by multiple security controls before reaching the destination workload.
+
+---
+# NSG Processing Order
+
+When both a subnet and a network interface (NIC) have an associated Network Security Group, Azure evaluates both security layers.
+
+The evaluation order depends on the traffic direction.
+
+## Inbound Traffic
+
+Inbound traffic is processed in the following order:
+
+```text
+Internet
+
+↓
+
+Subnet NSG
+
+↓
+
+NIC NSG
+
+↓
+
+Virtual Machine
+```
+
+Traffic must be allowed by **both** Network Security Groups to reach the destination resource.
+
+If either NSG denies the traffic, the packet is dropped.
+
+---
+
+## Outbound Traffic
+
+Outbound traffic follows the opposite order:
+
+```text
+Virtual Machine
+
+↓
+
+NIC NSG
+
+↓
+
+Subnet NSG
+
+↓
+
+Destination
+```
+
+Again, traffic must be permitted by both NSGs.
+
+> [!IMPORTANT]
+> Azure evaluates every applicable NSG. A single deny rule blocks the traffic, regardless of the result of the other NSG.
+
+---
+
+# Default Security Rules
+
+Every Network Security Group includes several built-in rules that cannot be removed.
+
+Administrators can override their behavior by creating higher-priority custom rules.
+
+| Priority | Rule | Purpose |
+|----------|------|---------|
+| 65000 | AllowVNetInBound | Allows inbound traffic within the Virtual Network. |
+| 65000 | AllowVNetOutBound | Allows outbound traffic within the Virtual Network. |
+| 65001 | AllowAzureLoadBalancerInBound | Allows Azure Load Balancer health probes. |
+| 65001 | AllowInternetOutBound | Allows outbound Internet access. |
+| 65500 | DenyAllInBound | Denies all remaining inbound traffic. |
+| 65500 | DenyAllOutBound | Denies all remaining outbound traffic not explicitly allowed. |
+
+The **VirtualNetwork** service tag includes:
+
+- The local Virtual Network.
+- Peered Virtual Networks.
+- On-premises networks connected through VPN Gateway.
+- On-premises networks connected through ExpressRoute.
+
+> [!IMPORTANT]
+> Azure always evaluates lower priority numbers first. Custom rules (priority **100–4096**) take precedence over the built-in default rules.
 
 ---
 
