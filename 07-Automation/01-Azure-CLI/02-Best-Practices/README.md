@@ -143,6 +143,42 @@ Selecting the appropriate output format simplifies automation.
 
 ---
 
+# Using TSV Output for Automation
+
+The **tsv** (Tab-Separated Values) output format is particularly useful for shell scripting.
+
+Unlike JSON or table output, TSV removes:
+
+- Quotes
+- Brackets
+- Property names
+- Formatting characters
+
+Example:
+
+```bash
+VNET_ID=$(az network vnet show \
+  --resource-group MyRG \
+  --name MyVNet \
+  --query id \
+  --output tsv)
+```
+
+The captured value can then be reused directly in subsequent Azure CLI commands.
+
+Typical use cases include:
+
+- Bash variables
+- Loops
+- CI/CD pipelines
+- Resource IDs
+- Automation scripts
+
+> [!TIP]
+> Use `--output tsv` whenever command output will be consumed by another command or stored in shell variables.
+
+---
+
 # Validate Resources Before Creating Them
 
 Avoid creating duplicate resources.
@@ -180,6 +216,37 @@ Use:
 when appropriate to improve script efficiency.
 
 Wait commands should only be used when later steps depend on successful resource creation.
+
+---
+
+# Waiting for Long-Running Operations
+
+Long-running Azure deployments are often executed asynchronously using `--no-wait`.
+
+However, later steps in an automation script may depend on the resource being fully provisioned.
+
+Azure CLI provides dedicated **wait commands** that poll Azure Resource Manager until a resource reaches the desired state.
+
+Example:
+
+```bash
+az vm wait \
+  --resource-group MyRG \
+  --name MyVM \
+  --created
+```
+
+Typical wait conditions include:
+
+- Created
+- Deleted
+- Exists
+- Updated
+
+Using wait commands makes automation more reliable by ensuring that dependent operations execute only after Azure has completed the requested deployment.
+
+> [!TIP]
+> A common automation pattern is to start several long-running deployments with `--no-wait` and synchronize only when later steps require those resources.
 
 ---
 
@@ -277,6 +344,30 @@ Cloud Shell provides:
 - No local installation.
 
 It is ideal for administrative tasks from any workstation.
+
+---
+
+# Azure Cloud Shell Persistence
+
+Azure Cloud Shell provides persistent storage by mounting an Azure Files share into the Cloud Shell environment.
+
+The mounted directory is:
+
+```text
+$HOME/clouddrive
+```
+
+This location stores:
+
+- Scripts
+- Configuration files
+- Templates
+- Downloaded resources
+
+If the associated Storage Account or Azure File Share is removed, Cloud Shell loses its persistent storage and will require a new storage location to be configured before persistence is restored.
+
+> [!IMPORTANT]
+> Cloud Shell itself is temporary, but files stored under **$HOME/clouddrive** persist across sessions because they are backed by Azure Files.
 
 ---
 
