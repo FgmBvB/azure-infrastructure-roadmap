@@ -53,6 +53,41 @@ Defender for Cloud continuously evaluates deployed resources and recommends impr
 
 ---
 
+# Azure Policy Integration
+
+Microsoft Defender for Cloud relies on **Azure Policy** to continuously evaluate Azure resources.
+
+When Microsoft Defender for Cloud is enabled, Azure automatically assigns built-in security initiatives based on the **Microsoft Cloud Security Benchmark (MCSB)**.
+
+Azure Policy evaluates resource compliance in the background.
+
+Resources marked as **Non-compliant** generate security recommendations inside Microsoft Defender for Cloud and may reduce the organization's Secure Score.
+
+```text
+Azure Resource
+
+↓
+
+Azure Policy Evaluation
+
+↓
+
+Compliance Result
+
+↓
+
+Defender for Cloud Recommendation
+
+↓
+
+Secure Score Update
+```
+
+> [!IMPORTANT]
+> Many Microsoft Defender for Cloud recommendations are generated directly from Azure Policy compliance evaluations.
+
+---
+
 # Core Capabilities
 
 ## Cloud Security Posture Management (CSPM)
@@ -210,6 +245,74 @@ Microsoft Defender for Cloud integrates with:
 - Azure Arc
 
 These integrations provide centralized governance and security management.
+
+---
+
+# Just-In-Time (JIT) VM Access
+
+Just-In-Time (JIT) VM Access reduces the exposure of management ports such as:
+
+- RDP (3389)
+- SSH (22)
+
+When JIT is enabled (requires the appropriate Defender plan), Microsoft Defender for Cloud restricts inbound access through the associated Network Security Group.
+
+Administrators request temporary access through Microsoft Defender for Cloud.
+
+If approved:
+
+- Access is granted only from the specified source IP.
+- Only the requested management port is opened.
+- Access remains available for a limited period.
+- The rule is automatically removed when the time expires.
+
+```text
+Administrator
+
+↓
+
+Request JIT Access
+
+↓
+
+RBAC Validation
+
+↓
+
+Temporary NSG Rule
+
+↓
+
+VM Access
+
+↓
+
+Automatic Rule Removal
+```
+
+This minimizes the attack surface while allowing secure administrative access.
+
+---
+
+# Workflow Automation
+
+Microsoft Defender for Cloud can automatically respond to security recommendations and alerts through **Workflow Automation**.
+
+Workflow Automation uses **Azure Logic Apps** to trigger automated actions when specific events occur.
+
+Typical actions include:
+
+- Send email notifications.
+- Create ITSM tickets.
+- Trigger remediation workflows.
+- Call webhooks.
+- Start Azure Automation runbooks.
+
+Automation reduces response time and improves operational consistency.
+
+> [!NOTE]
+> Some advanced security recommendations and workload protections require Azure Monitor Agent (AMA) and Log Analytics to collect the telemetry used by Microsoft Defender for Cloud.
+
 
 ---
 
