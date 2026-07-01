@@ -137,6 +137,25 @@ If the associated Storage Account or Azure File Share is deleted, Cloud Shell lo
 
 ---
 
+# Cloud Shell Infrastructure
+
+Azure Cloud Shell runs inside a Microsoft-managed temporary compute environment.
+
+When a Cloud Shell session starts:
+
+- A temporary compute environment is provisioned.
+- The user's Azure Files share is mounted.
+- Azure CLI and Azure PowerShell become immediately available.
+
+The compute environment is temporary and is recreated whenever a new session starts.
+
+Persistent user data is stored separately inside the associated Azure Files share.
+
+> [!IMPORTANT]
+> Cloud Shell compute resources are Microsoft-managed. Customers are charged only for the Azure Storage resources used to provide persistent storage.
+
+---
+
 # Temporary Storage
 
 Not every directory is persistent.
@@ -154,6 +173,29 @@ $HOME/clouddrive
 ```
 
 are preserved between sessions.
+
+---
+
+# Session Lifetime
+
+Azure Cloud Shell sessions automatically end after a period of inactivity.
+
+When a session expires:
+
+- The temporary compute environment is removed.
+- Running processes are terminated.
+- Temporary files outside the persistent storage location are lost.
+
+Files stored under:
+
+```text
+$HOME/clouddrive
+```
+
+remain available because they are backed by Azure Files.
+
+> [!TIP]
+> Save important scripts and templates inside **$HOME/clouddrive** to ensure they remain available across Cloud Shell sessions.
 
 ---
 
@@ -265,6 +307,23 @@ Administrators can:
 - Manage Infrastructure as Code
 
 without installing additional software.
+
+---
+
+# Private Connectivity Considerations
+
+Cloud Shell can administer both public and private Azure resources, provided that network connectivity and authentication requirements are satisfied.
+
+Some enterprise environments integrate Cloud Shell with private networking solutions to administer resources that are not exposed to the public Internet.
+
+Typical scenarios include:
+
+- Virtual Machines
+- Azure Kubernetes Service (AKS)
+- Private Endpoints
+- Internal services
+
+The available connectivity options depend on the organization's networking architecture and security requirements.
 
 ---
 
