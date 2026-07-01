@@ -139,6 +139,36 @@ Always verify the active subscription before deploying or modifying resources.
 
 ---
 
+# Azure Context
+
+Azure PowerShell maintains an **Azure Context** that represents the current authenticated session.
+
+A context includes:
+
+- Authenticated user or Service Principal
+- Active subscription
+- Microsoft Entra tenant
+- Selected Azure environment
+
+You can display the current context with:
+
+```powershell
+Get-AzContext
+```
+
+You can change the active context using:
+
+```powershell
+Set-AzContext -Subscription "<subscription-name>"
+```
+
+Many Azure PowerShell cmdlets also accept the **-DefaultProfile** parameter, allowing scripts to execute commands against different Azure contexts without changing the global session.
+
+> [!TIP]
+> Using multiple contexts is especially useful when automating tasks across multiple subscriptions or Microsoft Entra tenants.
+
+---
+
 # Resource Management
 
 Azure PowerShell supports management of virtually every Azure resource.
@@ -211,6 +241,31 @@ Objects can be:
 - Passed through the pipeline
 
 This is one of the major strengths of PowerShell automation.
+
+---
+
+# Pipeline Processing
+
+One of the strengths of Azure PowerShell is its integration with the native PowerShell pipeline.
+
+Many cmdlets can receive objects from previous commands, allowing administrators to perform bulk operations efficiently.
+
+Example:
+
+```powershell
+Get-AzVM -ResourceGroupName "Prod-RG" |
+Stop-AzVM -Force -NoWait
+```
+
+PowerShell automatically passes compatible objects through the pipeline, enabling administrators to:
+
+- Process multiple resources
+- Reduce repetitive code
+- Build readable automation scripts
+- Chain administrative operations
+
+> [!IMPORTANT]
+> Pipeline support depends on how each cmdlet is implemented. Always verify whether a parameter accepts pipeline input when designing automation scripts.
 
 ---
 
@@ -313,6 +368,38 @@ Azure PowerShell is commonly used for:
 - CI/CD pipelines
 
 It is particularly effective when automation requires complex object manipulation.
+
+---
+
+# Long-Running Operations
+
+Some Azure operations require several minutes to complete.
+
+Examples include:
+
+- Virtual Machine deployment
+- VPN Gateway creation
+- Azure Firewall deployment
+- Resource Group deletion
+
+Many Azure PowerShell cmdlets support the **-NoWait** parameter, which immediately returns control to the console while Azure continues processing the request.
+
+Some cmdlets also support **-AsJob**, allowing the operation to run as a background PowerShell job.
+
+Typical job management cmdlets include:
+
+```powershell
+Get-Job
+
+Wait-Job
+
+Receive-Job
+```
+
+Background jobs allow administrators to continue executing other tasks while long-running Azure operations complete.
+
+> [!TIP]
+> Combining Azure asynchronous operations with PowerShell background jobs improves automation efficiency for large deployments.
 
 ---
 
