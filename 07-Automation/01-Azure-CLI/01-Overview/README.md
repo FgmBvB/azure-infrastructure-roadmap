@@ -182,6 +182,47 @@ This consistent structure makes Azure CLI easy to learn and automate.
 
 ---
 
+# Azure CLI Configuration
+
+Azure CLI allows administrators to define default configuration values.
+
+Common settings include:
+
+- Default Resource Group
+- Default Location
+- Output format
+
+Example:
+
+```bash
+az configure
+```
+
+Typical defaults include:
+
+- Resource Group
+- Location
+- Output format
+
+---
+
+## Environment Variables
+
+Azure CLI also supports environment variables for advanced automation scenarios.
+
+Examples include:
+
+- Configuration directory
+- Authentication settings
+- Cloud environment
+
+These variables simplify automation in CI/CD pipelines and non-interactive deployments.
+
+> [!TIP]
+> Using default configuration reduces repetitive parameters and improves script readability.
+
+---
+
 # Output Formats
 
 Azure CLI supports multiple output formats.
@@ -343,6 +384,51 @@ Azure CLI is commonly used for:
 - Governance tasks
 
 Most repetitive Azure administrative tasks can be automated using Azure CLI.
+
+---
+
+# Long-Running Operations
+
+Some Azure resources require several minutes to provision.
+
+Examples include:
+
+- VPN Gateway
+- ExpressRoute Gateway
+- AKS Clusters
+- Azure Firewall
+
+By default, Azure CLI waits until the operation finishes.
+
+---
+
+## Using --no-wait
+
+The `--no-wait` parameter submits the request and immediately returns control to the terminal.
+
+Example:
+
+```bash
+az network vnet-gateway create \
+  --no-wait
+```
+
+This allows administrators to continue executing other commands while Azure completes the deployment.
+
+---
+
+## Waiting for Completion
+
+Azure CLI also provides wait commands that pause execution until a resource reaches a desired state.
+
+Typical scenarios include:
+
+- Sequential deployments
+- Automation scripts
+- CI/CD pipelines
+
+> [!IMPORTANT]
+> Using `--no-wait` together with Azure CLI wait commands improves automation efficiency by avoiding unnecessary idle time during long-running deployments.
 
 ---
 
