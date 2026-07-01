@@ -68,6 +68,47 @@ Apply Conditional Access broadly while maintaining emergency access accounts.
 
 ---
 
+# Validate Conditional Access Policies
+
+Incorrect Conditional Access policies can unintentionally block legitimate users or administrators.
+
+Microsoft recommends validating every new policy before enforcing it.
+
+## Report-only Mode
+
+Conditional Access policies can initially be deployed in **Report-only** mode.
+
+In this mode:
+
+- Policies are evaluated.
+- Sign-ins are recorded in the logs.
+- No access is blocked.
+- MFA is not enforced.
+
+This allows administrators to verify the policy's impact before enabling enforcement.
+
+---
+
+## What If Tool
+
+Microsoft Entra ID includes a built-in **What If** tool for Conditional Access.
+
+Administrators can simulate sign-in scenarios by specifying:
+
+- User
+- Group
+- Application
+- Device
+- Location
+- Risk level
+
+The simulator predicts which Conditional Access policies would apply without affecting production users.
+
+> [!IMPORTANT]
+> Microsoft recommends testing new Conditional Access policies using **Report-only** mode and the **What If** tool before enabling them in production.
+
+---
+
 # Apply Least Privilege
 
 Grant only the permissions required to perform administrative tasks.
@@ -101,6 +142,37 @@ Instead:
 - Review privileged assignments regularly.
 
 PIM significantly reduces standing administrative privileges.
+
+---
+
+# Privileged Identity Management Activation
+
+Privileged Identity Management distinguishes between **Eligible** and **Active** role assignments.
+
+## Eligible
+
+An eligible assignment does not grant administrative permissions immediately.
+
+The user must activate the role before performing privileged operations.
+
+Activation may require:
+
+- Multi-Factor Authentication (MFA)
+- Business justification
+- Approval workflow
+
+---
+
+## Active
+
+After successful activation, the role becomes active for a limited period.
+
+Once the activation expires, Azure automatically revokes the elevated permissions and the assignment returns to the **Eligible** state.
+
+Activation duration is configurable by administrators through PIM settings.
+
+> [!NOTE]
+> Just-in-time activation minimizes standing administrative privileges and is one of Microsoft's core Zero Trust recommendations.
 
 ---
 
