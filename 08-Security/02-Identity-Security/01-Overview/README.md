@@ -93,6 +93,67 @@ Azure RBAC implements the principle of least privilege.
 
 ---
 
+# Microsoft Entra Roles vs Azure RBAC
+
+Microsoft Entra ID roles and Azure RBAC roles serve different purposes.
+
+Although they both grant permissions, they operate on different control planes.
+
+| Microsoft Entra ID Roles | Azure RBAC Roles |
+|---------------------------|------------------|
+| Manage identities and directory services | Manage Azure resources |
+| Apply at the tenant level | Apply at Management Group, Subscription, Resource Group, or Resource level |
+| Evaluated by Microsoft Entra ID | Evaluated by Azure Resource Manager (ARM) |
+| Examples: Global Administrator, User Administrator | Examples: Owner, Contributor, Reader |
+
+A Microsoft Entra administrator does **not** automatically receive permissions to manage Azure resources.
+
+Likewise, an Azure subscription Owner does **not** automatically gain permissions to administer Microsoft Entra ID.
+
+---
+
+## Emergency Access
+
+A **Global Administrator** can temporarily elevate access to Azure resources by enabling:
+
+```text
+Access management for Azure resources
+```
+
+This option assigns the **User Access Administrator** role at the root scope, allowing recovery of orphaned Azure RBAC permissions.
+
+> [!IMPORTANT]
+> Microsoft Entra ID manages identities, while Azure RBAC manages Azure resources. Understanding this distinction is essential for the AZ-104 exam.
+
+---
+
+# Deny Assignments
+
+Azure authorization follows a **deny-overrides-allow** model.
+
+Although Azure RBAC is primarily based on allow permissions, Azure also supports **Deny Assignments**.
+
+Key characteristics:
+
+- Created automatically by certain Azure services.
+- Read-only from an administrator perspective.
+- Cannot be manually created using standard Azure RBAC.
+- Override any allow permission.
+
+If a Deny Assignment blocks an operation, the action is denied even if the user holds the **Owner** role.
+
+Typical scenarios include:
+
+- Azure Deployment Stacks
+- Azure Managed Applications
+- Other Azure-managed protection mechanisms
+
+> [!IMPORTANT]
+> Explicit deny permissions always take precedence over allow permissions.
+
+---
+
+
 ## Managed Identities
 
 Managed Identities eliminate the need to store credentials inside applications.
