@@ -225,6 +225,46 @@ JMESPath is widely used in Azure automation scenarios.
 
 ---
 
+# Advanced JMESPath Queries
+
+Azure CLI supports advanced **JMESPath** expressions for filtering, transforming, and formatting command output.
+
+### Conditional Filtering
+
+Return only resources that match a specific condition.
+
+Example:
+
+```bash
+az storage account list \
+  --query "[?kind=='StorageV2'].name"
+```
+
+---
+
+### Custom Projections
+
+Create simplified output with custom property names.
+
+Example:
+
+```bash
+az vm list \
+  --query "[].{VM:name, ResourceGroup:resourceGroup, Size:hardwareProfile.vmSize}"
+```
+
+Benefits include:
+
+- Smaller output
+- Easier scripting
+- Better reporting
+- Cleaner automation
+
+> [!TIP]
+> Advanced JMESPath queries reduce the need for external parsing tools in automation scripts.
+
+---
+
 # Azure CLI and ARM
 
 Azure CLI is a management client for Azure Resource Manager.
