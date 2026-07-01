@@ -201,6 +201,30 @@ For large-scale automation, consider Azure Automation, GitHub Actions, or Azure 
 
 ---
 
+# Restarting a Cloud Shell Session
+
+Cloud Shell provides a **Restart Session** option that recreates the temporary compute environment.
+
+Restarting the session:
+
+- Terminates all running processes.
+- Clears temporary files.
+- Creates a new temporary execution environment.
+- Reconnects the persistent Azure Files share.
+
+Files stored in:
+
+```text
+$HOME/clouddrive
+```
+
+remain available after the new session starts.
+
+> [!IMPORTANT]
+> Any files or processes stored outside the persistent Azure Files share are lost when the session is restarted.
+
+---
+
 # Understand Session Persistence
 
 Cloud Shell compute resources are temporary.
@@ -218,6 +242,31 @@ Running processes and temporary files are not preserved after the session ends.
 
 ---
 
+# Reconfigure Persistent Storage
+
+Azure Cloud Shell allows administrators to disconnect the current persistent storage configuration.
+
+The following command removes the association between the current Cloud Shell session and its Azure Files share:
+
+```bash
+clouddrive unmount
+```
+
+After the storage is unmounted, the current Cloud Shell session ends.
+
+The next time Cloud Shell starts, Azure prompts the administrator to:
+
+- Select an existing Storage Account.
+- Create a new Storage Account.
+- Create a new Azure Files share.
+
+This mechanism is useful when migrating Cloud Shell storage or recovering from storage configuration issues.
+
+> [!TIP]
+> Always ensure important files are backed up before unmounting the current Cloud Shell storage.
+
+---
+
 # Monitor Storage Usage
 
 The Azure Files share associated with Cloud Shell is billed as a normal Azure Storage resource.
@@ -230,6 +279,26 @@ Regularly:
 - Organize templates.
 
 Good housekeeping helps reduce storage costs.
+
+---
+
+# Cloud Shell Storage Connectivity
+
+Azure Cloud Shell depends on access to the Azure Storage Account that hosts its Azure Files share.
+
+If the associated Storage Account becomes unavailable or its network configuration prevents Cloud Shell from accessing the file share, persistent storage cannot be mounted successfully.
+
+Typical causes include:
+
+- Deleted Storage Account
+- Deleted Azure Files share
+- Storage configuration errors
+- Network restrictions that prevent Cloud Shell from accessing the storage account
+
+Without access to the Azure Files share, Cloud Shell cannot restore the persistent **clouddrive** environment.
+
+> [!TIP]
+> When securing Storage Accounts with network restrictions, verify that Cloud Shell can still access the associated Azure Files share or be prepared to reconfigure persistent storage.
 
 ---
 
