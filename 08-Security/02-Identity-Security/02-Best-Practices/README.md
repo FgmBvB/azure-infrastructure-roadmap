@@ -352,6 +352,29 @@ Emergency accounts should only be used when normal administrative access is unav
 
 ---
 
+# Design Emergency Access Accounts Correctly
+
+Emergency access ("break-glass") accounts provide administrative access when normal authentication mechanisms are unavailable.
+
+Microsoft recommends maintaining at least two emergency accounts.
+
+Best practices include:
+
+- Create cloud-only accounts in Microsoft Entra ID.
+- Do not synchronize them from on-premises Active Directory.
+- Protect them with strong credentials.
+- Monitor every sign-in.
+- Test them periodically.
+- Store credentials securely.
+- Exclude them from Conditional Access policies that could prevent emergency access.
+
+These accounts should only be used during exceptional circumstances such as identity outages or Conditional Access misconfigurations.
+
+> [!IMPORTANT]
+> Emergency access accounts should remain isolated from everyday administration and be continuously monitored to detect unauthorized use.
+
+---
+
 # Enterprise Scenario
 
 A multinational company manages hundreds of Azure subscriptions.
