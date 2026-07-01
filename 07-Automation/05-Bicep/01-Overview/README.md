@@ -55,6 +55,35 @@ The Bicep compiler converts the source file into a standard ARM template before 
 
 ---
 
+# Bicep Compilation
+
+Bicep is an authoring language and is **not** sent directly to Azure.
+
+Before deployment, Bicep is **transpiled** into a standard ARM Template (JSON).
+
+The compilation can be performed explicitly:
+
+```bash
+bicep build main.bicep
+```
+
+or automatically when deploying with Azure CLI or Azure PowerShell.
+
+Example:
+
+```bash
+az deployment group create \
+    --resource-group MyRG \
+    --template-file main.bicep
+```
+
+In this case, Azure CLI invokes the Bicep compiler automatically before submitting the generated ARM template to Azure Resource Manager.
+
+> [!IMPORTANT]
+> Azure Resource Manager never deploys Bicep files directly. Every deployment is ultimately processed as an ARM Template.
+
+---
+
 # Infrastructure as Code (IaC)
 
 Bicep fully supports the Infrastructure as Code model.
@@ -165,6 +194,43 @@ Resources use strongly typed syntax that improves readability and editor support
 
 ---
 
+# Implicit Dependencies
+
+One of Bicep's major advantages is its ability to infer resource dependencies automatically.
+
+When one resource references another using its symbolic name, Bicep generates the required deployment dependency without requiring an explicit `dependsOn`.
+
+Example:
+
+```bicep
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2023-11-01' = {
+  ...
+}
+
+resource nic 'Microsoft.Network/networkInterfaces@2023-11-01' = {
+  properties: {
+    ipConfigurations: [
+      {
+        properties: {
+          subnet: {
+            id: subnet.id
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+Because the network interface references `subnet.id`, Bicep automatically creates the dependency.
+
+This reduces template complexity and allows Azure Resource Manager to maximize parallel deployment whenever possible.
+
+> [!TIP]
+> Explicit `dependsOn` is only required when a dependency cannot be inferred automatically.
+
+---
+
 # Modules
 
 Modules allow large deployments to be divided into reusable components.
@@ -185,6 +251,34 @@ Benefits:
 - Smaller deployments
 
 Modules are one of the major improvements over traditional ARM Templates.
+
+---
+
+# Existing Resources
+
+Bicep can reference Azure resources that already exist without redeploying them.
+
+The **existing** keyword declares an existing resource so that its properties and resource ID can be used by the deployment.
+
+Example:
+
+```bicep
+resource vnet 'Microsoft.Network/virtualNetworks@2023-11-01' existing = {
+  name: 'vnet-core-prod'
+}
+```
+
+Typical scenarios include:
+
+- Deploying a Virtual Machine into an existing Virtual Network.
+- Using an existing Key Vault.
+- Connecting to an existing Storage Account.
+- Reusing shared networking infrastructure.
+
+Using **existing** improves modularity and allows independent deployments to integrate with previously deployed Azure resources.
+
+> [!IMPORTANT]
+> The resource must already exist. The deployment references it but does not create or modify it unless explicitly declared elsewhere.
 
 ---
 
