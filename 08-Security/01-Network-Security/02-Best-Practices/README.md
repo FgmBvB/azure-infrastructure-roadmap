@@ -129,6 +129,43 @@ Avoid managing identical NSG rules across multiple virtual networks.
 
 ---
 
+# Route Traffic Through Azure Firewall
+
+Deploying Azure Firewall inside a Virtual Network does **not** automatically redirect traffic through the firewall.
+
+To inspect traffic, administrators must configure **User Defined Routes (UDRs)**.
+
+A common configuration includes:
+
+- Destination: **0.0.0.0/0**
+- Next Hop Type: **Virtual Appliance**
+- Next Hop Address: **Azure Firewall private IP**
+
+The route table is then associated with the required subnets.
+
+```text
+Virtual Machine
+
+↓
+
+User Defined Route (UDR)
+
+↓
+
+Azure Firewall
+
+↓
+
+Internet
+```
+
+Without appropriate routing, traffic bypasses Azure Firewall entirely.
+
+> [!IMPORTANT]
+> Azure Firewall protects only the traffic that is explicitly routed through it.
+
+---
+
 # Protect Internet-Facing Applications
 
 Use Web Application Firewall (WAF) for HTTP and HTTPS workloads.
@@ -160,6 +197,26 @@ Combine DDoS Protection with Azure Firewall and WAF for layered protection.
 
 ---
 
+# Azure DDoS Protection Options
+
+Azure provides different deployment options for DDoS Protection depending on workload requirements.
+
+**DDoS Network Protection**
+
+- Applied at the Virtual Network level.
+- Protects all eligible public IP resources within the protected Virtual Network.
+- Designed for enterprise-scale environments.
+
+**DDoS IP Protection**
+
+- Applied to individual Public IP addresses.
+- Suitable for protecting specific Internet-facing resources.
+- Provides a more granular deployment option.
+
+Administrators should choose the protection model that best aligns with the organization's architecture and operational requirements.
+
+---
+
 # Minimize Public Exposure
 
 Avoid assigning public IP addresses unless absolutely necessary.
@@ -172,6 +229,30 @@ Whenever possible, use:
 - ExpressRoute
 
 Private connectivity significantly reduces the attack surface.
+
+---
+
+# Secure Administrative Access with Azure Bastion
+
+Microsoft recommends Azure Bastion instead of exposing Remote Desktop (RDP) or Secure Shell (SSH) directly to the Internet.
+
+Azure Bastion requires a dedicated subnet named:
+
+```text
+AzureBastionSubnet
+```
+
+For current Bastion SKUs, Microsoft recommends a subnet size of **/26 or larger** to support scaling.
+
+Using Azure Bastion provides several security benefits:
+
+- No public IP addresses on virtual machines.
+- No inbound RDP (3389) exposure.
+- No inbound SSH (22) exposure.
+- Browser-based management over HTTPS (443).
+- Reduced attack surface.
+
+Administrators can therefore keep management ports closed to Internet traffic while maintaining secure administrative access.
 
 ---
 
