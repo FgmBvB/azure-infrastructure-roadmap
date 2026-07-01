@@ -142,6 +142,31 @@ Consistent policy compliance improves overall security posture.
 
 ---
 
+# Use Azure Policy Exemptions Carefully
+
+Some security recommendations may not be applicable because of technical or business constraints.
+
+In these cases, administrators can create **Azure Policy Exemptions** instead of ignoring recommendations indefinitely.
+
+An exemption includes:
+
+- Business justification
+- Exemption category
+- Optional expiration date
+
+Examples include:
+
+- Legacy applications
+- Third-party software limitations
+- Temporary migration scenarios
+
+Exemptions should be reviewed regularly and removed when they are no longer required.
+
+> [!IMPORTANT]
+> Exemptions document accepted risk and improve governance, but they should not become a substitute for remediation whenever security improvements are technically feasible.
+
+---
+
 # Automate Security Response
 
 Use **Workflow Automation** to respond automatically to security recommendations and alerts.
@@ -195,6 +220,53 @@ Prioritize alerts based on:
 - Business impact
 
 Avoid treating every recommendation with the same priority.
+
+---
+
+# Suppress Non-Actionable Alerts
+
+Not every security alert requires immediate investigation.
+
+Microsoft Defender for Cloud allows administrators to create **Alert Suppression Rules** to automatically dismiss alerts that are expected or intentionally generated.
+
+Typical scenarios include:
+
+- Internal penetration testing
+- Vulnerability scanners
+- Approved security assessment tools
+- Known maintenance activities
+
+Suppression rules can be based on criteria such as:
+
+- Alert type
+- Resource
+- IP address
+- Subscription
+
+Suppressing expected alerts reduces operational noise while keeping threat detection enabled for unexpected activity.
+
+> [!NOTE]
+> Alert suppression should only be used for verified, non-actionable events. It should never replace proper investigation of unknown security alerts.
+
+---
+
+# Enable Automatic Agent Provisioning
+
+Microsoft recommends enabling automatic provisioning for supported monitoring and security extensions.
+
+Automatic provisioning simplifies large-scale deployments by installing the required agents on eligible resources without manual intervention.
+
+Depending on the enabled Defender Plans, Microsoft Defender for Cloud may automatically deploy components such as:
+
+- Azure Monitor Agent (AMA)
+- Microsoft Defender extensions
+- Vulnerability assessment components
+- Kubernetes security extensions
+
+Automatic provisioning helps ensure that newly deployed resources are onboarded consistently and reduces security blind spots.
+
+> [!NOTE]
+> Available extensions depend on the enabled Defender Plans and the supported resource types.
 
 ---
 
