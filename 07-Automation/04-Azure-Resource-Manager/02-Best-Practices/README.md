@@ -48,6 +48,36 @@ Parameterization makes templates reusable across multiple environments.
 
 ---
 
+# Separate Templates from Parameter Files
+
+Microsoft recommends keeping infrastructure definitions separate from environment-specific configuration.
+
+A common structure is:
+
+```text
+azuredeploy.json
+
+azuredeploy.parameters.dev.json
+
+azuredeploy.parameters.test.json
+
+azuredeploy.parameters.prod.json
+```
+
+The ARM template defines the infrastructure once, while each parameter file supplies the values required for a specific environment.
+
+Benefits include:
+
+- Infrastructure reuse.
+- Simpler environment management.
+- Reduced duplication.
+- Easier CI/CD integration.
+- Lower risk of configuration errors.
+
+This approach allows the same template to be deployed consistently across Development, Test, and Production.
+
+---
+
 # Use Variables to Reduce Duplication
 
 Store repeated expressions inside variables.
@@ -109,6 +139,28 @@ Validation reduces deployment failures.
 
 ---
 
+# Use What-If Before Deployment
+
+Template validation confirms that a deployment is syntactically correct, but it does not show how existing resources will be affected.
+
+The **What-If** operation compares the current Azure environment with the desired state defined in the template before deployment.
+
+Typical results include:
+
+- Resources to be created.
+- Resources to be modified.
+- Resources with no changes.
+- Resources that may be deleted.
+
+What-If helps administrators understand the expected impact of a deployment before applying changes.
+
+It is especially valuable when reviewing production deployments or evaluating the effects of Complete deployment mode.
+
+> [!TIP]
+> Running a What-If operation before production deployments reduces the risk of unintended infrastructure changes.
+
+---
+
 # Use Latest Stable API Versions
 
 Each Azure resource uses a specific API version.
@@ -143,6 +195,28 @@ Instead use:
 - Managed Identities
 
 Sensitive information should remain outside template code.
+
+---
+
+# Use Key Vault References
+
+Sensitive values should never be stored directly inside ARM templates or parameter files.
+
+Instead, use **Azure Key Vault** together with secure parameters and Key Vault references.
+
+Sensitive parameters should use the **secureString** (or **secureObject**) data type so their values are masked during deployment.
+
+Parameter files can reference secrets stored in Azure Key Vault instead of containing the secret itself.
+
+Benefits include:
+
+- Secrets remain outside template code.
+- Passwords are not stored in source control.
+- Deployment logs do not expose sensitive values.
+- Centralized secret management.
+
+> [!IMPORTANT]
+> Azure Resource Manager retrieves the secret directly from Azure Key Vault during deployment. Appropriate permissions are required for the deployment to access the referenced secret.
 
 ---
 
