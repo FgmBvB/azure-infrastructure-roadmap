@@ -139,6 +139,28 @@ Variables are evaluated during deployment.
 
 ---
 
+# Common ARM Template Functions
+
+ARM Templates include built-in functions that generate dynamic values during deployment.
+
+Some of the most frequently used functions are:
+
+| Function | Purpose |
+|----------|---------|
+| `concat()` | Combines multiple strings into a single value. |
+| `uniqueString()` | Generates a deterministic unique string based on the supplied value. Commonly used to create globally unique Storage Account names. |
+| `resourceId()` | Returns the fully qualified Azure Resource Manager ID of a resource. Used to reference existing resources across deployments. |
+
+Example:
+
+```json
+"name": "[concat(parameters('storagePrefix'), uniqueString(resourceGroup().id))]"
+```
+
+These functions improve template portability and eliminate hardcoded values.
+
+---
+
 # Resources
 
 The **Resources** section defines the Azure infrastructure.
@@ -191,6 +213,24 @@ Incremental deployments are recommended for most production environments.
 
 ---
 
+# Complete Deployment Mode
+
+Complete mode should be used with extreme caution.
+
+When an ARM template is deployed in **Complete** mode, Azure Resource Manager removes resources that exist in the deployment scope but are not defined in the template.
+
+For example, if the deployment target is a Resource Group:
+
+- Resources defined in the template are created or updated.
+- Resources not defined in the template may be deleted.
+
+Because Complete mode can unintentionally remove infrastructure, Microsoft recommends using **Incremental** mode for most production deployments.
+
+> [!IMPORTANT]
+> Resource deletion behavior depends on the deployment scope and the resource provider. Always validate the expected impact before using Complete mode in production.
+
+---
+
 # Dependency Management
 
 Azure Resource Manager automatically determines deployment order.
@@ -204,6 +244,35 @@ dependsOn
 When possible, ARM also detects implicit dependencies automatically.
 
 Parallel deployment improves provisioning performance.
+
+---
+
+# Resource Iteration
+
+ARM Templates support deploying multiple similar resources using the **copy** element.
+
+The associated **copyIndex()** function returns the current iteration number during deployment.
+
+Example:
+
+```json
+"name": "[concat('vm', copyIndex())]"
+```
+
+This mechanism allows Azure Resource Manager to generate sequential resource names such as:
+
+- vm0
+- vm1
+- vm2
+
+Typical use cases include deploying:
+
+- Multiple Virtual Machines
+- Storage Accounts
+- Managed Disks
+- Network Interfaces
+
+Using **copy** reduces template duplication and simplifies large deployments.
 
 ---
 
